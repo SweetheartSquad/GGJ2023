@@ -1,11 +1,12 @@
 import eases from 'eases';
-import { BitmapText, Container, Sprite } from 'pixi.js';
+import { Container, Sprite } from 'pixi.js';
 import { size } from './config';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { Tween, TweenManager } from './Tweens';
+import { UIPost } from './UIPost';
 import { tex } from './utils';
 
 export class UIFeed extends GameObject {
@@ -32,11 +33,11 @@ export class UIFeed extends GameObject {
 
 	voice = 'Default' as string | undefined;
 
-	lastText?: BitmapText;
+	lastText?: UIPost;
 
 	containerPosts = new Container();
 
-	posts: BitmapText[] = [];
+	posts: UIPost[] = [];
 
 	constructor() {
 		super();
@@ -50,7 +51,6 @@ export class UIFeed extends GameObject {
 		this.transform.x = size.x - this.margin.right - this.sprBg.width;
 		this.transform.y = size.y - this.margin.bottom - this.sprBg.height;
 
-		this.display.container.accessible = true;
 		this.display.container.addChild(this.sprBg);
 		this.display.container.addChild(this.containerPosts);
 		this.containerPosts.x = this.padding.left;
@@ -65,6 +65,7 @@ export class UIFeed extends GameObject {
 		this.tweens.forEach((t) => TweenManager.abort(t));
 		game.app.stage.removeChild(this.display.container);
 		super.destroy();
+		this.posts.forEach((i) => i.destroy());
 	}
 
 	update(): void {
@@ -72,26 +73,21 @@ export class UIFeed extends GameObject {
 	}
 
 	say(text: string) {
-		this.display.container.accessibleHint = text;
-		const t = new BitmapText(text, {
-			fontName: 'bmfont',
-			maxWidth:
-				this.sprBg.texture.width - (this.padding.right + this.padding.left),
-		});
-		this.containerPosts.addChild(t);
-		t.anchor.x = 0;
-		t.anchor.y = 1;
+		const t = new UIPost(
+			text,
+			this.sprBg.texture.width - (this.padding.right + this.padding.left)
+		);
+		this.containerPosts.addChild(t.display.container);
 		this.tweens.forEach((i) => {
 			TweenManager.abort(i);
 		});
-		if (this.lastText) this.lastText.alpha = 1;
 		this.tweens.length = 0;
 		this.posts.forEach((i) => {
 			this.tweens.push(
 				TweenManager.tween(
-					i,
+					i.transform,
 					'y',
-					i.y - t.height - this.gap,
+					i.transform.y - t.display.container.height - this.gap,
 					200,
 					undefined,
 					eases.backOut
@@ -99,9 +95,15 @@ export class UIFeed extends GameObject {
 			);
 		});
 		this.posts.push(t);
-		this.tweens.push(TweenManager.tween(t, 'alpha', 1, 200, 0, eases.quadOut));
 		this.tweens.push(
-			TweenManager.tween(t, 'y', 0, 200, this.padding.bottom, eases.backOut)
+			TweenManager.tween(
+				t.transform,
+				'y',
+				0,
+				200,
+				this.padding.bottom,
+				eases.backOut
+			)
 		);
 		this.lastText = t;
 	}
