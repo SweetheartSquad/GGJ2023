@@ -20,6 +20,7 @@ textures/guyRun.x4.png
 
 textures/bg_parallax.png
 
+textures/waterSkirt.x2.png
 textures/testIdle.png
 
 textures/feedBg.png

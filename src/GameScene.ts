@@ -1,5 +1,11 @@
 import { Body, Events, Runner } from 'matter-js';
-import { BitmapText, Container, DisplayObject, Graphics } from 'pixi.js';
+import {
+	BitmapText,
+	Container,
+	DisplayObject,
+	Graphics,
+	Sprite,
+} from 'pixi.js';
 import { Area } from './Area';
 import { Border } from './Border';
 import { Camera } from './Camera';
@@ -7,15 +13,17 @@ import { DEBUG } from './debug';
 import { game, resources } from './Game';
 import { GameObject } from './GameObject';
 import { getInput } from './main';
+import { NPC } from './NPC';
 import { engine } from './Physics';
 import { PhysicsDebug } from './PhysicsDebug';
 import { Player } from './Player';
 import { ScreenFilter } from './ScreenFilter';
+import { Animator } from './Scripts/Animator';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { UIFeed } from './UIFeed';
-import { delay, removeFromArray } from './utils';
+import { delay, randCirc, removeFromArray, tex } from './utils';
 import { add, V } from './VMath';
 
 let player: Player;
@@ -365,5 +373,35 @@ export class GameScene {
 	 */
 	t(key: string) {
 		return this.strand.passages[key]?.body || key;
+	}
+
+	addGuestToPool(guest: string) {
+		const n = new NPC({ body: guest, shadow: false, x: 0, y: 0, roam: 100 });
+		const g = new Graphics();
+		const skirt = new Sprite(tex('waterSkirt'));
+		g.beginFill(0xff0000);
+		g.drawRect(0, 0, n.spr.width, n.spr.height);
+		g.drawEllipse(
+			n.spr.width / 2,
+			n.spr.height,
+			n.spr.width / 2,
+			skirt.height / 2
+		);
+		g.endFill();
+		g.y = -n.spr.height * 1.5;
+		g.x = -n.spr.width / 2;
+		n.scripts.push(new Animator(n, { spr: skirt, freq: 1 / 400 }));
+		n.spr.parent.addChild(g);
+		n.spr.parent.addChild(skirt);
+		skirt.anchor.x = 0.5;
+		skirt.anchor.y = 0;
+		skirt.y = -n.spr.height / 2;
+		skirt.width = n.spr.width * 1.25;
+		skirt.scale.y = skirt.scale.x;
+		n.spr.mask = g;
+		const pos = randCirc(100);
+		n.setPosition(pos.x, pos.y);
+		this.take(n);
+		Area.mount([n], this.container);
 	}
 }
