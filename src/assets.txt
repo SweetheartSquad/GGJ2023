@@ -8,6 +8,8 @@ textures/border.png
 textures/dialogueBg.png
 textures/shadows.png
 textures/bg302.png
+textures/groundGrass.png
+textures/hottub.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
