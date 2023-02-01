@@ -131,7 +131,9 @@ export function tex(texture: string) {
 	t = resources.get<Texture>(`${texture}.1`);
 	resources.set(texture, t); // cache for repeated calls
 	if (t) return t;
-	return resources.get<Texture>('error');
+	t = resources.get<Texture>('error');
+	resources.set(texture, t); // cache for repeated calls
+	return t;
 }
 
 export function evalFn(fn: string) {
