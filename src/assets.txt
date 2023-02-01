@@ -16,7 +16,7 @@ audio/stepDefault.mp3
 textures/footprintDefault.png
 
 textures/guyIdle.x2.png
-textures/guyRun.x2.png
+textures/guyRun.x4.png
 
 textures/bg_parallax.png
 
