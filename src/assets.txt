@@ -22,6 +22,7 @@ textures/bg_parallax.png
 
 textures/test.png
 
+textures/feedBg.png
 
 font/bmfont.txt
 font/bmfont.x1.png

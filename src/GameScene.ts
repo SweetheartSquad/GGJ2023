@@ -14,6 +14,7 @@ import { ScreenFilter } from './ScreenFilter';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
+import { UIFeed } from './UIFeed';
 import { delay, removeFromArray } from './utils';
 import { add, V } from './VMath';
 
@@ -31,6 +32,8 @@ export class GameScene {
 	camera = new Camera();
 
 	dialogue: UIDialogue;
+
+	feed: UIFeed;
 
 	screenFilter: ScreenFilter;
 
@@ -135,6 +138,7 @@ export class GameScene {
 		this.strand.scene = this;
 		this.strand.debug = DEBUG;
 		this.dialogue = new UIDialogue(this.strand);
+		this.feed = new UIFeed();
 
 		this.border = new Border();
 		this.border.init();
@@ -229,6 +233,7 @@ export class GameScene {
 
 		this.take(this.player);
 		this.take(this.dialogue);
+		this.take(this.feed);
 		this.take(this.border);
 		this.take(this.camera);
 
@@ -266,6 +271,7 @@ export class GameScene {
 			children: true,
 		});
 		this.dialogue.destroy();
+		this.feed.destroy();
 		Runner.stop(this.runner);
 	}
 
