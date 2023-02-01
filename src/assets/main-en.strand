@@ -1,0 +1,331 @@
+::start
+// some info for if you want to mod it:
+//
+// basic syntax examples:
+// 	::passage title
+// 	[[basic link]]
+// 	[[link with different label>passage title]]
+// 	[[link with different action|this.something=true;this.goto('passage title');]]
+// 	<<if this.something>><<elseif this.somethingElse>><<endif>>
+// 	<<do this.something=true;>>
+// 	<<print this.something>>
+// 	>passage break
+//
+// js examples:
+// 	this.goto('passage')
+// 	this.show('texture', { duration, x, y, scale, animate, freq })
+// 	this.scrim(amount, duration)
+// 	this.tween(object, 'property', to, duration, from, ease)
+// 	this.gameObject - npc/interrupt that triggered the dialog
+// 	this.scene      - game scene
+// 	this.voice      - audio to play as letters tick in
+// 	this.ease       - easing functions
+//
+// game object stuff:
+// 	this.Area(name, [objects])
+// 	this.Npc({ passage, x, y )
+// 	this.Goto({ area, x, y }, { x, y, width, height })
+// 	this.Prop({ texture, x, y, alpha, scale, flip, blur, animate, offset })
+// 	this.PropParallax({ texture, alpha, scale, flip, blur, mult, animate, offset }),
+// 	this.Block({ x, y, width, height, type, radius })
+// 	this.Poly({ x, y, width, verts })
+// 	this.Interrupt({ passage, x, y, width, height })
+
+<<if !this.started>>
+<<do
+	// middle mouse click to go back in debug
+	if (this.debug && !window.debugBack) {
+		window.debugBack = true;
+		window.addEventListener('pointerdown', (event) => {
+			if (event.button === 1) {
+				window.scene.strand.back();
+			}
+		});
+	}
+
+	const PropParallaxAuto = (options) => {
+		const start = Date.now();
+		const gameObject = this.PropParallax(options);
+		gameObject.scripts.push({
+			gameObject,
+			update() {
+				gameObject.spr.tilePosition.x = (Date.now()-start)/1000 * options.speed;
+			},
+		});
+		return gameObject;
+	};
+
+
+	// text helper
+	this.texttimeouts = [];
+	this.PText = (text, delay = 0, offset = 0) => {
+		const timeout = setTimeout(() => {
+			this.sfx('voiceDefault');
+			const t = this.Text(text, { x: player.transform.x, y: player.transform.y - 20 + offset, offset: this.texttimeouts.length * 100 });
+			t.scripts[1].container.children[0].anchor.x = 0.5;
+			this.add(t);
+		}, delay);
+		this.texttimeouts.push(timeout);
+	};
+
+	this.Area('empty', []);
+
+	// start
+	this.started=true;
+	this.scene.goto({ area: 'empty' });
+	requestAnimationFrame(() => {
+		this.scrim(1, 3000);
+		this.scene.dialogue.sprBg.alpha = 0;
+	});
+>>
+<<endif>>
+Turnip the Heat!
+>New game
+<<do
+	this.music('bgm');
+	this.show('').then(() => {this.goto('start2')});
+>>
+
+::start2
+<<do
+	this.tween(this.scene.border.display.container, 'alpha', 1, 5000);
+	this.tween(this.scene.dialogue.sprBg, 'alpha', 1, 5000, 0);;
+	this.goto('main');
+>>
+
+::close
+this should never render
+
+::choiceDefault
+...
+
+::interact
+interact
+
+
+::The End
+<<print new Array(60).fill('\u200B').join('')>>
+The End
+
+[[Restart|this.restart()]]
+
+::debug menu
+<<do
+	this.scene.strand.passages['area warp'] = { title: 'area warp', body: Object.keys(this.scene.areas).filter(i => i !== 'root').map(i => '[['+i+'|this.scene.goto({ area: "'+i+'" }); this.goto("close")]]').concat('[[back|this.back()]]').join('\n') };
+>>
+[[passage select>passage select]]
+[[language select]]
+[[area warp]]
+[[teleport|
+	const canvas = window.game.app.renderer.context.gl.canvas;
+	const verts = [];
+	const onClick = (event) => {
+		if (event.button !== 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		this.scene.player.canMove = false;
+		setTimeout(() => this.scene.player.canMove = true, 100);
+		const p = this.mousePos(event);
+		this.scene.player.setPosition(p.x, p.y);
+	};
+	const onContextMenu = (event) => {
+		event.preventDefault();
+		canvas.removeEventListener('pointerdown', onClick);
+		canvas.parentElement.style.cursor = 'inherit';
+	};
+	requestAnimationFrame(() => {
+		canvas.addEventListener('pointerdown', onClick);
+		canvas.addEventListener('contextmenu', onContextMenu, { once: true });
+	});
+	canvas.parentElement.style.cursor = 'crosshair';
+	this.goto('close');
+]]
+[[toggle debugPhysics|window.debugPhysics=!window.debugPhysics]]
+[[toggle player collision|this.scene.player.bodyCollision.body.isSensor = !this.scene.player.bodyCollision.body.isSensor]]
+[[drawing tools]]
+[[close]]
+[[back|this.back()]]
+
+::drawing tools
+[[get coords|
+	const canvas = window.game.app.renderer.context.gl.canvas;
+	const onClick = (event) => {
+		if (event.button !== 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		this.scene.player.canMove = false;
+		setTimeout(() => this.scene.player.canMove = true, 100);
+		const p = this.mousePos(event);
+		navigator.clipboard.writeText(`x: ${Math.floor(p.x)}, y: ${Math.floor(p.y)}`);
+		console.log(`x: ${Math.floor(p.x)}, y: ${Math.floor(p.y)}`);
+	};
+	const onContextMenu = (event) => {
+		event.preventDefault();
+		canvas.removeEventListener('pointerdown', onClick);
+		canvas.parentElement.style.cursor = 'inherit';
+	};
+	requestAnimationFrame(() => {
+		canvas.addEventListener('pointerdown', onClick);
+		canvas.addEventListener('contextmenu', onContextMenu, { once: true });
+	});
+	canvas.parentElement.style.cursor = 'crosshair';
+	this.goto('close');
+]]
+[[place props|
+	const canvas = window.game.app.renderer.context.gl.canvas;
+
+	const textures = () => Array.from(resources._cache.entries()).filter(([k,r]) => !k.match(/\.[2-9]\d*?$/) && !k.match(/^https?:/) && r?.baseTexture);
+
+	let tex = 0;
+	const spr = new this.PIXI.Sprite();
+	spr.anchor.x = 0.5;
+	spr.anchor.y = 1.0;
+	this.scene.container.addChild(spr);
+	const onWheel = (event) => {
+		if (!event.deltaY) return;
+		const d = Math.sign(event.deltaY);
+		tex += d;
+		const ts = textures();
+		if (tex < 0) tex = ts.length - 1;
+		tex %= ts.length;
+		console.log(ts[tex][0]);
+		spr.texture = ts[tex][1];
+	};
+	const onMove = (event) => {
+		const p = this.mousePos(event);
+		spr.x = Math.floor(p.x);
+		spr.y = Math.floor(p.y);
+	};
+	const placed = [];
+	let flip = false;
+	const onClick = (event) => {
+		if (event.button !== 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		this.scene.player.canMove = false;
+		setTimeout(() => this.scene.player.canMove = true, 100);
+		if (event.ctrlKey) {
+			if (placed.length) {
+				const p = placed.pop();
+				this.remove(p);
+			}
+			return;
+		}
+		if (event.shiftKey) {
+			flip = !flip;
+			spr.scale.x = flip ? -1 : 1;
+			return;
+		}
+		const p = this.mousePos(event);
+		const prop = this.Prop({ texture: textures()[tex][0], x: Math.floor(p.x), y: Math.floor(p.y), flip });
+		placed.push(prop);
+		this.add(prop);
+	};
+	const onContextMenu = (event) => {
+		event.preventDefault();
+		canvas.removeEventListener('wheel', onWheel);
+		canvas.removeEventListener('pointerdown', onClick);
+		canvas.removeEventListener('pointermove', onMove);
+		canvas.parentElement.style.cursor = 'inherit';
+		spr.destroy();
+		const str = placed.map(p => `this.Prop({ texture: '${p.spr.texture.textureCacheIds[1]}', x: ${Math.floor(p.transform.x)}, y: ${Math.floor(p.transform.y)}${p.spr.scale.x < 0 ? ', flip: true' : ''} }),`).join('\n');
+		navigator.clipboard.writeText(str);
+		console.log(str);
+	};
+	requestAnimationFrame(() => {
+		canvas.addEventListener('wheel', onWheel);
+		canvas.addEventListener('pointerdown', onClick);
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('contextmenu', onContextMenu, { once: true });
+	});
+	canvas.parentElement.style.cursor = 'crosshair';
+	this.goto('close');
+]]
+[[draw walls|
+	if (!window.debugPhysics) window.debugPhysics=true;
+	const canvas = window.game.app.renderer.context.gl.canvas;
+	const verts = [];
+	let poly;
+
+	const getPos = (event) => {
+		const p = this.mousePos(event);
+		return [Math.round(p.x),Math.round(p.y)];
+	};
+	const makePoly = () => {
+		if (poly) {
+			this.destroy(poly);
+		}
+		if (verts.length > 0) {
+			poly = this.Poly({ verts: verts.flat() }, { plugin: { interactive: true }});
+			// this.add(poly);
+		} else {
+			poly = null;
+		}
+	};
+
+	const onMove = (event) => {
+		if (event.ctrlKey) return;
+		event.preventDefault();
+		event.stopPropagation();
+		verts.pop();
+		verts.push(getPos(event));
+		makePoly();
+	};
+	const onClick = (event) => {
+		if (event.button !== 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		this.scene.player.canMove = false;
+		setTimeout(() => this.scene.player.canMove = true, 100);
+		if (event.ctrlKey) {
+			verts.pop();
+		} else {
+			verts.push(getPos(event));
+		}
+		makePoly();
+		canvas.addEventListener('pointermove', onMove);
+		canvas.addEventListener('pointerup', () => {
+			canvas.removeEventListener('pointermove', onMove);
+		}, { once: true });
+	};
+	const onContextMenu = (event) => {
+		event.preventDefault();
+		canvas.removeEventListener('pointerdown', onClick);
+		canvas.removeEventListener('pointermove', onMove);
+		canvas.parentElement.style.cursor = 'inherit';
+		if (poly) {
+			navigator.clipboard.writeText(`this.Poly({ verts: [${verts.map(i => i.join(',')).join(', ')}] }),`);
+			console.log(`this.Poly({ verts: [${verts.map(i => i.join(',')).join(', ')}] }),`);
+			this.scene.drop(poly);
+		}
+	};
+	requestAnimationFrame(() => {
+		canvas.addEventListener('pointerdown', onClick);
+		canvas.addEventListener('contextmenu', onContextMenu, { once: true });
+	});
+	canvas.parentElement.style.cursor = 'crosshair';
+	this.goto('close');
+]]
+[[back|this.back()]]
+
+::main
+<<do
+	this.texttimeouts.forEach((t) => clearTimeout(t));
+	this.texttimeouts.length = 0;
+
+	if (this.scene.areas.main) {
+		this.scene.areas.main.forEach(i => {
+			this.destroy(i);
+		});
+		if (this.scene.area === 'main') {
+			this.scene.goto({ area: 'empty' });
+		}
+	}
+	this.Area('main', [
+		this.PropParallax({ texture: 'bg_parallax', offset: -1000000, mult: 1 }),
+		this.Prop({ texture: 'test', scale: 0.1 }),
+	]);
+	this.scene.goto({ area: 'main' });
+	this.goto('close');
+>>
+
