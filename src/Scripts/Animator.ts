@@ -4,8 +4,9 @@ import { GameObject } from '../GameObject';
 import { Script } from './Script';
 
 export function getFrameCount(animation: string): number {
-	let count = resources.get<number>(`${animation}-count`) || 0;
-	if (count) return count;
+	let count = resources.get<number | undefined>(`${animation}-count`);
+	if (count !== undefined) return count;
+	count = 0;
 	while (resources.get<Texture>(`${animation}.${count + 1}`)?.baseTexture) {
 		++count;
 	}
