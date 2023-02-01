@@ -22,8 +22,8 @@ import { TweenManager } from './Tweens';
 import { removeFromArray, tex } from './utils';
 import { multiply } from './VMath';
 
-const playerSpeedX = 0.00225;
-const playerSpeedY = 0.0015;
+const playerSpeedX = 0.00725;
+const playerSpeedY = 0.0065;
 const framesFootstep = [0];
 
 export class Player extends Character {
