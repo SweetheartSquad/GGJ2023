@@ -1,5 +1,5 @@
 import { Body, Events, Runner } from 'matter-js';
-import { Container, DisplayObject, Graphics } from 'pixi.js';
+import { BitmapText, Container, DisplayObject, Graphics } from 'pixi.js';
 import { Area } from './Area';
 import { Border } from './Border';
 import { Camera } from './Camera';
@@ -241,6 +241,12 @@ export class GameScene {
 
 		this.border.display.container.alpha = 0;
 		this.strand.goto('start');
+
+		this.container.addChild(
+			new BitmapText('test', {
+				fontName: 'bmfont',
+			})
+		);
 
 		this.runner = Runner.create({
 			isFixed: true,
