@@ -129,6 +129,7 @@ export function tex(texture: string) {
 	let t = resources.get<Texture>(texture);
 	if (t) return t;
 	t = resources.get<Texture>(`${texture}.1`);
+	resources.set(texture, t); // cache for repeated calls
 	if (t) return t;
 	return resources.get<Texture>('error');
 }

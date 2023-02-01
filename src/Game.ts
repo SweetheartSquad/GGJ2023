@@ -120,6 +120,15 @@ export class Game {
 	private async reloadAssetsRaw() {
 		this.app.ticker.stop();
 
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		// eslint-disable-next-line no-underscore-dangle
+		(Array.from(resources._cache.keys()) as string[])
+			.filter((i) => i.endsWith('-count') || !i.startsWith('http'))
+			.forEach((i) => {
+				resources.remove(i);
+			});
+
 		function recurseChildren(
 			result: DisplayObject[],
 			obj: DisplayObject
