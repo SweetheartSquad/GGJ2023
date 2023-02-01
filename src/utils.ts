@@ -125,6 +125,13 @@ export function randRange(min: number, max: number) {
 	return Math.random() * (max - min) + min;
 }
 
+/** @returns random point, uniformly distributed inside circle */
+export function randCirc(radius: number) {
+	const r = radius * Math.sqrt(Math.random());
+	const a = randRange(0, Math.PI * 2);
+	return { x: r * Math.cos(a), y: r * Math.sin(a) };
+}
+
 export function tex(texture: string) {
 	let t = resources.get<Texture>(texture);
 	if (t) return t;
