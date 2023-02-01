@@ -75,6 +75,7 @@ export class UIFeed extends GameObject {
 	say(text: string) {
 		const t = new UIPost(
 			text,
+			'test',
 			this.sprBg.texture.width - (this.padding.right + this.padding.left)
 		);
 		this.containerPosts.addChild(t.display.container);
