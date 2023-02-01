@@ -22,6 +22,8 @@ textures/bg_parallax.png
 
 textures/waterSkirt.x2.png
 textures/testIdle.png
+textures/test2Idle.png
+textures/test3Idle.png
 
 textures/feedBg.png
 textures/postBg.png
