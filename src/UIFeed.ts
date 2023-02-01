@@ -72,10 +72,10 @@ export class UIFeed extends GameObject {
 		super.update();
 	}
 
-	say(text: string) {
+	say(text: string, avatar: string) {
 		const t = new UIPost(
 			text,
-			'testIdle',
+			avatar,
 			this.sprBg.texture.width - (this.padding.right + this.padding.left)
 		);
 		this.containerPosts.addChild(t.display.container);
@@ -88,7 +88,7 @@ export class UIFeed extends GameObject {
 		});
 		// shift old posts up
 		this.tweens.forEach((i) => {
-			TweenManager.abort(i);
+			TweenManager.finish(i);
 		});
 		this.tweens.length = 0;
 		this.posts.forEach((i) => {

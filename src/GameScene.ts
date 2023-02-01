@@ -1,11 +1,5 @@
 import { Body, Events, Runner } from 'matter-js';
-import {
-	BitmapText,
-	Container,
-	DisplayObject,
-	Graphics,
-	Sprite,
-} from 'pixi.js';
+import { Container, DisplayObject, Graphics, Sprite } from 'pixi.js';
 import { Area } from './Area';
 import { Border } from './Border';
 import { Camera } from './Camera';
@@ -23,7 +17,14 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { UIFeed } from './UIFeed';
-import { delay, randCirc, removeFromArray, tex } from './utils';
+import {
+	delay,
+	randCirc,
+	randItem,
+	randRange,
+	removeFromArray,
+	tex,
+} from './utils';
 import { add, V } from './VMath';
 
 let player: Player;
@@ -255,11 +256,19 @@ export class GameScene {
 		this.border.display.container.alpha = 0;
 		this.strand.goto('start');
 
-		this.container.addChild(
-			new BitmapText('test', {
-				fontName: 'bmfont',
-			})
-		);
+		// fake some npcs/feed posts
+		setInterval(() => {
+			const npc = randItem(['test', 'test2', 'test3']);
+			this.addGuestToPool(npc);
+			setTimeout(() => {
+				setInterval(() => {
+					this.feed.say(
+						'lorem ipsum dolor sit amet'.repeat(Math.round(randRange(1, 3))),
+						`${npc}Idle`
+					);
+				}, 3143);
+			}, randRange(0, 5000));
+		}, 5234);
 
 		this.runner = Runner.create({
 			isFixed: true,
