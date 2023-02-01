@@ -6,6 +6,7 @@ import {
 	DisplayObject,
 	extensions,
 	loadTxt,
+	NineSlicePlane,
 	ProgressCallback,
 	Renderer,
 	SCALE_MODES,
@@ -147,14 +148,20 @@ export class Game {
 				.filter((i) => i)
 				.map((i) => recurseChildren([], (i as Display).container))
 		);
+		type Textured = Sprite | NineSlicePlane;
 		const textures = objs
-			.map((i) => [i, (i as Sprite)?.texture?.textureCacheIds[1]])
-			.filter(([, id]) => id) as [Sprite, string][];
+			.map((i) => [i, (i as Textured)?.texture?.textureCacheIds[1]])
+			.filter(([, id]) => id) as [Textured, string][];
+		console.log(objs, textures);
 
 		await Assets.unloadBundle('resources');
 		await Assets.loadBundle('resources');
-		textures.forEach(([sprite, texId]) => {
-			sprite.texture = tex(texId);
+		textures.forEach(([textured, texId]) => {
+			if ((textured as NineSlicePlane).shader) {
+				(textured as NineSlicePlane).shader.uniforms.uSampler.baseTexture =
+					tex(texId).baseTexture;
+			}
+			textured.texture = tex(texId);
 		});
 		scene?.screenFilter.reload();
 		this.app.ticker.start();
