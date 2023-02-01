@@ -7,7 +7,7 @@ import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { Tween, TweenManager } from './Tweens';
 import { UIPost } from './UIPost';
-import { tex } from './utils';
+import { removeFromArray, tex } from './utils';
 
 export class UIFeed extends GameObject {
 	padding = {
@@ -78,6 +78,14 @@ export class UIFeed extends GameObject {
 			this.sprBg.texture.width - (this.padding.right + this.padding.left)
 		);
 		this.containerPosts.addChild(t.display.container);
+		// remove old off-screen posts
+		this.posts.forEach((i) => {
+			if (i.transform.y < -size.y) {
+				i.destroy();
+				removeFromArray(this.posts, i);
+			}
+		});
+		// shift old posts up
 		this.tweens.forEach((i) => {
 			TweenManager.abort(i);
 		});
