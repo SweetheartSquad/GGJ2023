@@ -88,7 +88,7 @@ export class UIFeed extends GameObject {
 		});
 		// shift old posts up
 		this.tweens.forEach((i) => {
-			TweenManager.abort(i);
+			TweenManager.finish(i);
 		});
 		this.tweens.length = 0;
 		this.posts.forEach((i) => {
