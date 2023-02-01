@@ -21,3 +21,7 @@ textures/guyRun.x2.png
 textures/bg_parallax.png
 
 textures/test.png
+
+
+font/bmfont.txt
+font/bmfont.x1.png
