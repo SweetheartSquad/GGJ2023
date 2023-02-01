@@ -1,5 +1,5 @@
 info face="bmfont" size=8
-common lineHeight=10 base=8 pages=1 width=8 height=8 xoffset=0 yoffset=0 xadvance=8
+common lineHeight=10 base=8
 page id=0 file="bmfont.1.png"
 chars count=255
 char page=0 width=8 height=8 xoffset=0 yoffset=0 xadvance=8 id=0   x=0    y=0
