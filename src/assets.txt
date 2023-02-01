@@ -20,7 +20,7 @@ textures/guyRun.x4.png
 
 textures/bg_parallax.png
 
-textures/test.png
+textures/testIdle.png
 
 textures/feedBg.png
 textures/postBg.png
