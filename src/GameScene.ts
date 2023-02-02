@@ -267,7 +267,7 @@ export class GameScene {
 			setTimeout(() => {
 				setInterval(() => {
 					this.feed.say(
-						'lorem ipsum dolor sit amet'.repeat(Math.round(randRange(1, 3))),
+						'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG the quick brown fox jumps over the lazy dog'.repeat(Math.round(randRange(1, 3))),
 						`${npc}Idle`
 					);
 				}, 3143);
