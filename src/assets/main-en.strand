@@ -322,7 +322,7 @@ The End
 		}
 	}
 	this.Area('main', [
-		this.Prop({ texture: 'groundGrass', offset: -1000000}),
+		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 		this.Prop({ texture: 'test', scale: 0.1 }),
 
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -10000 }),
