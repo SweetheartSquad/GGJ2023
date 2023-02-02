@@ -385,7 +385,13 @@ export class GameScene {
 	}
 
 	addGuestToPool(guest: string) {
-		const n = new NPC({ body: guest, shadow: false, x: 0, y: 0, roam: 100 });
+		const n = new NPC({
+			body: guest,
+			shadow: false,
+			x: 115,
+			y: -716,
+			roam: 400,
+		});
 		const g = new Graphics();
 		const skirt = new Sprite(tex('waterSkirt'));
 		g.beginFill(0xff0000);
@@ -409,6 +415,8 @@ export class GameScene {
 		skirt.scale.y = skirt.scale.x;
 		n.spr.mask = g;
 		const pos = randCirc(100);
+		pos.x += 115;
+		pos.y -= 716;
 		n.setPosition(pos.x, pos.y);
 		this.take(n);
 		Area.mount([n], this.container);

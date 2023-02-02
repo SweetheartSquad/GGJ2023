@@ -325,7 +325,7 @@ The End
 		this.Prop({ texture: 'groundGrass', offset: -1000000}),
 		this.Prop({ texture: 'test', scale: 0.1 }),
 
-		this.Prop({ texture: 'hottub', x: 212, y: -204 }),
+		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -10000 }),
 	]);
 	this.scene.goto({ area: 'main' });
 	this.goto('close');
