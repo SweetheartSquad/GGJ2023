@@ -258,7 +258,10 @@ export class GameScene {
 		this.strand.goto('start');
 
 		// fake some npcs/feed posts
+		let count = 0;
 		setInterval(() => {
+			if (count > 10) return;
+			++count;
 			const npc = randItem(['test', 'test2', 'test3']);
 			this.addGuestToPool(npc);
 			setTimeout(() => {
