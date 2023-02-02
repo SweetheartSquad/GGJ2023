@@ -3,6 +3,7 @@ import { Container, DisplayObject, Graphics, Sprite } from 'pixi.js';
 import { Area } from './Area';
 import { Border } from './Border';
 import { Camera } from './Camera';
+import { size } from './config';
 import { DEBUG } from './debug';
 import { game, resources } from './Game';
 import { GameObject } from './GameObject';
@@ -348,14 +349,15 @@ export class GameScene {
 		this.camera.display.container.scale.x =
 			this.camera.display.container.scale.y = 1 + p * 2;
 
-		if (this.interactionFocus) {
-			let focusAmt = 0.4;
-			if (this.dialogue.isOpen) focusAmt = 0.7;
-			player.camPoint.y +=
-				(this.interactionFocus.y - player.transform.y) * focusAmt;
-			player.camPoint.x +=
-				(this.interactionFocus.x - player.transform.x) * focusAmt;
-		}
+		// if (this.interactionFocus) {
+		this.interactionFocus = { x: 0, y: -size.y / 2 };
+		const focusAmt = 0.9;
+		// if (this.dialogue.isOpen) focusAmt = 0.7;
+		player.camPoint.y +=
+			(this.interactionFocus.y - player.transform.y) * focusAmt;
+		player.camPoint.x +=
+			(this.interactionFocus.x - player.transform.x) * focusAmt;
+		// }
 
 		this.screenFilter.update();
 
@@ -385,7 +387,13 @@ export class GameScene {
 	}
 
 	addGuestToPool(guest: string) {
-		const n = new NPC({ body: guest, shadow: false, x: 0, y: 0, roam: 100 });
+		const n = new NPC({
+			body: guest,
+			shadow: false,
+			x: 115,
+			y: -716,
+			roam: 400,
+		});
 		const g = new Graphics();
 		const skirt = new Sprite(tex('waterSkirt'));
 		g.beginFill(0xff0000);
@@ -409,6 +417,8 @@ export class GameScene {
 		skirt.scale.y = skirt.scale.x;
 		n.spr.mask = g;
 		const pos = randCirc(100);
+		pos.x += 115;
+		pos.y -= 716;
 		n.setPosition(pos.x, pos.y);
 		this.take(n);
 		Area.mount([n], this.container);
