@@ -2,14 +2,13 @@
 import browserLang from 'browser-lang';
 import ease from 'eases';
 import * as PIXI from 'pixi.js';
-import { ITextStyle, Sprite, Text } from 'pixi.js';
+import { BitmapText, IBitmapTextStyle, Sprite } from 'pixi.js';
 import Strand from 'strand-core';
 import { Area } from './Area';
 import { music, sfx } from './Audio';
 import { AudioSpatial } from './AudioSpatial';
 import { Block } from './Block';
 import { size } from './config';
-import { fontIngame } from './font';
 import { resources } from './Game';
 import { GameObject } from './GameObject';
 import { GameScene } from './GameScene';
@@ -259,7 +258,7 @@ export class StrandE extends Strand {
 		}: {
 			x?: number;
 			y?: number;
-			font?: Partial<ITextStyle>;
+			font?: Partial<IBitmapTextStyle>;
 			offset?: number;
 		} = {}
 	) {
@@ -270,7 +269,7 @@ export class StrandE extends Strand {
 		go.scripts.push(transform);
 		const display = new Display(go);
 		go.scripts.push(display);
-		const text = new Text(str, { ...fontIngame, ...font });
+		const text = new BitmapText(str, { fontName: 'bmfont', ...font });
 		text.cacheAsBitmap = true;
 		display.container.addChild(text);
 		go.init();

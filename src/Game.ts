@@ -8,15 +8,12 @@ import {
 	loadTxt,
 	NineSlicePlane,
 	ProgressCallback,
-	Renderer,
 	SCALE_MODES,
 	settings,
 	Sprite,
-	Text,
 	utils,
 } from 'pixi.js';
 import { size } from './config';
-import * as fonts from './font';
 import { assets, enableHotReload, mainen } from './GameHotReload';
 import { getActiveScene, init } from './main';
 import { Display } from './Scripts/Display';
@@ -107,15 +104,6 @@ export class Game {
 			.filter((i) => !resources.get(i))
 			.join(', ');
 		if (failedToLoad) throw new Error(`Failed to load: ${failedToLoad}`);
-
-		// preload fonts
-		Object.values(fonts).forEach((i) => {
-			const t = new Text('preload', i);
-			t.alpha = 0;
-			this.app.stage.addChild(t);
-			this.app.stage.render(this.app.renderer as Renderer);
-			this.app.stage.removeChild(t);
-		});
 	}
 
 	private async reloadAssetsRaw() {

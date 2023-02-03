@@ -80,7 +80,23 @@
 >>
 <<endif>>
 Turnip the Heat!
->New game
+[[New game]]
+[[About]]
+
+::About
+Made by
+
+Michael,
+Sean,
+IAN,
+and Ryan
+
+of SweetHeart Squad
+
+for Global Game Jam 2023!
+[[Back|this.back()]]
+
+::New game
 <<do
 	this.music('bgm');
 	this.show('').then(() => {this.goto('start2')});
