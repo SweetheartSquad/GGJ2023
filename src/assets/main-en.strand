@@ -381,6 +381,17 @@ The End
 			p.transform.x += x;
 			p.transform.y += y*0.75;
 		}, }),
+		this.Emitter({ rate: 50, x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
+			const {x,y} = this.randCirc(25);
+			p.transform.y += y*0.5;
+			p.transform.x += x*0.5;
+			this.tween(p.display.container.scale, 'x', 2, 500);
+			this.tween(p.display.container.scale, 'y', 1.25, 500);
+			this.tween(p.display.container, 'alpha', 0, 500);
+			this.tween(p.transform, 'y', p.transform.y + y, 500);
+			this.tween(p.transform, 'x', p.transform.x + x, 500);
+		}, }),
+		
 
 		...this.Station({ type: 'Test', in: { x: -229, y: -282 }, out: { x: -400, y: -400 } }),
 		itemFollower,
