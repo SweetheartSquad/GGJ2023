@@ -7,7 +7,7 @@ import { Tween, TweenManager } from './Tweens';
 import { randRange, tex } from './utils';
 
 const padding = {
-	top: 5,
+	top: 20,
 	bottom: 15,
 	left: 5,
 	right: 5,
