@@ -132,6 +132,34 @@ export function randCirc(radius: number) {
 	return { x: r * Math.cos(a), y: r * Math.sin(a) };
 }
 
+/**
+ * Modifies a values between 0-100,
+ * weighted for diminishing returns and losses
+ * the closer you are to the extremes
+ *
+ * e.g.
+ * ```ts
+ * fairmath( 0,  50); // 50
+ * fairmath(50,  50); // 75
+ * fairmath(75,  50); // 88
+ * fairmath( 0, -50); //  0
+ * fairmath(50, -50); // 25
+ * fairmath(75, -50); // 38
+ * ```
+ *
+ * @param input original value (0 to 100)
+ * @param delta "percent" to change (-100 to 100)
+ * @returns "fairly" adjusted value
+ */
+export function fairmath(input: number, delta: number) {
+	input = clamp(0, input, 100);
+	delta = clamp(-100, delta, 100);
+	if (delta < 0) {
+		return Math.round(input + input * (delta / 100));
+	}
+	return Math.round(input + (100 - input) * (delta / 100));
+}
+
 export function tex(texture: string) {
 	let t = resources.get<Texture>(texture);
 	if (t) return t;
