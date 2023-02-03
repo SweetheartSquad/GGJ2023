@@ -36,6 +36,7 @@ export class Emitter extends GameObject {
 		this.scripts.push((this.transform = new Transform(this)));
 		this.transform.x = x;
 		this.transform.y = y;
+		this.lastSpawn = game.app.ticker.lastTime;
 		this.init();
 	}
 
@@ -47,12 +48,12 @@ export class Emitter extends GameObject {
 	update(): void {
 		super.update();
 		const t = game.app.ticker.lastTime;
-		if (t > this.lastSpawn + this.rate) {
+		while (t > this.lastSpawn + this.rate) {
 			const p = new Poof(this.initialProps);
 			p.transform.x += this.transform.x;
 			p.transform.y += this.transform.y;
 			this.spawn?.(p);
-			this.lastSpawn = t;
+			this.lastSpawn += this.rate;
 		}
 	}
 }
