@@ -5,15 +5,12 @@ import {
 	Rectangle,
 	Sprite,
 	Text,
-	TextMetrics,
-	TextStyle,
 	Texture,
 	utils,
 } from 'pixi.js';
 import Strand from 'strand-core';
 import { sfx } from './Audio';
 import { size } from './config';
-import { fontDialogue } from './font';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { KEYS, keys } from './input-keys';
@@ -33,10 +30,10 @@ const exclamationInflectionRange = 10;
 
 export class UIDialogue extends GameObject {
 	padding = {
-		top: 28,
-		bottom: 4,
-		left: 94,
-		right: 4,
+		top: 100,
+		bottom: 100,
+		left: 100,
+		right: 800,
 	};
 
 	sprScrim: Sprite;
@@ -57,13 +54,13 @@ export class UIDialogue extends GameObject {
 
 	isOpen: boolean;
 
-	textText: Text;
+	textText: BitmapText;
 
 	textPrompt: BitmapText & utils.EventEmitter;
 
 	fnPrompt?: () => void;
 
-	choices: (Text & utils.EventEmitter)[];
+	choices: (BitmapText & utils.EventEmitter)[];
 
 	selected: number | undefined;
 
@@ -136,7 +133,10 @@ export class UIDialogue extends GameObject {
 		this.posTime = 0;
 		this.posDelay = 2;
 		this.selected = undefined;
-		this.textText = new Text(this.strText, { ...fontDialogue });
+		this.textText = new BitmapText(this.strText, {
+			fontName: 'bmfont',
+			maxWidth: this.sprBg.width - this.padding.left - this.padding.right,
+		});
 		this.textPrompt = new BitmapText(this.strPrompt, { fontName: 'bmfont' });
 		this.textPrompt.alpha = 0;
 		this.textPrompt.x = size.x / 2;
@@ -165,12 +165,8 @@ export class UIDialogue extends GameObject {
 		this.containerChoices.addChild(this.sprChoices);
 		this.containerChoices.x = this.padding.left;
 		this.choices = [];
-		window.text = this.textText;
 		this.textText.y = -this.sprBg.height + this.padding.top;
 		this.textText.x = this.padding.left;
-		this.textText.style.wordWrap = true;
-		this.textText.style.wordWrapWidth =
-			this.sprBg.width - this.padding.left - this.padding.right;
 
 		this.display.container.addChild(this.sprScrim);
 		this.display.container.addChild(this.sprBg);
@@ -329,16 +325,7 @@ export class UIDialogue extends GameObject {
 		text = text.replace(/(,"?)(\s)/g, '$1\u200B\u200B\u200B\u200B$2');
 		this.selected = undefined;
 
-		this.strText = TextMetrics.measureText(
-			text,
-			// needed bc `measureText` doesn't allow a partial, but the style might be
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			this.textText.style || new TextStyle(fontDialogue),
-			true
-		)
-			.lines.join('\n')
-			.trimEnd();
+		this.strText = text.trimEnd();
 
 		this.textText.text = '';
 		this.display.container.accessibleHint = text;
@@ -347,9 +334,9 @@ export class UIDialogue extends GameObject {
 		this.choices = (actions || []).map((i, idx, a) => {
 			const choiceText = i.text || getActiveScene()?.t('choiceDefault');
 			const strText = a.length > 1 ? `${idx + 1}. ${choiceText}` : choiceText;
-			const t = new Text(strText, {
-				...this.textText.style,
-				wordWrapWidth: (this.textText.style.wordWrapWidth || 0) - 2,
+			const t = new BitmapText(strText || '', {
+				fontName: 'bmfont',
+				maxWidth: (this.textText.maxWidth || 0) - 2,
 			});
 			t.accessible = true;
 			t.accessibleHint = strText;
@@ -382,13 +369,11 @@ export class UIDialogue extends GameObject {
 			return t;
 		});
 		this.containerChoices.y =
-			this.textText.height - this.containerChoices.height;
+			this.textText.height - this.containerChoices.height - this.padding.bottom;
 
 		this.containerChoices.alpha = 0.0;
-		this.sprChoices.width =
-			this.containerChoices.width - (fontDialogue.padding ?? 0) * 2;
-		this.sprChoices.height =
-			this.containerChoices.height - (fontDialogue.padding ?? 0) * 2;
+		this.sprChoices.width = this.containerChoices.width;
+		this.sprChoices.height = this.containerChoices.height;
 		this.sprChoices.x = 0;
 		this.sprChoices.y = 0;
 		this.sprChoices.width += Math.abs(this.sprChoices.x) * 2;

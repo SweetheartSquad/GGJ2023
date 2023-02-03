@@ -267,9 +267,7 @@ export class GameScene {
 			setTimeout(() => {
 				setInterval(() => {
 					this.feed.say(
-						'HARDCORE! TO THE MEGA! '.repeat(
-							Math.round(randRange(1, 3))
-						),
+						'HARDCORE! TO THE MEGA! '.repeat(Math.round(randRange(1, 3))),
 						`${npc}Idle`
 					);
 				}, 3143);
@@ -348,11 +346,6 @@ export class GameScene {
 			this.container.addChild(this.physicsDebug.display.container);
 		}
 		this.container.addChild(this.graphics);
-
-		// adjust camera based on dialogue state
-		const p = this.dialogue.progress();
-		this.camera.display.container.scale.x =
-			this.camera.display.container.scale.y = 1 + p * 2;
 
 		// if (this.interactionFocus) {
 		this.interactionFocus = { x: 0, y: -size.y / 2 };
