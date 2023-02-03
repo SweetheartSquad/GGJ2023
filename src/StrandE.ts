@@ -31,6 +31,7 @@ import {
 	clamp,
 	delay,
 	fairmath,
+	lerp,
 	mousePos,
 	randCirc,
 	shuffle,
@@ -61,6 +62,8 @@ export class StrandE extends Strand {
 	tex = tex;
 
 	clamp = clamp;
+
+	lerp = lerp;
 
 	mousePos = mousePos;
 
