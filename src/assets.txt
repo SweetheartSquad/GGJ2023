@@ -13,6 +13,7 @@ textures/hottub.png
 textures/furnace.png
 textures/furnaceBackBlack.png
 textures/woodStation.png
+textures/refreshmentTable.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
@@ -45,4 +46,3 @@ textures/fire.x4.png
 textures/stationTestIn.png
 textures/stationTestOut.png
 textures/stationTestIdle.png
-
