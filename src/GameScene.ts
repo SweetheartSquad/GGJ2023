@@ -348,6 +348,7 @@ export class GameScene {
 			(this.interactionFocus.y - player.transform.y) * focusAmt;
 		player.camPoint.x +=
 			(this.interactionFocus.x - player.transform.x) * focusAmt;
+		player.camPoint.x += this.feed.display.container.width / 2;
 		// }
 
 		this.screenFilter.update();
