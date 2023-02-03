@@ -75,13 +75,6 @@ export class GameScene {
 
 	constructor() {
 		this.player = player = new Player({});
-		player.updateCamPoint = () => {
-			Player.prototype.updateCamPoint.call(player);
-			const p = this.dialogue.progress();
-			player.camPoint.y +=
-				(this.dialogue.height() / 2 / this.camera.display.container.scale.y) *
-				p;
-		};
 		this.container.addChild(player.display.container);
 		this.container.addChild(player.displayShadow.container);
 
