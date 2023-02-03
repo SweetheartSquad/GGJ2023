@@ -359,6 +359,12 @@ The End
 		hunger: 0,
 		thirst: 0,
 	};
+	setInterval(() => {
+		this.stats.heat = this.fairmath(this.stats.heat, -1);
+		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
+		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
+	}, 1000);
+
 	const spawnInPool = (p) => {
 			const {x,y} = this.randCirc(400);
 			p.transform.x += x;
