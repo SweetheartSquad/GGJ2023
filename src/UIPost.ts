@@ -30,10 +30,10 @@ export class UIPost extends GameObject {
 		const texture = tex('postBg');
 		const sprBg = new NineSlicePlane(
 			texture,
-			texture.width / 3,
-			texture.height / 3,
-			texture.width / 3,
-			texture.height / 3
+			texture.width / 2,
+			texture.height / 2,
+			texture.width / 2,
+			texture.height / 2
 		);
 		sprBg.name = 'postBg';
 		const sprAvatar = new Sprite(tex(avatar));
