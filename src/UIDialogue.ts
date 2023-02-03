@@ -1,6 +1,6 @@
 import { cubicIn, cubicOut } from 'eases';
-import type { utils } from 'pixi.js';
 import {
+	BitmapText,
 	Container,
 	Rectangle,
 	Sprite,
@@ -8,11 +8,12 @@ import {
 	TextMetrics,
 	TextStyle,
 	Texture,
+	utils,
 } from 'pixi.js';
 import Strand from 'strand-core';
 import { sfx } from './Audio';
 import { size } from './config';
-import { fontDialogue, fontPrompt } from './font';
+import { fontDialogue } from './font';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { KEYS, keys } from './input-keys';
@@ -58,7 +59,7 @@ export class UIDialogue extends GameObject {
 
 	textText: Text;
 
-	textPrompt: Text & utils.EventEmitter;
+	textPrompt: BitmapText & utils.EventEmitter;
 
 	fnPrompt?: () => void;
 
@@ -136,7 +137,7 @@ export class UIDialogue extends GameObject {
 		this.posDelay = 2;
 		this.selected = undefined;
 		this.textText = new Text(this.strText, { ...fontDialogue });
-		this.textPrompt = new Text(this.strPrompt, fontPrompt);
+		this.textPrompt = new BitmapText(this.strPrompt, { fontName: 'bmfont' });
 		this.textPrompt.alpha = 0;
 		this.textPrompt.x = size.x / 2;
 		this.textPrompt.y = 10;
@@ -202,13 +203,23 @@ export class UIDialogue extends GameObject {
 		this.textPrompt.alpha = lerp(
 			this.textPrompt.alpha,
 			shouldPrompt ? 1 : 0,
-			0.1
+			0.3
 		);
 		this.display.container.interactive = this.isOpen;
 		this.textPrompt.interactive = shouldPrompt;
 		this.textPrompt.cursor = shouldPrompt ? 'pointer' : 'auto';
 		this.textPrompt.tabIndex = shouldPrompt ? 0 : undefined;
 		const input = getInput();
+
+		const s = getActiveScene();
+		if (s) {
+			const p = s.container.toGlobal(s.player.transform);
+			this.textPrompt.x = p.x;
+			this.textPrompt.y =
+				p.y -
+				s.player.display.container.height -
+				(Math.sin(game.app.ticker.lastTime / 100) + 1) * 10;
+		}
 
 		if (!this.isOpen && input.interact) {
 			this.textPrompt.emit('pointerdown');

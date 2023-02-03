@@ -61,7 +61,7 @@ export class Character extends GameObject {
 	expression: string;
 
 	constructor({
-		body = 'guy',
+		body = '',
 		expression = '',
 		x = 0,
 		y = 0,
