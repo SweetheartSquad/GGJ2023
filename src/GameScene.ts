@@ -1,5 +1,11 @@
 import { Body, Events, Runner } from 'matter-js';
-import { Container, DisplayObject, Graphics, Sprite } from 'pixi.js';
+import {
+	BitmapText,
+	Container,
+	DisplayObject,
+	Graphics,
+	Sprite,
+} from 'pixi.js';
 import { Area } from './Area';
 import { Border } from './Border';
 import { Camera } from './Camera';
@@ -72,6 +78,8 @@ export class GameScene {
 	runner: Runner;
 
 	physicsDebug?: PhysicsDebug;
+
+	statsDebug?: BitmapText;
 
 	constructor() {
 		this.player = player = new Player({});
@@ -267,6 +275,11 @@ export class GameScene {
 			}, randRange(0, 5000));
 		}, 5234);
 
+		if (DEBUG) {
+			this.statsDebug = new BitmapText('', { fontName: 'bmfont' });
+			game.app.stage.addChild(this.statsDebug);
+		}
+
 		this.runner = Runner.create({
 			isFixed: true,
 		});
@@ -322,6 +335,19 @@ export class GameScene {
 				this.strand.goto('close');
 			} else if (getInput().menu) {
 				this.strand.goto('debug menu');
+			}
+
+			const { stats } = this.strand as unknown as {
+				stats: Maybe<{ [key: string]: number }>;
+			};
+			if (this.statsDebug && stats) {
+				this.statsDebug.text = '';
+				this.statsDebug.text = (Object.entries(stats) as [string, number][])
+					.map(
+						([key, value]) =>
+							`${key.padStart(8, ' ')}: ${value.toFixed(2).padStart(6, '0')}`
+					)
+					.join('\n');
 			}
 		}
 

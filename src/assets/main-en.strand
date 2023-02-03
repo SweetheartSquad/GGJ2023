@@ -353,6 +353,12 @@ The End
 	itemFollower.spr.pivot.y = this.scene.player.display.container.height;
 	itemFollower.speed = 8;
 	this.itemFollower = itemFollower;
+
+	this.stats = {
+		heat: 0,
+		hunger: 0,
+		thirst: 0,
+	};
 	const spawnInPool = (p) => {
 			const {x,y} = this.randCirc(400);
 			p.transform.x += x;
