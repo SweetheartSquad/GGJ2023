@@ -4,7 +4,7 @@ import { GameObject } from './GameObject';
 import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { Tween, TweenManager } from './Tweens';
-import { tex } from './utils';
+import { randRange, tex } from './utils';
 
 const padding = {
 	top: 5,
@@ -30,10 +30,10 @@ export class UIPost extends GameObject {
 		const texture = tex('postBg');
 		const sprBg = new NineSlicePlane(
 			texture,
-			texture.width / 3,
-			texture.height / 3,
-			texture.width / 3,
-			texture.height / 3
+			texture.width / 2,
+			texture.height / 2,
+			texture.width / 2,
+			texture.height / 2
 		);
 		sprBg.name = 'postBg';
 		const sprAvatar = new Sprite(tex(avatar));
@@ -48,12 +48,22 @@ export class UIPost extends GameObject {
 		avatarBg.drawCircle(0, 0, avatarSize / 2);
 		avatarBg.endFill();
 
-		const t = new BitmapText(text, {
+		const t = new BitmapText(`${text}\n `, {
 			fontName: 'bmfont',
 			maxWidth: width - (padding.left + padding.right + gap + avatarSize),
 		});
+		const t2 = new BitmapText(
+			` ${Math.floor(randRange(1, 99))}    ${Math.floor(randRange(1, 99))}`,
+			{
+				fontName: 'bmfont',
+				maxWidth: width - (padding.left + padding.right + gap + avatarSize),
+				fontSize: 16,
+			}
+		);
 		t.anchor.x = 0;
 		t.anchor.y = 0;
+		t2.anchor.x = 0;
+		t2.anchor.y = 1;
 		sprBg.width = width;
 		sprBg.height =
 			Math.max(t.height, mask.height) + padding.top + padding.bottom;
@@ -62,6 +72,7 @@ export class UIPost extends GameObject {
 		this.display.container.accessibleHint = text;
 		this.display.container.addChild(sprBg);
 		sprBg.addChild(t);
+		sprBg.addChild(t2);
 		sprBg.addChild(mask);
 		sprBg.addChild(avatarBg);
 		sprBg.addChild(sprAvatar);
@@ -71,6 +82,8 @@ export class UIPost extends GameObject {
 		avatarBg.y = mask.y = padding.top + avatarSize / 2;
 		t.x = sprAvatar.x + sprAvatar.width + gap;
 		t.y = padding.top;
+		t2.x = sprAvatar.x + sprAvatar.width + gap;
+		t2.y = sprBg.height - padding.bottom;
 		this.display.container.pivot.y = this.display.container.height;
 		this.display.container.cacheAsBitmap = true;
 
