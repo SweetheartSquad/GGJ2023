@@ -9,6 +9,7 @@ import { music, sfx } from './Audio';
 import { AudioSpatial } from './AudioSpatial';
 import { Block } from './Block';
 import { size } from './config';
+import { Emitter } from './Emitter';
 import { resources } from './Game';
 import { GameObject } from './GameObject';
 import { GameScene } from './GameScene';
@@ -242,6 +243,10 @@ export class StrandE extends Strand {
 
 	Poof(...args: ConstructorParameters<typeof Poof>) {
 		return new Poof(...args);
+	}
+
+	Emitter(...args: ConstructorParameters<typeof Emitter>) {
+		return new Emitter(...args);
 	}
 
 	PropParallax(...args: ConstructorParameters<typeof PropParallax>) {
