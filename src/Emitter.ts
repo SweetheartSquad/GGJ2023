@@ -48,7 +48,9 @@ export class Emitter extends GameObject {
 	update(): void {
 		super.update();
 		const t = game.app.ticker.lastTime;
-		while (t > this.lastSpawn + this.rate) {
+		const maxPerFrame = 10;
+		let count = 0;
+		while (t > this.lastSpawn + this.rate && ++count < maxPerFrame) {
 			const p = new Poof(this.initialProps);
 			p.transform.x += this.transform.x;
 			p.transform.y += this.transform.y;
