@@ -341,11 +341,15 @@ The End
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -10000 }),
+
+		// wood and fire related
 		this.Prop({ texture: 'furnace', x: -229, y: -282 }),
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -100 }),
 
 		...this.Station({ type: 'Test', in: { x: -229, y: -282 }, out: { x: -400, y: -400 } }),
 		itemFollower,
+
+		this.Prop({ texture: 'woodStation', x: -953, y: -1039 }),
 	]);
 	this.scene.goto({ area: 'main' });
 	this.goto('close');

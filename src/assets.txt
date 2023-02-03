@@ -12,6 +12,7 @@ textures/groundGrass.png
 textures/hottub.png
 textures/furnace.png
 textures/furnaceBackBlack.png
+textures/woodStation.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
