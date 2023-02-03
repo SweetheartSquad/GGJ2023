@@ -338,4 +338,35 @@ export class StrandE extends Strand {
 			);
 		});
 	}
+
+	Station(options: {
+		type: string;
+		in: Omit<ConstructorParameters<typeof Prop>[0], 'texture'>;
+		out: Omit<ConstructorParameters<typeof Prop>[0], 'texture'>;
+	}) {
+		return [
+			new Prop({
+				texture: `station${options.type}In`,
+				...options.in,
+			}),
+			new Prop({
+				texture: `station${options.type}Out`,
+				...options.out,
+			}),
+			new NPC({
+				passage: 'stationIn',
+				bodyCollision: { isSensor: true },
+				x: options.in.x ?? 0,
+				y: options.in.y ?? 0,
+				bodySensor: { plugin: { label: 'grab', type: options.type } },
+			}),
+			new NPC({
+				passage: 'stationOut',
+				bodyCollision: { isSensor: true },
+				x: options.out.x ?? 0,
+				y: options.out.y ?? 0,
+				bodySensor: { plugin: { label: 'dump', type: options.type } },
+			}),
+		];
+	}
 }

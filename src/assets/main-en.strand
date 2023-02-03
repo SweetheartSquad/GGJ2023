@@ -102,6 +102,12 @@ this should never render
 ::interact
 interact
 
+::grab
+grab
+
+::dump
+dump
+
 
 ::The End
 <<print new Array(60).fill('\u200B').join('')>>
@@ -321,14 +327,42 @@ The End
 			this.scene.goto({ area: 'empty' });
 		}
 	}
+	// setup rubble follower
+	const itemFollower = this.Npc({ shadow: false, body: '', x: 50, y: 50, bodyCollision: { isSensor: true } });
+	this.scene.player.follow(itemFollower);
+	itemFollower.display.container.visible = false;
+	itemFollower.roam.range[0] = 0;
+	itemFollower.roam.range[1] = 0;
+	itemFollower.roam.changeOffset = Infinity;
+	itemFollower.roam.offset.y = -this.scene.player.display.container.height;
+	itemFollower.speed = 8;
+	this.itemFollower = itemFollower;
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -10000 }),
 		this.Prop({ texture: 'furnace', x: -229, y: -282 }),
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -100 }),
+
+		...this.Station({ type: 'Test', in: { x: -229, y: -282 }, out: { x: -400, y: -400 } }),
+		itemFollower,
 	]);
 	this.scene.goto({ area: 'main' });
 	this.goto('close');
 >>
 
+::stationIn
+<<do
+	this.itemFollower.body = `station${this.gameObject.bodySensor.body.plugin.type}`;
+	this.itemFollower.animatorBody.setAnimation(`${this.itemFollower.body}Idle`);
+	this.itemFollower.display.container.visible = true;
+	this.goto('close');
+>>
+
+::stationOut
+<<do
+	this.itemFollower.body = '';
+	this.itemFollower.animatorBody.setAnimation(`error`);
+	this.itemFollower.display.container.visible = false;
+	this.goto('close');
+>>

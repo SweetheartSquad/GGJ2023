@@ -204,7 +204,7 @@ export class GameScene {
 				this.interactionFocus = focus
 					? add(top.position, { x: 0, y: 0, ...focus })
 					: top.position;
-				this.dialogue.prompt(`( ${this.t(label).toUpperCase()} )`, () => {
+				this.dialogue.prompt(this.t(label).toUpperCase(), () => {
 					this.strand.gameObject = gameObject;
 					this.strand.goto(passage);
 				});
@@ -267,7 +267,9 @@ export class GameScene {
 			setTimeout(() => {
 				setInterval(() => {
 					this.feed.say(
-						'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG the quick brown fox jumps over the lazy dog'.repeat(Math.round(randRange(1, 3))),
+						'THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG the quick brown fox jumps over the lazy dog'.repeat(
+							Math.round(randRange(1, 3))
+						),
 						`${npc}Idle`
 					);
 				}, 3143);

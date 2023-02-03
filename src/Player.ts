@@ -51,6 +51,7 @@ export class Player extends Character {
 		bodySensor?: Partial<IChamferableBodyDefinition>;
 	}) {
 		super({
+			body: 'guy',
 			bodyCollision: {
 				...bodyCollision,
 				restitution: 0.8,
