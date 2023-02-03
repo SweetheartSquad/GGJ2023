@@ -32,6 +32,7 @@ textures/test3Idle.png
 
 textures/feedBg.png
 textures/postBg.png
+textures/instayamLogo.png
 
 font/bmfont.txt
 font/bmfont.x1.png
@@ -45,6 +46,7 @@ textures/smallBubble3.x3.png
 
 textures/smoke.png
 textures/fire.x4.png
+
 textures/stationTestIn.png
 textures/stationTestOut.png
 textures/stationTestIdle.png
