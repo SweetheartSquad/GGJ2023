@@ -155,9 +155,9 @@ export function fairmath(input: number, delta: number) {
 	input = clamp(0, input, 100);
 	delta = clamp(-100, delta, 100);
 	if (delta < 0) {
-		return Math.round(input + input * (delta / 100));
+		return input + input * (delta / 100);
 	}
-	return Math.round(input + (100 - input) * (delta / 100));
+	return input + (100 - input) * (delta / 100);
 }
 
 export function tex(texture: string) {
