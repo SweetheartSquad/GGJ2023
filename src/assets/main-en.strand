@@ -329,7 +329,8 @@ The End
 		// wood and fire related
 		this.Prop({ texture: 'furnace', x: -229, y: -282 }),
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -100 }),
-		this.Prop({ texture: 'woodStation', x: -953, y: -1039 }),
+		this.Prop({ texture: 'fire', x: -229, y: -282,offset: -99 }),
+		this.Prop({ texture: 'woodStation', x: -953, y: -1045 }),
 	]);
 	this.scene.goto({ area: 'main' });
 	this.goto('close');
