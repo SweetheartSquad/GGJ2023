@@ -353,6 +353,24 @@ The End
 	itemFollower.spr.pivot.y = this.scene.player.display.container.height;
 	itemFollower.speed = 8;
 	this.itemFollower = itemFollower;
+
+	this.stats = {
+		heat: 0,
+		hunger: 0,
+		thirst: 0,
+	};
+	setInterval(() => {
+		this.stats.heat = this.fairmath(this.stats.heat, -1);
+		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
+		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
+	}, 1000);
+
+	const spawnInPool = (p) => {
+			const {x,y} = this.randCirc(400);
+			p.transform.x += x;
+			p.transform.y += y*0.75;
+	};
+
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
@@ -366,22 +384,13 @@ The End
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
 		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
 
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: (p) => {
-			const {x,y} = this.randCirc(400);
-			p.transform.x += x;
-			p.transform.y += y*0.75;
-		}, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles2', freq: 1/100, spawn: (p) => {
-			const {x,y} = this.randCirc(400);
-			p.transform.x += x;
-			p.transform.y += y*0.75;
-		}, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles3', freq: 1/100, spawn: (p) => {
-			const {x,y} = this.randCirc(400);
-			p.transform.x += x;
-			p.transform.y += y*0.75;
-		}, }),
-		this.Emitter({ rate: 50, x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 30 : this.lerp(500, 30, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 40 : this.lerp(600, 40, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 50 : this.lerp(700, 50, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 5000 : this.lerp(5000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 6000 : this.lerp(6000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 7000 : this.lerp(7000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.lerp(500, 20, this.ease.circOut(this.stats.heat/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
 			const {x,y} = this.randCirc(25);
 			p.transform.y += y*0.5;
 			p.transform.x += x*0.5;
@@ -423,6 +432,11 @@ The End
 		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
 		this.tween(p.spr, 'rotation', 1, 200);
 		this.tween(p.display.container, 'alpha', 0, 200);
+
+		if (this.itemFollower.body === 'stationTest') {
+			this.stats.heat = this.fairmath(this.stats.heat, 10);
+		}
+
 		this.itemFollower.body = '';
 		this.itemFollower.animatorBody.setAnimation(`error`);
 		this.itemFollower.display.container.visible = false;

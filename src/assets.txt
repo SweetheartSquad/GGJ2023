@@ -40,9 +40,9 @@ font/bmfont.x1.png
 textures/bubbles1.x5.png
 textures/bubbles2.x6.png
 textures/bubbles3.x6.png
-textures/smallBubble1.x3.png
-textures/smallBubble2.x3.png
-textures/smallBubble3.x3.png
+textures/smallBubble1.x4.png
+textures/smallBubble2.x4.png
+textures/smallBubble3.x4.png
 
 textures/smoke.png
 textures/fire.x4.png

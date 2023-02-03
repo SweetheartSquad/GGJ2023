@@ -27,7 +27,14 @@ export class UIPost extends GameObject {
 
 		this.scripts.push((this.transform = new Transform(this)));
 		this.scripts.push((this.display = new Display(this)));
-		const sprBg = new NineSlicePlane(tex('postBg'), 10, 10, 10, 10);
+		const texture = tex('postBg');
+		const sprBg = new NineSlicePlane(
+			texture,
+			texture.width / 3,
+			texture.height / 3,
+			texture.width / 3,
+			texture.height / 3
+		);
 		sprBg.name = 'postBg';
 		const sprAvatar = new Sprite(tex(avatar));
 		sprAvatar.width = avatarSize;

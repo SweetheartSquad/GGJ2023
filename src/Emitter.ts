@@ -9,7 +9,7 @@ export class Emitter extends GameObject {
 
 	lastSpawn = 0;
 
-	rate: number;
+	rate: number | (() => number);
 
 	spawn?: (poof: Poof) => void;
 
@@ -26,7 +26,7 @@ export class Emitter extends GameObject {
 	}: ConstructorParameters<typeof Poof>[0] & {
 		x?: number;
 		y?: number;
-		rate?: number;
+		rate?: number | (() => number);
 		spawn?: (poof: Poof) => void;
 	}) {
 		super();
@@ -50,12 +50,13 @@ export class Emitter extends GameObject {
 		const t = game.app.ticker.lastTime;
 		const maxPerFrame = 10;
 		let count = 0;
-		while (t > this.lastSpawn + this.rate && ++count < maxPerFrame) {
+		const rate = typeof this.rate === 'function' ? this.rate() : this.rate;
+		while (t > this.lastSpawn + rate && ++count < maxPerFrame) {
 			const p = new Poof(this.initialProps);
 			p.transform.x += this.transform.x;
 			p.transform.y += this.transform.y;
 			this.spawn?.(p);
-			this.lastSpawn += this.rate;
+			this.lastSpawn += rate;
 		}
 	}
 }
