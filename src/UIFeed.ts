@@ -12,7 +12,7 @@ import { randRange, removeFromArray, tex } from './utils';
 export class UIFeed extends GameObject {
 	padding = {
 		bottom: 20,
-		left: 20,
+		left: 60,
 		right: 20,
 	};
 
