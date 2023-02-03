@@ -355,13 +355,19 @@ The End
 	this.itemFollower = itemFollower;
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
+		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
 
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
+
 		this.Prop({ texture: 'refreshmentTable', x: 592, y: -801, offset: -60 }),
+
 		// wood and fire related
-		this.Prop({ texture: 'furnace', x: -229, y: -282 }),
-		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -100 }),
-		this.Prop({ texture: 'fire', x: -229, y: -282,offset: -99 }),
+		this.Prop({ texture: 'furnace', x: -229, y: -282, offset: -150 }),
+		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
+		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
+		this.Prop({ texture: 'bubbles1', x: -192, y: -653}),
+		this.Prop({ texture: 'bubbles2', x: -13, y: -767, offset: 150 }),
+		this.Prop({ texture: 'bubbles3', x: 363, y: -772}),
 
 		...this.Station({ type: 'Test', in: { x: -229, y: -282 }, out: { x: -400, y: -400 } }),
 		itemFollower,
