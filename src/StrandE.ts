@@ -30,6 +30,7 @@ import {
 	chunks,
 	clamp,
 	delay,
+	fairmath,
 	mousePos,
 	randCirc,
 	shuffle,
@@ -64,6 +65,8 @@ export class StrandE extends Strand {
 	mousePos = mousePos;
 
 	randCirc = randCirc;
+
+	fairmath = fairmath;
 
 	setSource(src: string) {
 		super.setSource(
