@@ -366,6 +366,21 @@ The End
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
 		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
 
+		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble1', freq: 1/100, spawn: (p) => {
+			const {x,y} = this.randCirc(400);
+			p.transform.x += x;
+			p.transform.y += y*0.75;
+		}, }),
+		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble2', freq: 1/100, spawn: (p) => {
+			const {x,y} = this.randCirc(400);
+			p.transform.x += x;
+			p.transform.y += y*0.75;
+		}, }),
+		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble3', freq: 1/100, spawn: (p) => {
+			const {x,y} = this.randCirc(400);
+			p.transform.x += x;
+			p.transform.y += y*0.75;
+		}, }),
 		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: (p) => {
 			const {x,y} = this.randCirc(400);
 			p.transform.x += x;
