@@ -31,6 +31,7 @@ textures/test2Idle.png
 textures/test3Idle.png
 
 textures/feedBg.png
+textures/feedMask.png
 textures/postBg.png
 textures/instayamLogo.png
 

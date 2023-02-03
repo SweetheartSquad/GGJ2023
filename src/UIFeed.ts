@@ -45,13 +45,15 @@ export class UIFeed extends GameObject {
 		this.scripts.push((this.transform = new Transform(this)));
 		this.scripts.push((this.display = new Display(this)));
 		this.sprBg = new Sprite(tex('feedBg'));
+		const maskBg = (this.containerPosts.mask = new Sprite(tex('feedMask')));
 		this.sprBg.name = 'feedBg';
-		this.sprBg.anchor.y = 0;
-		this.sprBg.anchor.x = 0;
+		maskBg.anchor.y = this.sprBg.anchor.y = 0;
+		maskBg.anchor.x = this.sprBg.anchor.x = 0;
 		this.transform.x = size.x - this.margin.right - this.sprBg.width;
 		this.transform.y = size.y - this.margin.bottom - this.sprBg.height;
 
 		this.display.container.addChild(this.sprBg);
+		this.display.container.addChild(maskBg);
 		this.display.container.addChild(this.containerPosts);
 		this.containerPosts.x = this.padding.left;
 		this.containerPosts.y = this.sprBg.height - this.padding.bottom;
@@ -93,7 +95,7 @@ export class UIFeed extends GameObject {
 			TweenManager.finish(i);
 		});
 		this.tweens.length = 0;
-		this.posts.forEach((i) => {
+		this.posts.forEach((i, idx) => {
 			this.tweens.push(
 				TweenManager.tween(
 					i.transform,
@@ -102,6 +104,16 @@ export class UIFeed extends GameObject {
 					200,
 					undefined,
 					eases.backOut
+				)
+			);
+			this.tweens.push(
+				TweenManager.tween(
+					i.display.container,
+					'alpha',
+					1 - (this.posts.length - idx) / 10,
+					200,
+					undefined,
+					eases.cubicOut
 				)
 			);
 		});
