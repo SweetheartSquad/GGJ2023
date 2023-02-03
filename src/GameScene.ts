@@ -267,7 +267,7 @@ export class GameScene {
 			setTimeout(() => {
 				setInterval(() => {
 					this.feed.say(
-						'HARDCORE! TO THE MEGA!'.repeat(
+						'HARDCORE! TO THE MEGA! '.repeat(
 							Math.round(randRange(1, 3))
 						),
 						`${npc}Idle`
@@ -356,7 +356,7 @@ export class GameScene {
 
 		// if (this.interactionFocus) {
 		this.interactionFocus = { x: 0, y: -size.y / 2 };
-		const focusAmt = 0.9;
+		const focusAmt = 0.1;
 		// if (this.dialogue.isOpen) focusAmt = 0.7;
 		player.camPoint.y +=
 			(this.interactionFocus.y - player.transform.y) * focusAmt;
