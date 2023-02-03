@@ -334,7 +334,7 @@ The End
 	itemFollower.roam.range[0] = 0;
 	itemFollower.roam.range[1] = 0;
 	itemFollower.roam.changeOffset = Infinity;
-	itemFollower.roam.offset.y = -this.scene.player.display.container.height;
+	itemFollower.spr.pivot.y = this.scene.player.display.container.height;
 	itemFollower.speed = 8;
 	this.itemFollower = itemFollower;
 	this.Area('main', [
