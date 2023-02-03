@@ -26,7 +26,15 @@ import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { storage } from './Storage';
 import { TweenManager } from './Tweens';
-import { chunks, clamp, delay, mousePos, shuffle, tex } from './utils';
+import {
+	chunks,
+	clamp,
+	delay,
+	mousePos,
+	randCirc,
+	shuffle,
+	tex,
+} from './utils';
 
 export class StrandE extends Strand {
 	scene!: GameScene;
@@ -54,6 +62,8 @@ export class StrandE extends Strand {
 	clamp = clamp;
 
 	mousePos = mousePos;
+
+	randCirc = randCirc;
 
 	setSource(src: string) {
 		super.setSource(
