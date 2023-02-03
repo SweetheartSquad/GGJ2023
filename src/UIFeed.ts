@@ -95,7 +95,7 @@ export class UIFeed extends GameObject {
 			TweenManager.finish(i);
 		});
 		this.tweens.length = 0;
-		this.posts.forEach((i) => {
+		this.posts.forEach((i, idx) => {
 			this.tweens.push(
 				TweenManager.tween(
 					i.transform,
@@ -104,6 +104,16 @@ export class UIFeed extends GameObject {
 					200,
 					undefined,
 					eases.backOut
+				)
+			);
+			this.tweens.push(
+				TweenManager.tween(
+					i.display.container,
+					'alpha',
+					1 - (this.posts.length - idx) / 10,
+					200,
+					undefined,
+					eases.cubicOut
 				)
 			);
 		});
