@@ -384,12 +384,12 @@ The End
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
 		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
 
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'smallBubble3', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 30 : this.lerp(500, 30, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 40 : this.lerp(600, 40, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat > 30 ? 50 : this.lerp(700, 50, this.stats.heat/30), x: 194, y: -664, texture: 'smallBubble3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 5000 : this.lerp(5000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 6000 : this.lerp(6000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.heat < 30 ? 7000 : this.lerp(7000, 15, this.ease.circOut((this.stats.heat-30)/70)), x: 194, y: -664, texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ rate: () => this.lerp(500, 20, this.ease.circOut(this.stats.heat/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
 			const {x,y} = this.randCirc(25);
 			p.transform.y += y*0.5;
