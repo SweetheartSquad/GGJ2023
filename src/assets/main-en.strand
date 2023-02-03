@@ -390,7 +390,7 @@ The End
 		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ rate: 50, x: 194, y: -664, texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: 50, x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
+		this.Emitter({ rate: () => this.lerp(500, 20, this.ease.circOut(this.stats.heat/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
 			const {x,y} = this.randCirc(25);
 			p.transform.y += y*0.5;
 			p.transform.x += x*0.5;
