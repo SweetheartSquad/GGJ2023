@@ -2,8 +2,8 @@ export const size: {
 	readonly x: number;
 	readonly y: number;
 } = {
-	x: 1920,
-	y: 1080,
+	x: 1600,
+	y: 900,
 };
 
 export const fps = 60;
