@@ -432,10 +432,11 @@ The End
 	let count = 0;
 	const guestsWaiting = [];
 	const guests = [];
+	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest')).map(i => i.replace('Idle', ''));
 	setInterval(() => {
 		if (count > 10) return;
 		++count;
-		const npcType = this.randItem(['test', 'test2', 'test3']);
+		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
 		guestsWaiting.push(npc);
