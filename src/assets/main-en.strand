@@ -361,9 +361,17 @@ game over (bad)!
 	itemFollower.roam.range[0] = 0;
 	itemFollower.roam.range[1] = 0;
 	itemFollower.roam.changeOffset = Infinity;
-	itemFollower.spr.pivot.y = this.scene.player.display.container.height;
+	itemFollower.roam.offset.y = 10;
+	itemFollower.spr.pivot.y = this.scene.player.display.container.height / 2;
+	itemFollower.roam.offset.x = -this.scene.player.display.container.width / 4;
 	itemFollower.speed = 8;
 	this.itemFollower = itemFollower;
+	this.scene.player.scripts.push({
+		gameObject: this.itemFollower,
+		update: () => {
+			itemFollower.roam.offset.x = (this.scene.player.flipped? 1 : -1) * Math.abs(itemFollower.roam.offset.x);
+		},
+	});
 
 	const spawnRate = [1000, .01];
 	const postRate = [300, .01];
