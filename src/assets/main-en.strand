@@ -423,7 +423,7 @@ game over (bad)!
 		update: () => {
 			waterProp.spr.pivot.y = (1 - this.stats.dry/100) * 40;
 			const g = this.stats.bland/100;
-			waterProp.spr.tint = rgbToHex(this.lerp(49, 70, g), this.lerp(85, 113, g), this.lerp(114, 12, g));
+			waterProp.spr.tint = rgbToHex(this.lerp(31, 70, g), this.lerp(58, 113, g), this.lerp(132, 12, g));
 			waterProp.spr.alpha = 1-g*0.5;
 		},
 	});
