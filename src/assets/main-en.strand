@@ -421,8 +421,8 @@ game over!
 		}, }),
 
 		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { /* TODO */ x: -229, y: -282 } }),
-		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize:  }, in: { /* TODO */ x: 709, y: -779, offset: -80 } }),
-		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize:  }, in: { /* TODO */ x: 520, y: -860, offset: -50 } }),
+		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 1 }, in: { /* TODO */ x: 709, y: -779, offset: -80 } }),
+		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 1 }, in: { /* TODO */ x: 520, y: -860, offset: -50 } }),
 		...this.Station({ type: 'Dry', out: { x: 1303, y: -1220 }, in: { /* TODO */ x: -125, y: -920 } }),
 		...this.Station({ type: 'Bland', out: { x: -1159, y: -236 }, in: { /* TODO */ x: -210, y: -876 } }),
 		itemFollower,
