@@ -366,11 +366,19 @@ game over!
 		bland: 0,
 		dry: 0,
 	};
+	const statRates = {
+		cold: 1,
+		hunger: 5,
+		thirst: 5,
+		busy: 1,
+		bland: 1,
+		dry: 1,
+	};
 	const intervals = [];
 	intervals.push(setInterval(() => {
 		Object.keys(this.stats).forEach(i => {
 			if (i === 'busy') return;
-			this.stats[i] = this.fairmath(this.stats[i], 1);
+			this.stats[i] = this.fairmath(this.stats[i], statRates[i]);
 		});
 		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length || -1);
 	}, 1000));
