@@ -18,7 +18,7 @@ textures/meatFridge.png
 textures/saltBag.png
 textures/waterBarrel.png
 textures/wineRack.png
-
+textures/stationWineIdle.png
 audio/bgm.mp3
 audio/voiceDefault.mp3
 textures/walk_cursor.x7.png
