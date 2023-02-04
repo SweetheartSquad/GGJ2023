@@ -400,7 +400,6 @@ game over!
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
 		
 		// wood and fire related
-		this.Prop({ texture: 'furnace', x: -229, y: -282, offset: -150 }),
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
 		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
 
