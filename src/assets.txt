@@ -48,6 +48,9 @@ textures/waterSkirt.x2.png
 textures/guest1Idle.png
 textures/guest2Idle.png
 textures/guest3Idle.png
+textures/guestGingerIdle.png
+textures/guestBeetIdle.png
+textures/guestYamIdle.png
 
 textures/feedBg.png
 textures/feedMask.png
