@@ -551,6 +551,7 @@ The End
 	`rub a dub dub wheres the grub`,
 	`im starvin luv xx`,
 	`is the food gone?`,
+	`do they have food at this party`,
 ])>>
 
 ::guest-not-hungry
@@ -563,6 +564,7 @@ The End
 	`wowww im in snack heaven`,
 	`yummy!`,
 	`ate too much lol`,
+	`delicious`,
 ])>>
 
 ::guest-thirsty
@@ -585,19 +587,19 @@ The End
 	`doing shots rn!!`,
 	`feelin refreshed`,
 	`ahhh... that hits`,
-	`gotta pee...`,
+	`gotta pee`,
 ])>>
 
 ::guest-cold
 <<print this.randItem([
 	`wont anyone please turn up the heat`,
 	`${this.randItem(['brr', 'brrrr', 'brrrrrrr'])}`,
-	`im ice cold (in the bad way)`
-	`im freezing :(`
-	`feel like im the north pole`
-	`arent hot tubs supposed to be HOT`
-	`didnt come for an ice bath...`
-	`more heat plz`
+	`im ice cold (in the bad way)`,
+	`im freezing :(`,
+	`feel like im the north pole`,
+	`arent hot tubs supposed to be HOT`,
+	`didnt come for an ice bath...`,
+	`more heat plz`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
 ])>>
 
@@ -614,6 +616,7 @@ The End
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
 	`dont wanna get out <3`,
 	`mmmm warm`,
+	`hot tub heaven...`
 ])>>
 
 ::guest-random
@@ -645,4 +648,19 @@ The End
 <<print this.randItem([
 	`Let me in.`,
 	`LET ME INNNNN!!!`,
+	`how long is the wait`,
+	`waiting...`,
+	`i wanna get in :-O`,
+	`wait for me im still in line`,
+	`line is too long...`,
+	`been in line 4ever`,
+	`${this.randItem(['so', 'soo', 'soooo'])} excited to get in`,
+	`long line`,
+	`pumped 4 this!`,
+	`wheres the bouncer`,
+	`how much longer??!?`,
+	`lemme in`,
+	`im here`,
+	`${this.randItem(['SHE', 'HE', 'THEY', 'ZE'])} got let in before me??`,
+	`ill wait a bit longer i guess`,
 ])>>
