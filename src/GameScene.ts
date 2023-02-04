@@ -400,25 +400,21 @@ export class GameScene {
 			body: guest,
 			shadow: false,
 		});
+		const h = n.spr.height;
 		const g = new Graphics();
 		const skirt = new Sprite(tex('waterSkirt'));
 		g.beginFill(0xff0000);
-		g.drawRect(0, 0, n.spr.width, n.spr.height);
-		g.drawEllipse(
-			n.spr.width / 2,
-			n.spr.height,
-			n.spr.width / 2,
-			skirt.height / 2
-		);
+		g.drawRect(0, 0, n.spr.width, h);
+		g.drawEllipse(n.spr.width / 2, h, n.spr.width / 2, skirt.height / 2);
 		g.endFill();
-		g.y = -n.spr.height * 1.5;
+		g.y = -h * 1.5;
 		g.x = -n.spr.width / 2;
 		n.scripts.push(new Animator(n, { spr: skirt, freq: 1 / 400 }));
 		n.spr.parent.addChild(g);
 		n.spr.parent.addChild(skirt);
 		skirt.anchor.x = 0.5;
 		skirt.anchor.y = 0.5;
-		skirt.y = -n.spr.height / 2;
+		skirt.y = -h / 2;
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
 		skirt.visible = g.visible = false;
@@ -426,8 +422,8 @@ export class GameScene {
 			new Updater(n, () => {
 				// @ts-ignore
 				const dry = this.strand.stats.dry / 100;
-				g.pivot.y = -dry * (n.spr.height / 2);
-				skirt.pivot.y = -dry * (n.spr.height / 2);
+				g.pivot.y = -dry * (h / 2);
+				skirt.pivot.y = -dry * (h / 2);
 				skirt.alpha = 1 - dry;
 			})
 		);
