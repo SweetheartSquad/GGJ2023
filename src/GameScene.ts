@@ -417,7 +417,7 @@ export class GameScene {
 		n.spr.parent.addChild(g);
 		n.spr.parent.addChild(skirt);
 		skirt.anchor.x = 0.5;
-		skirt.anchor.y = 0;
+		skirt.anchor.y = 0.5;
 		skirt.y = -n.spr.height / 2;
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
@@ -426,8 +426,8 @@ export class GameScene {
 			new Updater(n, () => {
 				// @ts-ignore
 				const dry = this.strand.stats.dry / 100;
-				g.pivot.y = -dry * n.spr.height * 0.5;
-				skirt.pivot.y = -dry * n.spr.height * 0.5;
+				g.pivot.y = -dry * (n.spr.height / 2);
+				skirt.pivot.y = -dry * (n.spr.height / 2);
 				skirt.alpha = 1 - dry;
 			})
 		);
