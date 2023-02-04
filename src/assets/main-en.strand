@@ -410,6 +410,20 @@ game over!
 	});
 
 
+	const propMeat = this.Prop({ texture: 'stationHungerIdle', x: 540, y: -1018, offset: 500 });
+	this.scene.player.scripts.push({
+		gameObject: this.scene.player,
+		update: () => {
+			propMeat.display.container.visible = this.stats.hunger < 50;
+		},
+	});
+	const propDrink = this.Prop({ texture: 'stationThirstIdle', x: 702, y: -934, offset: 500 });
+	this.scene.player.scripts.push({
+		gameObject: this.scene.player,
+		update: () => {
+			propDrink.display.container.visible = this.stats.thirst < 50;
+		},
+	});
 
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
@@ -441,6 +455,10 @@ game over!
 			this.tween(p.transform, 'y', p.transform.y + y, 500);
 			this.tween(p.transform, 'x', p.transform.x + x, 500);
 		}, }),
+
+		propMeat,
+		propDrink,
+
 
 		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { /* TODO */ x: -229, y: -282 } }),
 		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 1 }, in: { /* TODO */ x: 709, y: -779, offset: -80 } }),
@@ -586,6 +604,9 @@ game over!
 		if (this.itemFollower.body === `station${this.gameObject.bodySensor.body.plugin.type}`) {
 			const stat = this.itemFollower.body.replace('station', '').toLowerCase();
 			this.stats[stat] = this.fairmath(this.stats[stat], -10);
+			if (stat === 'hunger' || stat === 'thirst') {
+				this.stats[stat] = 0;
+			}
 		} else {
 			// TODO: wrong sfx
 			Object.keys(this.stats).forEach(i => {
