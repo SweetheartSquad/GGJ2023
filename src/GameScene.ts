@@ -286,6 +286,8 @@ export class GameScene {
 		});
 		this.dialogue.destroy();
 		this.feed.destroy();
+		this.timer.destroy();
+		this.statsDebug?.destroy();
 		Runner.stop(this.runner);
 	}
 
@@ -422,7 +424,7 @@ export class GameScene {
 		n.skirt = skirt;
 		// @ts-ignore
 		n.mask = g;
-		this.take(n);
+		this.drop(n);
 		Area.mount([n], this.container);
 		return n;
 	}
