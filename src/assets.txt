@@ -16,6 +16,7 @@ textures/woodStation.png
 textures/refreshmentTable.png
 textures/meatFridge.png
 textures/saltBag.png
+textures/waterBarrel.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
