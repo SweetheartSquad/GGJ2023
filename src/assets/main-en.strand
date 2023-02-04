@@ -363,13 +363,13 @@ The End
 		thirst: 0,
 		busy: 0,
 	};
-	setInterval(() => {
-		if (this.gameover) return;
+	const intervals = [];
+	intervals.push(setInterval(() => {
 		this.stats.heat = this.fairmath(this.stats.heat, -1);
 		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
 		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
 		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length);
-	}, 1000);
+	}, 1000));
 
 	const poolPos = {x: 200, y: -580 };
 	const pointInPool = () => {
@@ -437,7 +437,7 @@ The End
 	const guestsWaiting = [];
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest')).map(i => i.replace('Idle', ''));
-	setInterval(() => {
+	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (count > 10) return;
 		++count;
@@ -460,7 +460,9 @@ The End
 		npc.bodyCollision.body.isSensor = true;
 		npc.speed = 0.5;
 		setTimeout(() => {
-			setInterval(() => {
+			if (this.gameover) return;
+			intervals.push(setInterval(() => {
+				if (this.gameover) return;
 				const category = npc.waiting ? 'waiting' : this.randItem([
 					this.stats.heat > 50 ? 'hot' : 'cold',
 					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
@@ -469,11 +471,12 @@ The End
 				]);
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
 				this.scene.feed.say(post, `${npcType}Idle`);
-			}, 3143);
+			}, 3143));
 		}, this.randRange(0, 5000));
-	}, 52);
+	}, 52));
 
 	this.letGuestIn = async () => {
+		if (this.gameover) return;
 		if (!guestsWaiting.length) return;
 		const guest = guestsWaiting.shift();
 		guests.push(guest);
@@ -518,6 +521,8 @@ The End
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
 				this.gameover = true;
+				intervals.forEach(i => clearInterval(i));
+				intervals.length = 0;
 			}
 		},
 	});
