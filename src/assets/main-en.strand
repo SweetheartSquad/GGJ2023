@@ -565,20 +565,26 @@ game over!
 
 ::stationOut
 <<do
+	const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
+	p.spr.pivot.y = this.itemFollower.spr.pivot.y;
+	this.tween(p.spr, 'rotation', 1, 200);
+	this.tween(p.display.container, 'alpha', 0, 200);
 	if (this.itemFollower.body === `station${this.gameObject.bodySensor.body.plugin.type}`) {
-		const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
-		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
-		this.tween(p.spr, 'rotation', 1, 200);
-		this.tween(p.display.container, 'alpha', 0, 200);
-
+		// TODO: all station mechanics
 		if (this.itemFollower.body === 'stationTest') {
 			this.stats.heat = this.fairmath(this.stats.heat, 10);
 		}
 
-		this.itemFollower.body = '';
-		this.itemFollower.animatorBody.setAnimation(`error`);
-		this.itemFollower.display.container.visible = false;
+	} else {
+		// TODO: wrong sfx
+		this.stats.heat = this.fairmath(this.stats.heat, -5);
+		this.stats.hunger = this.fairmath(this.stats.hunger, 5);
+		this.stats.thirst = this.fairmath(this.stats.thirst, 5);
+		this.stats.busy = this.fairmath(this.stats.busy, 5);
 	}
+	this.itemFollower.body = '';
+	this.itemFollower.animatorBody.setAnimation(`error`);
+	this.itemFollower.display.container.visible = false;
 	this.goto('close');
 >>
 
