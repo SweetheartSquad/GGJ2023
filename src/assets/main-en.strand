@@ -391,11 +391,21 @@ game over!
 
 	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150 });
 
+	function componentToHex(c) {
+		const hex = Math.round(c).toString(16);
+		return hex.length == 1 ? "0" + hex : hex;
+	}
+
+	function rgbToHex(r, g, b) {
+		return parseInt(`0x${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`, 16);
+	}
 	const waterProp = this.Prop({ texture: 'hottubWater', x: 212, y: -204, offset: -700 });
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
 			waterProp.spr.pivot.y = (1 - this.stats.dry/100) * 40;
+			const g = this.stats.bland/100;
+			waterProp.spr.tint = rgbToHex(this.lerp(49, 70, g), this.lerp(85, 113, g), this.lerp(114, 12, g));
 		},
 	});
 
