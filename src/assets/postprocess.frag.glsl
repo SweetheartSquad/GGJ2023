@@ -27,7 +27,7 @@ void main(void) {
 	vec2 uvDither = fract((coord + vec2(0.5)) / (ditherSize.xy * scale));
 	vec2 uvPreview = uv;
 	vec3 orig = texture2D(uSampler, uvPreview).rgb;
-	// vec3 col = (orig - 0.5 + (brightness - 1.0)) * contrast + 0.5;
+	vec3 col = (orig - 0.5 + (brightness - 1.0)) * contrast + 0.5;
 	// vec3 limit = texture2D(ditherGridMap, uvDither).rgb;
 	// // posterization
 	// vec3 raw = col;
@@ -37,11 +37,11 @@ void main(void) {
 	// // output
 	// col = posterized + dither;
 
-	// col = mix(col, vec3(1.0), whiteout);
+	col = mix(col, vec3(1.0), whiteout);
 	// col = mix(col, vec3(1.0) - col, invert);
 
 	// vec3 rgb = mix(bg, fg, col) / 255.0;
 
 	// gl_FragColor = vec4(rgb, 1.0);
-	gl_FragColor = vec4(orig, 1.0);
+	gl_FragColor = vec4(col, 1.0);
 }

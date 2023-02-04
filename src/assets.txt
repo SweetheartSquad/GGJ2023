@@ -69,3 +69,5 @@ textures/smoke.png
 textures/fire.x4.png
 
 textures/door.png
+textures/endBad.x2.png
+textures/endGood.x2.png

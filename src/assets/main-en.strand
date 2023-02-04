@@ -128,8 +128,15 @@ open
 dump
 
 
-::end
-game over!
+::endGood
+// TODO: proper end text
+game over (good)!
+
+[[Restart|this.restart()]]
+
+::endBad
+// TODO: proper end text
+game over (bad)!
 
 [[Restart|this.restart()]]
 
@@ -383,12 +390,12 @@ game over!
 		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length || -1);
 	}, 1000));
 
-	const poolPos = {x: 200, y: -580 };
+	this.poolPos = {x: 200, y: -580 };
 	const pointInPool = () => {
 		let {x,y} = this.randCirc(400);
 		y*=0.7;
-		x += poolPos.x;
-		y += poolPos.y;
+		x += this.poolPos.x;
+		y += this.poolPos.y;
 		return {x,y};
 	};
 	const spawnInPool = (p) => {
@@ -544,7 +551,7 @@ game over!
 		await guest.walkTo(238, -900);
 		this.Poof({ texture: 'bubbles3', scale: 3, x: guest.transform.x, y: guest.transform.y, offset: 1000, freq: 1/50 });
 		guest.speed = 1;
-		guest.roam.target = poolPos;
+		guest.roam.target = this.poolPos;
 		guest.roam.range[0] = 400;
 		guest.roam.range[1] = 0.7;
 		guest.roam.freq = {
@@ -561,7 +568,7 @@ game over!
 	let time = 120 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
-		update: () => {
+		update: async () => {
 			if (this.gameover) {
 				return;
 			}
@@ -574,7 +581,8 @@ game over!
 				this.scene.timer.scale.x = this.scene.timer.scale.y = this.lerp(2, 1, this.ease.cubicOut(s/30)) + Math.sin(time/100)*0.1*(1-(s/30));
 			}
 			if (time < 0) {
-				// TODO: end game
+				// TODO: proper win condition
+				const won = (guests.length - guestsWaiting.length) > 5;
 				this.music('');
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
@@ -584,9 +592,22 @@ game over!
 				this.scene.focusAmt = 1;
 				this.tween(this.propLid.display.container, 'alpha', 1, 500, 0, this.ease.cubicOut);
 				this.tween(this.propLid.transform, 'y', this.propLid.transform.y, 2000, this.propLid.transform.y - 1000, this.ease.bounceOut);
-				this.delay(2000).then(() => {
-					this.goto('end');
-				});
+
+				await this.delay(2000);
+				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 1, 1500, 0, this.ease.cubicIn);
+				for (let i = 0; i < 250; ++i) {
+					const p = this.randRange(0, Math.PI*2);
+					setTimeout(() => {
+						const poof = this.Poof({ texture: `bubbles${i%3+1}`, offset: 100000, x: this.poolPos.x + Math.cos(p)*500, y: this.poolPos.y + Math.sin(p)*400*0.75 - 50, freq: 1/100 });
+					}, i * 10);
+				}
+				await this.delay(2000);
+				this.scene.feed.display.container.visible = false;
+				this.scene.timer.visible = false;
+				this.show(won ? 'endGood' : 'endBad', { duration: 0 });
+				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 500, 0, this.ease.cubicOut);
+				await this.delay(3000);
+				this.goto(won ? 'endGood' : 'endBad');
 			}
 		},
 	});
