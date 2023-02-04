@@ -22,8 +22,8 @@ import { TweenManager } from './Tweens';
 import { removeFromArray, tex } from './utils';
 import { multiply } from './VMath';
 
-const playerSpeedX = 0.00725;
-const playerSpeedY = 0.0065;
+const playerSpeedX = 0.01;
+const playerSpeedY = 0.009;
 const framesFootstep = [0];
 
 export class Player extends Character {
@@ -52,6 +52,7 @@ export class Player extends Character {
 	}) {
 		super({
 			body: 'guy',
+			freq: 1 / 150,
 			bodyCollision: {
 				...bodyCollision,
 				restitution: 0.8,
