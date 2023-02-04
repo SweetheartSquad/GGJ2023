@@ -681,6 +681,26 @@ game over!
 	`hot tub heaven...`,
 ])>>
 
+::guest-dry
+<<print this.randItem([
+	`dry`,
+])>>
+
+::guest-not-dry
+<<print this.randItem([
+	`not dry`,
+])>>
+
+::guest-bland
+<<print this.randItem([
+	`bland`,
+])>>
+
+::guest-not-bland
+<<print this.randItem([
+	`not bland`,
+])>>
+
 ::guest-random
 <<print this.randItem([
 	`lol`,
