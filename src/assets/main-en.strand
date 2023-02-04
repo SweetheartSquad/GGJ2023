@@ -443,8 +443,16 @@ The End
 		const p = pointInPool();
 		npc.setPosition(doorProp.transform.x, doorProp.transform.y - 200);
 		npc.roam.target.x = doorProp.transform.x;
-		npc.roam.target.y = doorProp.transform.y - 50;
+		npc.roam.target.y = doorProp.transform.y - 100;
+		npc.roam.range[0] = 100;
+		npc.roam.range[1] = 1;
+		npc.roam.freq = {
+			value: 1000,
+			range: 900,
+		};
 		npc.waiting = true;
+		npc.bodyCollision.body.isSensor = true;
+		npc.speed = 0.5;
 		setTimeout(() => {
 			setInterval(() => {
 				const category = npc.waiting ? 'waiting' : this.randItem([
@@ -459,17 +467,28 @@ The End
 		}, this.randRange(0, 5000));
 	}, 52);
 
-	this.letGuestIn = () => {
+	this.letGuestIn = async () => {
 		if (!guestsWaiting.length) return;
 		const guest = guestsWaiting.shift();
 		guests.push(guest);
+		guest.waiting = false;
+		this.stats.busy = this.fairmath(this.stats.busy, -20);
+
+		guest.speed = 2.5;
+		await guest.walkTo(238, -900);
+		this.Poof({ texture: 'bubbles3', scale: 3, x: guest.transform.x, y: guest.transform.y, offset: 1000, freq: 1/50 });
+		guest.speed = 1;
 		guest.roam.target = poolPos;
 		guest.roam.range[0] = 400;
 		guest.roam.range[1] = 0.7;
-		guest.waiting = false;
+		guest.roam.freq = {
+			value: 4000,
+			range: 3000,
+		};
 		guest.spr.mask = guest.mask;
 		guest.mask.visible = guest.skirt.visible = true;
-		this.stats.busy = this.fairmath(this.stats.busy, -20);
+		await this.delay(100);
+		guest.bodyCollision.body.isSensor = false;
 	};
 
 	// timer
