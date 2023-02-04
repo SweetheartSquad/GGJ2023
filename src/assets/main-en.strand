@@ -545,42 +545,75 @@ The End
 
 ::guest-hungry
 <<print this.randItem([
-	`im hungry`,
-	`i am hungry`,
-	`i am also hungry`,
+	`im starving... wheres the food at`,
+	`any1 kno where the snacks are?`,
+	`dying of hunger send food`,
+	`rub a dub dub wheres the grub`,
+	`im starvin luv xx`,
+	`is the food gone?`,
 ])>>
 
 ::guest-not-hungry
 <<print this.randItem([
-	`im not hungry`,
-	`i am not hungry`,
-	`i am also not hungry`,
+	`mmm.. im stuffed`,
+	`the snacks are bangin rn`,
+	`im so full... x_x`,
+	`luv these or derves (sp?)`,
+	`the food here is ${this.randItem(['so', 'soo', 'soooo'])} good`,
+	`wowww im in snack heaven`,
+	`yummy!`,
+	`ate too much lol`,
 ])>>
 
 ::guest-thirsty
 <<print this.randItem([
 	`im thirsty`,
-	`i am thirsty`,
-	`i am also thirsty`,
+	`need a drink...`,
+	`where are the bevvies smh`,
+	`cant find my drink :(`,
+	`wheres the DRINX`,
+	`feelin parched`,
+	`would kill for a drink rn`,
+	`runnin dry over here`,
 ])>>
 
 ::guest-not-thirsty
 <<print this.randItem([
-	`im not thirsty`,
-	`i am not thirsty`,
-	`i am also not thirsty`,
+	`mm.. this drink is ${this.randItem(['so', 'soo', 'soooo'])} good`,
+	`lots of yummy drinx tn`,
+	`its no longer thirsty thursday lol`,
+	`doing shots rn!!`,
+	`feelin refreshed`,
+	`ahhh... that hits`,
+	`gotta pee...`,
 ])>>
 
 ::guest-cold
 <<print this.randItem([
 	`wont anyone please turn up the heat`,
+	`${this.randItem(['brr', 'brrrr', 'brrrrrrr'])}`,
+	`im ice cold (in the bad way)`
+	`im freezing :(`
+	`feel like im the north pole`
+	`arent hot tubs supposed to be HOT`
+	`didnt come for an ice bath...`
+	`more heat plz`
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
 ])>>
 
 ::guest-hot
 <<print this.randItem([
 	`the waters fine`,
+	`this hot tub rocks`,
+	`perfect temp in here`,
+	`cozy...`,
+	`feelin toasty`,
+	`hot tub is fire emoji`,
+	`yessss so warm`,
+	`${this.randItem(['ahh', 'ahhh', 'ahhhhhhh'])} this is relaxing...`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
+	`dont wanna get out <3`,
+	`mmmm warm`,
 ])>>
 
 ::guest-random
@@ -589,6 +622,23 @@ The End
 	`lmao`,
 	`wowww`,
 	`HARDCORE! TO THE MEGA!`,
+	`cant find my glasses :(`,
+	`who took my shirt!!`,
+	`so fun`,
+	`date night with this one <3`,
+	`what's this song?`,
+	`whos drink is this...`,
+	`meet me in the hot tub!`,
+    `chilling...`,
+    `omg as if ${this.randItem(['SHE', 'HE', 'THEY', 'ZE'])} came...`,
+	`love it`,
+	`this song sux`,
+	`did i miss anything?`,
+	`omg dead xD`,
+	`this is my jam!!`,
+	`bored...`,
+	`i fell`,
+	`${this.randItem(['woo', 'woooo', 'woooooooo'])}`,
 ])>>
 
 ::guest-waiting

@@ -14,6 +14,7 @@ textures/furnace.png
 textures/furnaceBackBlack.png
 textures/woodStation.png
 textures/refreshmentTable.png
+textures/meatFridge.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
