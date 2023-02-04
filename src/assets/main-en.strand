@@ -582,6 +582,7 @@ game over!
 			Object.keys(this.stats).forEach(i => {
 				this.stats[i] = this.fairmath(this.stats[i], 5);
 			});
+			this.tween(this.scene.camera, 'shake', 0, 200, 10, this.ease.circOut);
 		}
 		this.itemFollower.body = '';
 		this.itemFollower.animatorBody.setAnimation(`error`);
