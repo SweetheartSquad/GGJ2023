@@ -528,7 +528,7 @@ game over!
 			const m = Math.floor(s/60);
 			s -= m * 60;
 			this.scene.timer.text = `${m.toFixed(0).padStart(2, '0')}:${s.toFixed(2).padStart(5, '0')}`;
-			if (s < 30) {
+			if (m <= 0 && s < 30) {
 				this.scene.timer.scale.x = this.scene.timer.scale.y = this.lerp(2, 1, this.ease.cubicOut(s/30)) + Math.sin(time/100)*0.1*(1-(s/30));
 			}
 			if (time < 0) {
