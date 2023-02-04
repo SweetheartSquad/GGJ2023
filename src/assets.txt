@@ -54,6 +54,7 @@ textures/guestBeetIdle.png
 textures/guestYamIdle.png
 textures/guestCarrotIdle.png
 textures/guestOnionIdle.png
+textures/guestDaikonIdle.png
 
 textures/feedBg.png
 textures/feedMask.png
