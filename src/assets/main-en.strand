@@ -451,14 +451,16 @@ game over!
 		guestsWaiting.push(npc);
 
 		const p = pointInPool();
-		npc.setPosition(doorProp.transform.x, doorProp.transform.y - 200);
 		npc.roam.target.x = doorProp.transform.x;
 		npc.roam.target.y = doorProp.transform.y - 100 - guestsWaiting.length * guestsGap;
-		npc.roam.range[0] = 10;
+		npc.setPosition(doorProp.transform.x, Math.min(npc.roam.target.y, doorProp.transform.y) - 200);
+		npc.display.container.alpha = 0;
+		this.tween(npc.display.container, 'alpha', 1, 200);
+		npc.roam.range[0] = guestsGap/2;
 		npc.roam.range[1] = 1;
 		npc.roam.freq = {
-			value: 1000,
-			range: 900,
+			value: 500,
+			range: 400,
 		};
 		npc.waiting = true;
 		npc.bodyCollision.body.isSensor = true;
