@@ -426,7 +426,6 @@ game over!
 		...this.Station({ type: 'Dry', out: { x: 1303, y: -1220 }, in: { /* TODO */ x: 600, y: 200 } }),
 		...this.Station({ type: 'Bland', out: { x: -1159, y: -236 }, in: { /* TODO */ x: 800, y: 200 } }),
 		itemFollower,
-
 	]);
 
 
@@ -438,6 +437,7 @@ game over!
 	const guestsGap = 40;
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
+	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
@@ -469,12 +469,8 @@ game over!
 			intervals.push(setInterval(() => {
 				if (this.gameover) return;
 				if (Math.random() > postRate[1]) return;
-				const category = npc.waiting ? 'waiting' : this.randItem([
-					this.stats.cold > 50 ? 'cold' : 'hot',
-					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
-					this.stats.thirst > 50 ? 'thirsty' : 'not-thirsty',
-					'random',
-				]);
+				let category = npc.waiting ? 'waiting' : this.randItem(postTypes);
+				if (this.stats[category] !== undefined && this.stats[category] < 50) category = `not-${category}`;
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
 				this.scene.feed.say(post, `${npcType}Idle`);
 			}, postRate[0]));
@@ -597,7 +593,7 @@ game over!
 //      .88
 //  d8888P
 
-::guest-hungry
+::guest-hunger
 <<print this.randItem([
 	`im starving... wheres the food at`,
 	`any1 kno where the snacks are?`,
@@ -609,7 +605,7 @@ game over!
 	`do they have food at this party`,
 ])>>
 
-::guest-not-hungry
+::guest-not-hunger
 <<print this.randItem([
 	`mmm.. im stuffed`,
 	`the snacks are bangin rn`,
@@ -624,7 +620,7 @@ game over!
 	`food pics for the yam`,
 ])>>
 
-::guest-thirsty
+::guest-thirst
 <<print this.randItem([
 	`im thirsty`,
 	`need a drink...`,
@@ -637,7 +633,7 @@ game over!
 	`#thirsty`,
 ])>>
 
-::guest-not-thirsty
+::guest-not-thirst
 <<print this.randItem([
 	`mm.. this drink is ${this.randItem(['so', 'soo', 'soooo'])} good`,
 	`lots of yummy drinx tn`,
@@ -663,7 +659,7 @@ game over!
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
 ])>>
 
-::guest-hot
+::guest-not-cold
 <<print this.randItem([
 	`the waters fine`,
 	`this hot tub rocks`,
@@ -678,6 +674,26 @@ game over!
 	`dont wanna get out <3`,
 	`mmmm warm`,
 	`hot tub heaven...`,
+])>>
+
+::guest-dry
+<<print this.randItem([
+	`dry`,
+])>>
+
+::guest-not-dry
+<<print this.randItem([
+	`not dry`,
+])>>
+
+::guest-bland
+<<print this.randItem([
+	`bland`,
+])>>
+
+::guest-not-bland
+<<print this.randItem([
+	`not bland`,
 ])>>
 
 ::guest-random
