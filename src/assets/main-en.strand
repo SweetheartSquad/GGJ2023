@@ -411,17 +411,23 @@ The End
 
 	// fake some npcs/feed posts
 	let count = 0;
+	const guests = [];
 	setInterval(() => {
 		if (count > 10) return;
 		++count;
 		const npc = this.randItem(['test', 'test2', 'test3']);
+		guests.push(npc);
 		this.scene.addGuestToPool(npc);
 		setTimeout(() => {
 			setInterval(() => {
-				this.scene.feed.say(
-					'HARDCORE! TO THE MEGA! '.repeat(Math.round(this.randRange(1, 3))),
-					`${npc}Idle`
-				);
+				const category = this.randItem([
+					this.stats.heat > 50 ? 'hot' : 'cold',
+					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
+					this.stats.thirst > 50 ? 'thirsty' : 'not-thirsty',
+					'random',
+				]);
+				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
+				this.scene.feed.say(post, `${this.randItem(guests)}Idle`);
 			}, 3143);
 		}, this.randRange(0, 5000));
 	}, 5234);
@@ -463,3 +469,60 @@ The End
 	}
 	this.goto('close');
 >>
+
+//                                       dP
+//                                       88
+// .d8888b. dP    dP .d8888b. .d8888b. d8888P .d8888b.
+// 88'  `88 88    88 88ooood8 Y8ooooo.   88   Y8ooooo.
+// 88.  .88 88.  .88 88.  ...       88   88         88
+// `8888P88 `88888P' `88888P' `88888P'   dP   `88888P'
+//      .88
+//  d8888P
+
+::guest-hungry
+<<print this.randItem([
+	`im hungry`,
+	`i am hungry`,
+	`i am also hungry`,
+])>>
+
+::guest-not-hungry
+<<print this.randItem([
+	`im not hungry`,
+	`i am not hungry`,
+	`i am also not hungry`,
+])>>
+
+::guest-thirsty
+<<print this.randItem([
+	`im thirsty`,
+	`i am thirsty`,
+	`i am also thirsty`,
+])>>
+
+::guest-not-thirsty
+<<print this.randItem([
+	`im not thirsty`,
+	`i am not thirsty`,
+	`i am also not thirsty`,
+])>>
+
+::guest-cold
+<<print this.randItem([
+	`wont anyone please turn up the heat`,
+	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
+])>>
+
+::guest-hot
+<<print this.randItem([
+	`the waters fine`,
+	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
+])>>
+
+::guest-random
+<<print this.randItem([
+	`lol`,
+	`lmao`,
+	`wowww`,
+	`HARDCORE! TO THE MEGA!`,
+])>>
