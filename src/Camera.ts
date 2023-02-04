@@ -3,7 +3,7 @@ import { size } from './config';
 import { game } from './Game';
 import { GameObject } from './GameObject';
 import { Display } from './Scripts/Display';
-import { zero } from './utils';
+import { randRange, zero } from './utils';
 import * as VMath from './VMath';
 
 export class Camera extends GameObject {
@@ -14,6 +14,8 @@ export class Camera extends GameObject {
 	private targetPivot: VMath.V = { x: 0, y: 0 };
 
 	subpixel = false;
+
+	shake = 0;
 
 	constructor() {
 		super();
@@ -47,11 +49,17 @@ export class Camera extends GameObject {
 		VMath.copy(
 			this.display.container.pivot,
 			VMath.add(
-				VMath.multiply(
-					VMath.subtract(this.targetPivot, this.display.container.pivot),
-					dt
+				VMath.add(
+					VMath.multiply(
+						VMath.subtract(this.targetPivot, this.display.container.pivot),
+						dt
+					),
+					this.display.container.pivot
 				),
-				this.display.container.pivot
+				{
+					x: randRange(-this.shake, this.shake),
+					y: randRange(-this.shake, this.shake),
+				}
 			)
 		);
 		if (!this.subpixel) {
