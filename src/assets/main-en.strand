@@ -359,16 +359,17 @@ game over!
 	this.itemFollower = itemFollower;
 
 	this.stats = {
-		heat: 0,
+		cold: 50,
 		hunger: 0,
 		thirst: 0,
 		busy: 0,
 	};
 	const intervals = [];
 	intervals.push(setInterval(() => {
-		this.stats.heat = this.fairmath(this.stats.heat, -1);
-		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
-		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
+		Object.keys(this.stats).forEach(i => {
+			if (i === 'busy') return;
+			this.stats[i] = this.fairmath(this.stats[i], 1);
+		});
 		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length);
 	}, 1000));
 
@@ -410,13 +411,13 @@ game over!
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
 		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
 
-		this.Emitter({ rate: () => this.stats.heat > 30 ? 30 : this.lerp(500, 30, this.stats.heat/30), texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.stats.heat > 30 ? 40 : this.lerp(600, 40, this.stats.heat/30), texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.stats.heat > 30 ? 50 : this.lerp(700, 50, this.stats.heat/30), texture: 'smallBubble3', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.stats.heat < 30 ? 5000 : this.lerp(5000, 15, this.ease.circOut((this.stats.heat-30)/70)), texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.stats.heat < 30 ? 6000 : this.lerp(6000, 15, this.ease.circOut((this.stats.heat-30)/70)), texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.stats.heat < 30 ? 7000 : this.lerp(7000, 15, this.ease.circOut((this.stats.heat-30)/70)), texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.lerp(500, 20, this.ease.circOut(this.stats.heat/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
+		this.Emitter({ rate: () => this.stats.cold < 70 ? 30 : this.lerp(30, 500, (this.stats.cold-70)/30), texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.cold < 70 ? 40 : this.lerp(40, 600, (this.stats.cold-70)/30), texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.cold < 70 ? 50 : this.lerp(50, 700, (this.stats.cold-70)/30), texture: 'smallBubble3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.cold > 70 ? 5000 : this.lerp(15, 5000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.cold > 70 ? 6000 : this.lerp(15, 6000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.stats.cold > 70 ? 7000 : this.lerp(15, 7000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
+		this.Emitter({ rate: () => this.lerp(20, 500, this.ease.circIn(this.stats.cold/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
 			const {x,y} = this.randCirc(25);
 			p.transform.y += y*0.5;
 			p.transform.x += x*0.5;
@@ -446,7 +447,7 @@ game over!
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
-		if (Math.random() * ((100 - this.stats.heat) + this.stats.hunger + this.stats.thirst + this.stats.busy)/400 > spawnRate[1]) return;
+		if (Math.random() * (this.stats.cold + this.stats.hunger + this.stats.thirst + this.stats.busy)/400 > spawnRate[1]) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
@@ -475,7 +476,7 @@ game over!
 				if (this.gameover) return;
 				if (Math.random() > postRate[1]) return;
 				const category = npc.waiting ? 'waiting' : this.randItem([
-					this.stats.heat > 50 ? 'hot' : 'cold',
+					this.stats.cold > 50 ? 'cold' : 'hot',
 					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
 					this.stats.thirst > 50 ? 'thirsty' : 'not-thirsty',
 					'random',
@@ -572,12 +573,12 @@ game over!
 	if (this.itemFollower.body === `station${this.gameObject.bodySensor.body.plugin.type}`) {
 		// TODO: all station mechanics
 		if (this.itemFollower.body === 'stationTest') {
-			this.stats.heat = this.fairmath(this.stats.heat, 10);
+			this.stats.cold = this.fairmath(this.stats.cold, -10);
 		}
 
 	} else {
 		// TODO: wrong sfx
-		this.stats.heat = this.fairmath(this.stats.heat, -5);
+		this.stats.cold = this.fairmath(this.stats.cold, 5);
 		this.stats.hunger = this.fairmath(this.stats.hunger, 5);
 		this.stats.thirst = this.fairmath(this.stats.thirst, 5);
 		this.stats.busy = this.fairmath(this.stats.busy, 5);
