@@ -422,8 +422,8 @@ export class GameScene {
 			new Updater(n, () => {
 				// @ts-ignore
 				const dry = this.strand.stats.dry / 100;
-				g.pivot.y = -dry * (h / 2);
-				skirt.pivot.y = -dry * (h / 2);
+				g.y = -h * 1.5 + dry * (h / 2);
+				skirt.y = -h / 2 + dry * (h / 2);
 				skirt.alpha = 1 - dry;
 			})
 		);
