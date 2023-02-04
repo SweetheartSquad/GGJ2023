@@ -437,11 +437,13 @@ game over!
 	const spawnRate = [1000, .10];
 	const postRate = [100, .01];
 	const guestsWaiting = [];
+	const guestsMaxWaiting = 10;
+	const guestsGap = 40;
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
-		if (guestsWaiting.length > 10) return;
+		if (guestsWaiting.length > guestsMaxWaiting) return;
 		if (Math.random() * ((100 - this.stats.heat) + this.stats.hunger + this.stats.thirst + this.stats.busy)/400 > spawnRate[1]) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
@@ -451,8 +453,8 @@ game over!
 		const p = pointInPool();
 		npc.setPosition(doorProp.transform.x, doorProp.transform.y - 200);
 		npc.roam.target.x = doorProp.transform.x;
-		npc.roam.target.y = doorProp.transform.y - 100;
-		npc.roam.range[0] = 100;
+		npc.roam.target.y = doorProp.transform.y - 100 - guestsWaiting.length * guestsGap;
+		npc.roam.range[0] = 10;
 		npc.roam.range[1] = 1;
 		npc.roam.freq = {
 			value: 1000,
@@ -484,6 +486,9 @@ game over!
 		if (this.gameover) return;
 		if (!guestsWaiting.length) return;
 		const guest = guestsWaiting.shift();
+		guestsWaiting.forEach((i, idx) => {
+			i.roam.target.y = doorProp.transform.y - 100 - idx * guestsGap;
+		});
 		guests.push(guest);
 		guest.waiting = false;
 		this.stats.busy = this.fairmath(this.stats.busy, -20);
