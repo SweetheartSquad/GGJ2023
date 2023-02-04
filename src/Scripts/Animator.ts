@@ -5,12 +5,13 @@ import { Script } from './Script';
 
 export function getFrameCount(animation: string): number {
 	let count = resources.get<number | undefined>(`${animation}-count`);
+	if (count === -1) return 0;
 	if (count !== undefined) return count;
 	count = 0;
 	while (resources.get<Texture>(`${animation}.${count + 1}`)?.baseTexture) {
 		++count;
 	}
-	resources.set(`${animation}-count`, count); // cache for repeated calls
+	resources.set(`${animation}-count`, count || -1); // cache for repeated calls
 	return count;
 }
 
