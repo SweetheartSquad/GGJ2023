@@ -590,7 +590,7 @@ game over (bad)!
 			}
 			if (time < 0) {
 				// TODO: proper win condition
-				const won = (guests.length - guestsWaiting.length) > 5;
+				const won = (guests.length - guestsWaiting.length) > 10;
 				this.music('');
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
