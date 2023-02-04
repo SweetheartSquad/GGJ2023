@@ -15,6 +15,8 @@ textures/hottubWall.png
 textures/hottubLid.png
 textures/furnaceBackBlack.png
 textures/fenceProxy.png
+textures/bushAndPump.png
+
 textures/stationBlandIdle.png
 textures/stationBlandOut.png
 textures/stationBlandIn.png
