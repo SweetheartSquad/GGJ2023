@@ -46,9 +46,6 @@ textures/guyIdle.x2.png
 textures/guyRun.x4.png
 
 textures/waterSkirt.x2.png
-textures/guest1Idle.png
-textures/guest2Idle.png
-textures/guest3Idle.png
 textures/guestGingerIdle.png
 textures/guestBeetIdle.png
 textures/guestYamIdle.png
