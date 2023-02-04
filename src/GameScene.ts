@@ -427,7 +427,6 @@ export class GameScene {
 				// @ts-ignore
 				const dry = this.strand.stats.dry / 100;
 				g.pivot.y = -dry * n.spr.height * 0.5;
-				// @ts-ignore
 				skirt.pivot.y = -dry * n.spr.height * 0.5;
 				skirt.alpha = 1 - dry;
 			})
