@@ -519,6 +519,7 @@ game over!
 			}
 			if (time < 0) {
 				// TODO: end game
+				this.music('');
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
 				this.gameover = true;
