@@ -364,6 +364,7 @@ The End
 		busy: 0,
 	};
 	setInterval(() => {
+		if (this.gameover) return;
 		this.stats.heat = this.fairmath(this.stats.heat, -1);
 		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
 		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
@@ -437,6 +438,7 @@ The End
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest')).map(i => i.replace('Idle', ''));
 	setInterval(() => {
+		if (this.gameover) return;
 		if (count > 10) return;
 		++count;
 		const npcType = this.randItem(guestTypes);
@@ -496,7 +498,7 @@ The End
 	};
 
 	// timer
-	let time = 32 * 1000;
+	let time = 120 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
@@ -514,6 +516,8 @@ The End
 			if (time < 0) {
 				// TODO: end game
 				this.scene.timer.text = 'TIME!';
+				this.scene.player.canMove = false;
+				this.gameover = true;
 			}
 		},
 	});
