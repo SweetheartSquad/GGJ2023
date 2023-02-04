@@ -24,7 +24,7 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { UIFeed } from './UIFeed';
-import { delay, randCirc, removeFromArray, tex } from './utils';
+import { delay, removeFromArray, tex } from './utils';
 import { add, V } from './VMath';
 
 let player: Player;
@@ -384,8 +384,6 @@ export class GameScene {
 		const n = new NPC({
 			body: guest,
 			shadow: false,
-			x: 115,
-			y: -716,
 			roam: 400,
 		});
 		const g = new Graphics();
@@ -410,11 +408,8 @@ export class GameScene {
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
 		n.spr.mask = g;
-		const pos = randCirc(100);
-		pos.x += 115;
-		pos.y -= 716;
-		n.setPosition(pos.x, pos.y);
 		this.take(n);
 		Area.mount([n], this.container);
+		return n;
 	}
 }
