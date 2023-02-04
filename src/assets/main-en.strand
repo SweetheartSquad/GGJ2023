@@ -558,7 +558,7 @@ game over!
 	};
 
 	// timer
-	let time = 10 * 1000;
+	let time = 120 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
