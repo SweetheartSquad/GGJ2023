@@ -657,6 +657,7 @@ game over!
 	`didnt come for an ice bath...`,
 	`more heat plz`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
+	`#coolin`,
 ])>>
 
 ::guest-not-cold
@@ -678,22 +679,45 @@ game over!
 
 ::guest-dry
 <<print this.randItem([
-	`dry`,
+	`wheres the water!!`,
+	`#dry #notwet`,
+	`needs more water`,
+	`pool's runnin low`,
+	`#drought`,
+	`water level droppin`,
+	`land ho!`,
 ])>>
 
 ::guest-not-dry
 <<print this.randItem([
-	`not dry`,
+	`nice n wet`,
+	`#soaking`,
+	`water's high!`,
+	`#waterworld`,
+	`#WetNWild`,
+	`full body soak`,
+	`#immersed`,
 ])>>
 
 ::guest-bland
 <<print this.randItem([
-	`bland`,
+	`not very salty...`,
+	`the water's gross`,
+	`i see scum :X`,
+	`#grody #scumbum`,
+	`need salt`,
+	`#unseasoned`,
 ])>>
 
 ::guest-not-bland
 <<print this.randItem([
-	`not bland`,
+	`#salty`,
+	`feelin fresh`,
+	`hot tub's nice n clean`,
+	`lotsa salt in here`,
+	`#seasoned`,
+	`salty tubbin`,
+	`love that salt smell`,
 ])>>
 
 ::guest-random
@@ -735,7 +759,6 @@ game over!
 	`line is too long...`,
 	`been in line 4ever`,
 	`${this.randItem(['so', 'soo', 'soooo'])} excited to get in`,
-	`long line`,
 	`pumped 4 this!`,
 	`wheres the bouncer`,
 	`how much longer??!?`,
