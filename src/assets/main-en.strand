@@ -556,6 +556,7 @@ The End
 	`rub a dub dub wheres the grub`,
 	`im starvin luv xx`,
 	`is the food gone?`,
+	`#starving`,
 	`do they have food at this party`,
 ])>>
 
@@ -568,8 +569,10 @@ The End
 	`the food here is ${this.randItem(['so', 'soo', 'soooo'])} good`,
 	`wowww im in snack heaven`,
 	`yummy!`,
+	`#stuffed`,
 	`ate too much lol`,
 	`delicious`,
+	`food pics for the yam`,
 ])>>
 
 ::guest-thirsty
@@ -582,6 +585,7 @@ The End
 	`feelin parched`,
 	`would kill for a drink rn`,
 	`runnin dry over here`,
+	`#thirsty`,
 ])>>
 
 ::guest-not-thirsty
@@ -590,9 +594,10 @@ The End
 	`lots of yummy drinx tn`,
 	`its no longer thirsty thursday lol`,
 	`doing shots rn!!`,
+	`#shots`,
 	`feelin refreshed`,
 	`ahhh... that hits`,
-	`gotta pee`,
+	`#drinking #gottapee`,
 ])>>
 
 ::guest-cold
@@ -603,6 +608,7 @@ The End
 	`im freezing :(`,
 	`feel like im the north pole`,
 	`arent hot tubs supposed to be HOT`,
+	`#coldfeet`,
 	`didnt come for an ice bath...`,
 	`more heat plz`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
@@ -617,6 +623,7 @@ The End
 	`feelin toasty`,
 	`hot tub is fire emoji`,
 	`yessss so warm`,
+	`#heat #fire`,
 	`${this.randItem(['ahh', 'ahhh', 'ahhhhhhh'])} this is relaxing...`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
 	`dont wanna get out <3`,
@@ -630,9 +637,12 @@ The End
 	`lmao`,
 	`wowww`,
 	`HARDCORE! TO THE MEGA!`,
+	`#party`,
 	`cant find my glasses :(`,
 	`who took my shirt!!`,
 	`so fun`,
+	`#PartyVibes`,
+	`hashtag do it for the yam`,
 	`date night with this one <3`,
 	`what's this song?`,
 	`whos drink is this...`,
@@ -664,6 +674,7 @@ The End
 	`pumped 4 this!`,
 	`wheres the bouncer`,
 	`how much longer??!?`,
+	`#waiting #bored`,
 	`lemme in`,
 	`im here`,
 	`${this.randItem(['SHE', 'HE', 'THEY', 'ZE'])} got let in before me??`,
