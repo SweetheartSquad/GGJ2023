@@ -7,9 +7,9 @@ import { Tween, TweenManager } from './Tweens';
 import { randRange, tex } from './utils';
 
 const padding = {
-	top: 5,
+	top: 20,
 	bottom: 15,
-	left: 5,
+	left: 20,
 	right: 5,
 };
 const avatarSize = 60;
@@ -80,7 +80,7 @@ export class UIPost extends GameObject {
 		sprAvatar.y = padding.top;
 		avatarBg.x = mask.x = padding.left + avatarSize / 2;
 		avatarBg.y = mask.y = padding.top + avatarSize / 2;
-		t.x = sprAvatar.x + sprAvatar.width + gap;
+		t.x = sprAvatar.x + sprAvatar.width + gap - 10;
 		t.y = padding.top;
 		t2.x = sprAvatar.x + sprAvatar.width + gap;
 		t2.y = sprBg.height - padding.bottom;
