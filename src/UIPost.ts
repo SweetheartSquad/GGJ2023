@@ -10,7 +10,7 @@ const padding = {
 	top: 20,
 	bottom: 15,
 	left: 20,
-	right: 5,
+	right: 20,
 };
 const avatarSize = 60;
 const gap = 20;
