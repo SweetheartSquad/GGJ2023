@@ -447,7 +447,7 @@ game over!
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
-		if (Math.random() * (this.stats.cold + this.stats.hunger + this.stats.thirst + this.stats.busy)/400 > spawnRate[1]) return;
+		if (Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1]) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
