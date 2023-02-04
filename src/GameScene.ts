@@ -21,6 +21,7 @@ import { PhysicsDebug } from './PhysicsDebug';
 import { Player } from './Player';
 import { ScreenFilter } from './ScreenFilter';
 import { Animator } from './Scripts/Animator';
+import { Updater } from './Scripts/Updater';
 import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
@@ -421,6 +422,16 @@ export class GameScene {
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
 		skirt.visible = g.visible = false;
+		n.scripts.push(
+			new Updater(n, () => {
+				// @ts-ignore
+				const dry = this.strand.stats.dry / 100;
+				g.pivot.y = -dry * n.spr.height * 0.5;
+				// @ts-ignore
+				skirt.pivot.y = -dry * n.spr.height * 0.5;
+				skirt.alpha = 1 - dry;
+			})
+		);
 		// @ts-ignore
 		n.skirt = skirt;
 		// @ts-ignore
