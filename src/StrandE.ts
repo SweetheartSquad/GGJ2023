@@ -367,8 +367,10 @@ export class StrandE extends Strand {
 
 	Station(options: {
 		type: string;
-		in: Omit<ConstructorParameters<typeof Prop>[0], 'texture'>;
-		out: Omit<ConstructorParameters<typeof Prop>[0], 'texture'>;
+		in: Omit<ConstructorParameters<typeof Prop>[0], 'texture'> &
+			Pick<ConstructorParameters<typeof NPC>[0], 'colliderSize'>;
+		out: Omit<ConstructorParameters<typeof Prop>[0], 'texture'> &
+			Pick<ConstructorParameters<typeof NPC>[0], 'colliderSize'>;
 	}) {
 		return [
 			new Prop({
@@ -385,6 +387,7 @@ export class StrandE extends Strand {
 				x: options.in.x ?? 0,
 				y: options.in.y ?? 0,
 				bodySensor: { plugin: { label: 'dump', type: options.type } },
+				colliderSize: options.in.colliderSize,
 			}),
 			new NPC({
 				passage: 'stationOut',
@@ -392,6 +395,7 @@ export class StrandE extends Strand {
 				x: options.out.x ?? 0,
 				y: options.out.y ?? 0,
 				bodySensor: { plugin: { label: 'grab', type: options.type } },
+				colliderSize: options.out.colliderSize,
 			}),
 		];
 	}
