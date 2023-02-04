@@ -507,7 +507,7 @@ The End
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
-			if (time < 0) {
+			if (this.gameover) {
 				return;
 			}
 			time -= window.game.app.ticker.deltaMS;
