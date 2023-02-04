@@ -128,9 +128,8 @@ open
 dump
 
 
-::The End
-<<print new Array(60).fill('\u200B').join('')>>
-The End
+::end
+game over!
 
 [[Restart|this.restart()]]
 
@@ -525,10 +524,12 @@ The End
 				this.gameover = true;
 				intervals.forEach(i => clearInterval(i));
 				intervals.length = 0;
+				this.delay(2000).then(() => {
+					this.goto('end');
+				});
 			}
 		},
 	});
-
 
 	this.scene.goto({ area: 'main' });
 	this.goto('close');
