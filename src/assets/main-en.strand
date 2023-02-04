@@ -121,6 +121,9 @@ interact
 ::grab
 grab
 
+::open
+open
+
 ::dump
 dump
 
@@ -388,7 +391,7 @@ The End
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
 
 		doorProp,
-		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true } }),
+		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
 
 		// food and drink related
