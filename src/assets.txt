@@ -14,7 +14,6 @@ textures/hottubWater.png
 textures/hottubWall.png
 textures/hottubLid.png
 textures/furnaceBackBlack.png
-textures/fenceProxy.png
 textures/stationBlandIdle.png
 textures/stationBlandOut.png
 textures/stationBlandIn.png
@@ -71,6 +70,8 @@ textures/smallBubble3.x4.png
 textures/smoke.png
 textures/fire.x4.png
 
+textures/edges.png
+textures/pastEdge.png
 textures/door.png
 textures/endBad.x2.png
 textures/endGood.x2.png

@@ -455,8 +455,12 @@ game over (bad)!
 	this.propLid.display.container.alpha = 0;
 
 	this.Area('main', [
-		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
+		this.Prop({ texture: 'groundGrass', x: 300, y: 200, offset: -100000 }),
+		this.PropParallax({ texture: 'pastEdge', offset: -1000000, mult: 1 }),
+		this.Prop({ texture: 'edges', x: 300, y: 200, offset: 10000 }),
+
+		// fence
 
 		doorProp,
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
