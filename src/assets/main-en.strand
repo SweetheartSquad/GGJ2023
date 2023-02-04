@@ -358,11 +358,13 @@ The End
 		heat: 0,
 		hunger: 0,
 		thirst: 0,
+		busy: 0,
 	};
 	setInterval(() => {
 		this.stats.heat = this.fairmath(this.stats.heat, -1);
 		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
 		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
+		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length);
 	}, 1000);
 
 	const poolPos = {x: 200, y: -580 };
@@ -379,10 +381,14 @@ The End
 			p.transform.y += y;
 	};
 
+	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150 });
+
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
 
+		doorProp,
+		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
 
 		// food and drink related
@@ -424,6 +430,7 @@ The End
 
 	// fake some npcs/feed posts
 	let count = 0;
+	const guestsWaiting = [];
 	const guests = [];
 	setInterval(() => {
 		if (count > 10) return;
@@ -431,25 +438,39 @@ The End
 		const npcType = this.randItem(['test', 'test2', 'test3']);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
+		guestsWaiting.push(npc);
 
 		const p = pointInPool();
-		npc.setPosition(p.x, p.y);
-		npc.roam.target = poolPos;
-		npc.roam.range[0] = 400;
-		npc.roam.range[1] = 0.7;
+		npc.setPosition(doorProp.transform.x, doorProp.transform.y - 200);
+		npc.roam.target.x = doorProp.transform.x;
+		npc.roam.target.y = doorProp.transform.y - 50;
+		npc.waiting = true;
 		setTimeout(() => {
 			setInterval(() => {
-				const category = this.randItem([
+				const category = npc.waiting ? 'waiting' : this.randItem([
 					this.stats.heat > 50 ? 'hot' : 'cold',
 					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
 					this.stats.thirst > 50 ? 'thirsty' : 'not-thirsty',
 					'random',
 				]);
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
-				this.scene.feed.say(post, `${this.randItem(guests)}Idle`);
+				this.scene.feed.say(post, `${npcType}Idle`);
 			}, 3143);
 		}, this.randRange(0, 5000));
 	}, 52);
+
+	this.letGuestIn = () => {
+		if (!guestsWaiting.length) return;
+		const guest = guestsWaiting.shift();
+		guests.push(guest);
+		guest.roam.target = poolPos;
+		guest.roam.range[0] = 400;
+		guest.roam.range[1] = 0.7;
+		guest.waiting = false;
+		guest.spr.mask = guest.mask;
+		guest.mask.visible = guest.skirt.visible = true;
+		this.stats.busy = this.fairmath(this.stats.busy, -20);
+	};
 
 	// timer
 	let time = 32 * 1000;
@@ -512,6 +533,12 @@ The End
 	this.goto('close');
 >>
 
+::door
+<<do
+	this.letGuestIn();
+	this.goto('close');
+>>
+
 //                                       dP
 //                                       88
 // .d8888b. dP    dP .d8888b. .d8888b. d8888P .d8888b.
@@ -523,42 +550,75 @@ The End
 
 ::guest-hungry
 <<print this.randItem([
-	`im hungry`,
-	`i am hungry`,
-	`i am also hungry`,
+	`im starving... wheres the food at`,
+	`any1 kno where the snacks are?`,
+	`dying of hunger send food`,
+	`rub a dub dub wheres the grub`,
+	`im starvin luv xx`,
+	`is the food gone?`,
 ])>>
 
 ::guest-not-hungry
 <<print this.randItem([
-	`im not hungry`,
-	`i am not hungry`,
-	`i am also not hungry`,
+	`mmm.. im stuffed`,
+	`the snacks are bangin rn`,
+	`im so full... x_x`,
+	`luv these or derves (sp?)`,
+	`the food here is ${this.randItem(['so', 'soo', 'soooo'])} good`,
+	`wowww im in snack heaven`,
+	`yummy!`,
+	`ate too much lol`,
 ])>>
 
 ::guest-thirsty
 <<print this.randItem([
 	`im thirsty`,
-	`i am thirsty`,
-	`i am also thirsty`,
+	`need a drink...`,
+	`where are the bevvies smh`,
+	`cant find my drink :(`,
+	`wheres the DRINX`,
+	`feelin parched`,
+	`would kill for a drink rn`,
+	`runnin dry over here`,
 ])>>
 
 ::guest-not-thirsty
 <<print this.randItem([
-	`im not thirsty`,
-	`i am not thirsty`,
-	`i am also not thirsty`,
+	`mm.. this drink is ${this.randItem(['so', 'soo', 'soooo'])} good`,
+	`lots of yummy drinx tn`,
+	`its no longer thirsty thursday lol`,
+	`doing shots rn!!`,
+	`feelin refreshed`,
+	`ahhh... that hits`,
+	`gotta pee...`,
 ])>>
 
 ::guest-cold
 <<print this.randItem([
 	`wont anyone please turn up the heat`,
+	`${this.randItem(['brr', 'brrrr', 'brrrrrrr'])}`,
+	`im ice cold (in the bad way)`
+	`im freezing :(`
+	`feel like im the north pole`
+	`arent hot tubs supposed to be HOT`
+	`didnt come for an ice bath...`
+	`more heat plz`
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
 ])>>
 
 ::guest-hot
 <<print this.randItem([
 	`the waters fine`,
+	`this hot tub rocks`,
+	`perfect temp in here`,
+	`cozy...`,
+	`feelin toasty`,
+	`hot tub is fire emoji`,
+	`yessss so warm`,
+	`${this.randItem(['ahh', 'ahhh', 'ahhhhhhh'])} this is relaxing...`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
+	`dont wanna get out <3`,
+	`mmmm warm`,
 ])>>
 
 ::guest-random
@@ -567,4 +627,27 @@ The End
 	`lmao`,
 	`wowww`,
 	`HARDCORE! TO THE MEGA!`,
+	`cant find my glasses :(`,
+	`who took my shirt!!`,
+	`so fun`,
+	`date night with this one <3`,
+	`what's this song?`,
+	`whos drink is this...`,
+	`meet me in the hot tub!`,
+    `chilling...`,
+    `omg as if ${this.randItem(['SHE', 'HE', 'THEY', 'ZE'])} came...`,
+	`love it`,
+	`this song sux`,
+	`did i miss anything?`,
+	`omg dead xD`,
+	`this is my jam!!`,
+	`bored...`,
+	`i fell`,
+	`${this.randItem(['woo', 'woooo', 'woooooooo'])}`,
+])>>
+
+::guest-waiting
+<<print this.randItem([
+	`Let me in.`,
+	`LET ME INNNNN!!!`,
 ])>>

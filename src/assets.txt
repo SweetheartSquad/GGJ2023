@@ -50,6 +50,7 @@ textures/smallBubble3.x4.png
 textures/smoke.png
 textures/fire.x4.png
 
+textures/door.png
 textures/stationTestIn.png
 textures/stationTestOut.png
 textures/stationTestIdle.png
