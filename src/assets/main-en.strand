@@ -363,6 +363,8 @@ game over!
 		hunger: 0,
 		thirst: 0,
 		busy: 0,
+		bland: 0,
+		dry: 0,
 	};
 	const intervals = [];
 	intervals.push(setInterval(() => {
