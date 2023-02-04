@@ -592,12 +592,12 @@ The End
 <<print this.randItem([
 	`wont anyone please turn up the heat`,
 	`${this.randItem(['brr', 'brrrr', 'brrrrrrr'])}`,
-	`im ice cold (in the bad way)`
-	`im freezing :(`
-	`feel like im the north pole`
-	`arent hot tubs supposed to be HOT`
-	`didnt come for an ice bath...`
-	`more heat plz`
+	`im ice cold (in the bad way)`,
+	`im freezing :(`,
+	`feel like im the north pole`,
+	`arent hot tubs supposed to be HOT`,
+	`didnt come for an ice bath...`,
+	`more heat plz`,
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} cold`,
 ])>>
 
