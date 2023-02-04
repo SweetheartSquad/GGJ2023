@@ -433,6 +433,8 @@ game over!
 			propDrink.display.container.visible = this.stats.thirst < 50;
 		},
 	});
+	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
+	this.propLid.display.container.alpha = 0;
 
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
@@ -443,6 +445,7 @@ game over!
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -700 }),
 		waterProp,
 		this.Prop({ texture: 'hottubWall', x: 212, y: -204, offset: -650 }),
+		this.propLid,
 		
 		// wood and fire related
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
@@ -555,7 +558,7 @@ game over!
 	};
 
 	// timer
-	let time = 2 * 60 * 1000;
+	let time = 10 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
@@ -578,6 +581,9 @@ game over!
 				this.gameover = true;
 				intervals.forEach(i => clearInterval(i));
 				intervals.length = 0;
+				this.scene.focusAmt = 1;
+				this.tween(this.propLid.display.container, 'alpha', 1, 500, 0, this.ease.cubicOut);
+				this.tween(this.propLid.transform, 'y', this.propLid.transform.y, 2000, this.propLid.transform.y - 1000, this.ease.bounceOut);
 				this.delay(2000).then(() => {
 					this.goto('end');
 				});
