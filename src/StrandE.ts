@@ -34,6 +34,8 @@ import {
 	lerp,
 	mousePos,
 	randCirc,
+	randItem,
+	randRange,
 	shuffle,
 	tex,
 } from './utils';
@@ -66,6 +68,10 @@ export class StrandE extends Strand {
 	lerp = lerp;
 
 	mousePos = mousePos;
+
+	randRange = randRange;
+
+	randItem = randItem;
 
 	randCirc = randCirc;
 
