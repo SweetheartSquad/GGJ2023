@@ -267,7 +267,10 @@ export class GameScene {
 		this.strand.goto('start');
 
 		if (DEBUG) {
-			this.statsDebug = new BitmapText('', { fontName: 'bmfont' });
+			this.statsDebug = new BitmapText('', {
+				fontName: 'bmfont',
+				fontSize: 16,
+			});
 			game.app.stage.addChild(this.statsDebug);
 		}
 
