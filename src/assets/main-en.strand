@@ -338,6 +338,8 @@ The End
 	this.texttimeouts.forEach((t) => clearTimeout(t));
 	this.texttimeouts.length = 0;
 
+	this.tween(this.scene.feed.display.container, 'alpha', 1, 1000);
+
 	if (this.scene.areas.main) {
 		this.scene.areas.main.forEach(i => {
 			this.destroy(i);

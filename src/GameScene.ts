@@ -146,6 +146,7 @@ export class GameScene {
 		this.strand.debug = DEBUG;
 		this.dialogue = new UIDialogue(this.strand);
 		this.feed = new UIFeed();
+		this.feed.display.container.alpha = 0;
 
 		this.border = new Border();
 		this.border.init();
