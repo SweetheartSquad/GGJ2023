@@ -1,6 +1,6 @@
 import { Character } from '../Character';
 import { game } from '../Game';
-import { randRange } from '../utils';
+import { randCirc } from '../utils';
 import * as VMath from '../VMath';
 import { Script } from './Script';
 
@@ -39,8 +39,9 @@ export class Roam extends Script {
 
 		const curTime = game.app.ticker.lastTime;
 		if (curTime > this.changeOffset) {
-			this.offset.x = randRange(...this.range) * Math.sign(Math.random() - 0.5);
-			this.offset.y = randRange(...this.range) * Math.sign(Math.random() - 0.5);
+			const p = randCirc(this.range[0]);
+			this.offset.x = p.x;
+			this.offset.y = p.y * this.range[1];
 			this.changeOffset =
 				curTime + (Math.random() * 2 - 1) * this.freq.range + this.freq.value;
 		}

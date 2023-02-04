@@ -24,7 +24,7 @@ import { StrandE } from './StrandE';
 import { TweenManager } from './Tweens';
 import { UIDialogue } from './UIDialogue';
 import { UIFeed } from './UIFeed';
-import { delay, randCirc, removeFromArray, tex } from './utils';
+import { delay, removeFromArray, tex } from './utils';
 import { add, V } from './VMath';
 
 let player: Player;
@@ -43,6 +43,8 @@ export class GameScene {
 	dialogue: UIDialogue;
 
 	feed: UIFeed;
+
+	timer: BitmapText;
 
 	screenFilter: ScreenFilter;
 
@@ -146,6 +148,13 @@ export class GameScene {
 
 		this.border = new Border();
 		this.border.init();
+
+		this.timer = new BitmapText('', { fontName: 'bmfont', align: 'center' });
+		this.timer.anchor.x = 0.5;
+		this.timer.anchor.y = 1;
+		this.timer.x = size.x / 2;
+		this.timer.y = size.y - 20;
+		game.app.stage.addChild(this.timer);
 
 		const interactions: Body[] = [];
 
@@ -384,8 +393,6 @@ export class GameScene {
 		const n = new NPC({
 			body: guest,
 			shadow: false,
-			x: 115,
-			y: -716,
 			roam: 400,
 		});
 		const g = new Graphics();
@@ -410,11 +417,8 @@ export class GameScene {
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
 		n.spr.mask = g;
-		const pos = randCirc(100);
-		pos.x += 115;
-		pos.y -= 716;
-		n.setPosition(pos.x, pos.y);
 		this.take(n);
 		Area.mount([n], this.container);
+		return n;
 	}
 }
