@@ -365,6 +365,9 @@ game over (bad)!
 	itemFollower.speed = 8;
 	this.itemFollower = itemFollower;
 
+	const spawnRate = [1000, .01];
+	const postRate = [300, .01];
+	const guestsMaxWaiting = 10;
 	this.stats = {
 		cold: 50,
 		hunger: 0,
@@ -489,11 +492,8 @@ game over (bad)!
 
 
 	// spawn npcs
-	const spawnRate = [1000, .10];
-	const postRate = [100, .01];
-	const guestsWaiting = [];
-	const guestsMaxWaiting = 10;
 	const guestsGap = 40;
+	const guestsWaiting = [];
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
@@ -639,7 +639,7 @@ game over (bad)!
 		this.tween(p.display.container, 'alpha', 0, 200);
 		if (this.itemFollower.body === `station${this.gameObject.bodySensor.body.plugin.type}`) {
 			const stat = this.itemFollower.body.replace('station', '').toLowerCase();
-			this.stats[stat] = this.fairmath(this.stats[stat], -10);
+			this.stats[stat] = this.fairmath(this.stats[stat], -50);
 			if (stat === 'hunger' || stat === 'thirst') {
 				this.stats[stat] = 0;
 			}
