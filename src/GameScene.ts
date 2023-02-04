@@ -78,7 +78,7 @@ export class GameScene {
 
 	statsDebug?: BitmapText;
 
-	focusAmt = 0.1;
+	focusAmt = 0.25;
 
 	constructor() {
 		this.player = player = new Player({});
