@@ -44,6 +44,8 @@ export class GameScene {
 
 	feed: UIFeed;
 
+	timer: BitmapText;
+
 	screenFilter: ScreenFilter;
 
 	strand: StrandE;
@@ -146,6 +148,13 @@ export class GameScene {
 
 		this.border = new Border();
 		this.border.init();
+
+		this.timer = new BitmapText('', { fontName: 'bmfont', align: 'center' });
+		this.timer.anchor.x = 0.5;
+		this.timer.anchor.y = 1;
+		this.timer.x = size.x / 2;
+		this.timer.y = size.y - 20;
+		game.app.stage.addChild(this.timer);
 
 		const interactions: Body[] = [];
 
