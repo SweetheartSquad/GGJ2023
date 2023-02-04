@@ -19,6 +19,7 @@ textures/saltBag.png
 textures/waterBarrel.png
 textures/wineRack.png
 textures/stationWineIdle.png
+textures/stationSaltIdle.png
 audio/bgm.mp3
 audio/voiceDefault.mp3
 textures/walk_cursor.x7.png
