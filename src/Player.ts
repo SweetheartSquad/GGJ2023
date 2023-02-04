@@ -81,7 +81,7 @@ export class Player extends Character {
 		this.camPoint = new Container();
 		this.camPoint.visible = false;
 		this.display.container.addChild(this.camPoint);
-		this.canMove = true;
+		this.canMove = false;
 		this.step = 0;
 
 		window.player = this;
