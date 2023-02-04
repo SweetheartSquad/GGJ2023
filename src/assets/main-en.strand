@@ -647,7 +647,7 @@ The End
 	`wow it's ${this.randItem(['so', 'soo', 'soooo'])} hot`,
 	`dont wanna get out <3`,
 	`mmmm warm`,
-	`hot tub heaven...`
+	`hot tub heaven...`,
 ])>>
 
 ::guest-random
