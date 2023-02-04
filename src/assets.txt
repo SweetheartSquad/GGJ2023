@@ -10,6 +10,8 @@ textures/shadows.png
 textures/bg302.png
 textures/groundGrass.png
 textures/hottub.png
+textures/hottubWater.png
+textures/hottubWall.png
 textures/furnaceBackBlack.png
 
 textures/stationBlandIdle.png
