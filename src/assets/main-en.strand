@@ -578,10 +578,9 @@ game over!
 
 	} else {
 		// TODO: wrong sfx
-		this.stats.cold = this.fairmath(this.stats.cold, 5);
-		this.stats.hunger = this.fairmath(this.stats.hunger, 5);
-		this.stats.thirst = this.fairmath(this.stats.thirst, 5);
-		this.stats.busy = this.fairmath(this.stats.busy, 5);
+		Object.keys(this.stats).forEach(i => {
+			this.stats[i] = this.fairmath(this.stats[i], 5);
+		});
 	}
 	this.itemFollower.body = '';
 	this.itemFollower.animatorBody.setAnimation(`error`);
