@@ -441,7 +441,7 @@ The End
 					'random',
 				]);
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
-				this.scene.feed.say(post, `${this.randItem(guests)}Idle`);
+				this.scene.feed.say(post, `${npcType}Idle`);
 			}, 3143);
 		}, this.randRange(0, 5000));
 	}, 52);
