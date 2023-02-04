@@ -574,11 +574,8 @@ game over!
 		this.tween(p.spr, 'rotation', 1, 200);
 		this.tween(p.display.container, 'alpha', 0, 200);
 		if (this.itemFollower.body === `station${this.gameObject.bodySensor.body.plugin.type}`) {
-			// TODO: all station mechanics
-			if (this.itemFollower.body === 'stationTest') {
-				this.stats.cold = this.fairmath(this.stats.cold, -10);
-			}
-
+			const stat = this.itemFollower.body.replace('station', '').toLowerCase();
+			this.stats[stat] = this.fairmath(this.stats[stat], -10);
 		} else {
 			// TODO: wrong sfx
 			Object.keys(this.stats).forEach(i => {
