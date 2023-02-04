@@ -373,8 +373,8 @@ game over (bad)!
 		},
 	});
 
-	const spawnRate = [1000, .01];
-	const postRate = [300, .01];
+	const spawnRate = [500, .01];
+	const postRate = [100, .02];
 	const guestsMaxWaiting = 10;
 	this.stats = {
 		cold: 50,
@@ -386,8 +386,8 @@ game over (bad)!
 	};
 	const statRates = {
 		cold: 1,
-		hunger: 5,
-		thirst: 5,
+		hunger: 4,
+		thirst: 4,
 		busy: 1,
 		bland: 1,
 		dry: 1,
