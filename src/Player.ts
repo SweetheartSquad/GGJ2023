@@ -65,7 +65,7 @@ export class Player extends Character {
 			},
 			bodySensor: {
 				...bodySensor,
-				radius: 10,
+				radius: 40,
 				collisionFilter: {
 					category: SENSOR_PLAYER,
 					mask: SENSOR_INTERACTION,
