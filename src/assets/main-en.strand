@@ -500,7 +500,7 @@ game over (bad)!
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
-		if (Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1]) return;
+		if (guests.length && Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1]) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
