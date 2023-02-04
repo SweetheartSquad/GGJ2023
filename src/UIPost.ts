@@ -52,6 +52,9 @@ export class UIPost extends GameObject {
 			fontName: 'bmfont',
 			maxWidth: width - (padding.left + padding.right + gap + avatarSize),
 		});
+		if (text.startsWith('#')) {
+			t.tint = 0xffff12;
+		}
 		const t2 = new BitmapText(
 			` ${Math.floor(randRange(1, 99))}    ${Math.floor(randRange(1, 99))}`,
 			{
