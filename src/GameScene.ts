@@ -78,6 +78,8 @@ export class GameScene {
 
 	statsDebug?: BitmapText;
 
+	focusAmt = 0.1;
+
 	constructor() {
 		this.player = player = new Player({});
 		this.container.addChild(player.display.container);
@@ -359,12 +361,11 @@ export class GameScene {
 
 		// if (this.interactionFocus) {
 		this.interactionFocus = { x: 0, y: -size.y / 2 };
-		const focusAmt = 0.1;
 		// if (this.dialogue.isOpen) focusAmt = 0.7;
 		player.camPoint.y +=
-			(this.interactionFocus.y - player.transform.y) * focusAmt;
+			(this.interactionFocus.y - player.transform.y) * this.focusAmt;
 		player.camPoint.x +=
-			(this.interactionFocus.x - player.transform.x) * focusAmt;
+			(this.interactionFocus.x - player.transform.x) * this.focusAmt;
 		player.camPoint.x += this.feed.display.container.width / 2;
 		// }
 
