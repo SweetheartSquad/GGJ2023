@@ -44,6 +44,7 @@
 		"input-gamepads.js": "^3.0.4",
 		"localforage": "^1.10.0",
 		"matter-js": "^0.18.0",
+		"pixi-filters": "^5.1.1",
 		"pixi.js": "^7.1.0",
 		"postcss-clean": "1.2.0",
 		"postcss-loader": "^6.2.1",

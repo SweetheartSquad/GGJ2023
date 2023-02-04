@@ -1,4 +1,5 @@
 import { cubicIn, cubicOut } from 'eases';
+import { OutlineFilter } from 'pixi-filters';
 import {
 	BitmapText,
 	Container,
@@ -138,6 +139,7 @@ export class UIDialogue extends GameObject {
 			maxWidth: this.sprBg.width - this.padding.left - this.padding.right,
 		});
 		this.textPrompt = new BitmapText(this.strPrompt, { fontName: 'bmfont' });
+		this.textPrompt.filters = [new OutlineFilter(3, 0)];
 		this.textPrompt.alpha = 0;
 		this.textPrompt.x = size.x / 2;
 		this.textPrompt.y = 10;

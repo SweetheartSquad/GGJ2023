@@ -1,4 +1,5 @@
 import { Body, Events, Runner } from 'matter-js';
+import { OutlineFilter } from 'pixi-filters';
 import {
 	BitmapText,
 	Container,
@@ -154,6 +155,7 @@ export class GameScene {
 		this.timer.anchor.y = 1;
 		this.timer.x = size.x / 2;
 		this.timer.y = size.y - 20;
+		this.timer.filters = [new OutlineFilter(3, 0)];
 		game.app.stage.addChild(this.timer);
 
 		const interactions: Body[] = [];
