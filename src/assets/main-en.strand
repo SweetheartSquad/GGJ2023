@@ -433,15 +433,16 @@ game over!
 	]);
 
 
-	// fake some npcs/feed posts
-	let count = 0;
+	// spawn npcs
+	const spawnRate = [1000, .10];
+	const postRate = [100, .01];
 	const guestsWaiting = [];
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
-		if (count > 10) return;
-		++count;
+		if (guestsWaiting.length > 10) return;
+		if (Math.random() * ((100 - this.stats.heat) + this.stats.hunger + this.stats.thirst + this.stats.busy)/400 > spawnRate[1]) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
@@ -460,10 +461,13 @@ game over!
 		npc.waiting = true;
 		npc.bodyCollision.body.isSensor = true;
 		npc.speed = 0.5;
+
+		// send posts
 		setTimeout(() => {
 			if (this.gameover) return;
 			intervals.push(setInterval(() => {
 				if (this.gameover) return;
+				if (Math.random() > postRate[1]) return;
 				const category = npc.waiting ? 'waiting' : this.randItem([
 					this.stats.heat > 50 ? 'hot' : 'cold',
 					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
@@ -472,9 +476,9 @@ game over!
 				]);
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
 				this.scene.feed.say(post, `${npcType}Idle`);
-			}, 3143));
-		}, this.randRange(0, 5000));
-	}, 52));
+			}, postRate[0]));
+		}, this.randRange(0, postRate[0]));
+	}, spawnRate[0]));
 
 	this.letGuestIn = async () => {
 		if (this.gameover) return;
