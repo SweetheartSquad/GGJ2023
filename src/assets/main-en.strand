@@ -372,7 +372,7 @@ game over!
 			if (i === 'busy') return;
 			this.stats[i] = this.fairmath(this.stats[i], 1);
 		});
-		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length);
+		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length || -1);
 	}, 1000));
 
 	const poolPos = {x: 200, y: -580 };
