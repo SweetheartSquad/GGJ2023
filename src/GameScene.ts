@@ -393,7 +393,6 @@ export class GameScene {
 		const n = new NPC({
 			body: guest,
 			shadow: false,
-			roam: 400,
 		});
 		const g = new Graphics();
 		const skirt = new Sprite(tex('waterSkirt'));
@@ -416,7 +415,11 @@ export class GameScene {
 		skirt.y = -n.spr.height / 2;
 		skirt.width = n.spr.width * 1.25;
 		skirt.scale.y = skirt.scale.x;
-		n.spr.mask = g;
+		skirt.visible = g.visible = false;
+		// @ts-ignore
+		n.skirt = skirt;
+		// @ts-ignore
+		n.mask = g;
 		this.take(n);
 		Area.mount([n], this.container);
 		return n;

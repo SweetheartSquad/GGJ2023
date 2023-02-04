@@ -358,11 +358,13 @@ The End
 		heat: 0,
 		hunger: 0,
 		thirst: 0,
+		busy: 0,
 	};
 	setInterval(() => {
 		this.stats.heat = this.fairmath(this.stats.heat, -1);
 		this.stats.hunger = this.fairmath(this.stats.hunger, 1);
 		this.stats.thirst = this.fairmath(this.stats.thirst, 1);
+		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length);
 	}, 1000);
 
 	const poolPos = {x: 200, y: -580 };
@@ -379,10 +381,14 @@ The End
 			p.transform.y += y;
 	};
 
+	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150 });
+
 	this.Area('main', [
 		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
 
+		doorProp,
+		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
 
 		this.Prop({ texture: 'refreshmentTable', x: 592, y: -801, offset: -60 }),
@@ -419,6 +425,7 @@ The End
 
 	// fake some npcs/feed posts
 	let count = 0;
+	const guestsWaiting = [];
 	const guests = [];
 	setInterval(() => {
 		if (count > 10) return;
@@ -426,15 +433,16 @@ The End
 		const npcType = this.randItem(['test', 'test2', 'test3']);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
+		guestsWaiting.push(npc);
 
 		const p = pointInPool();
-		npc.setPosition(p.x, p.y);
-		npc.roam.target = poolPos;
-		npc.roam.range[0] = 400;
-		npc.roam.range[1] = 0.7;
+		npc.setPosition(doorProp.transform.x, doorProp.transform.y - 200);
+		npc.roam.target.x = doorProp.transform.x;
+		npc.roam.target.y = doorProp.transform.y - 50;
+		npc.waiting = true;
 		setTimeout(() => {
 			setInterval(() => {
-				const category = this.randItem([
+				const category = npc.waiting ? 'waiting' : this.randItem([
 					this.stats.heat > 50 ? 'hot' : 'cold',
 					this.stats.hunger > 50 ? 'hungry' : 'not-hungry',
 					this.stats.thirst > 50 ? 'thirsty' : 'not-thirsty',
@@ -445,6 +453,19 @@ The End
 			}, 3143);
 		}, this.randRange(0, 5000));
 	}, 52);
+
+	this.letGuestIn = () => {
+		if (!guestsWaiting.length) return;
+		const guest = guestsWaiting.shift();
+		guests.push(guest);
+		guest.roam.target = poolPos;
+		guest.roam.range[0] = 400;
+		guest.roam.range[1] = 0.7;
+		guest.waiting = false;
+		guest.spr.mask = guest.mask;
+		guest.mask.visible = guest.skirt.visible = true;
+		this.stats.busy = this.fairmath(this.stats.busy, -20);
+	};
 
 	// timer
 	let time = 32 * 1000;
@@ -507,6 +528,12 @@ The End
 	this.goto('close');
 >>
 
+::door
+<<do
+	this.letGuestIn();
+	this.goto('close');
+>>
+
 //                                       dP
 //                                       88
 // .d8888b. dP    dP .d8888b. .d8888b. d8888P .d8888b.
@@ -562,4 +589,10 @@ The End
 	`lmao`,
 	`wowww`,
 	`HARDCORE! TO THE MEGA!`,
+])>>
+
+::guest-waiting
+<<print this.randItem([
+	`Let me in.`,
+	`LET ME INNNNN!!!`,
 ])>>
