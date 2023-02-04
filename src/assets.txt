@@ -10,19 +10,25 @@ textures/shadows.png
 textures/bg302.png
 textures/groundGrass.png
 textures/hottub.png
-textures/furnace.png
 textures/furnaceBackBlack.png
 
 textures/stationBlandIdle.png
 textures/stationBlandOut.png
+
 textures/stationColdIdle.png
 textures/stationColdOut.png
+textures/stationColdIn.png
+
 textures/stationDryIdle.png
 textures/stationDryOut.png
+
 textures/stationHungerIdle.png
 textures/stationHungerOut.png
+textures/stationHungerIn.png
+
 textures/stationThirstIdle.png
 textures/stationThirstOut.png
+textures/stationThirstIn.png
 
 audio/bgm.mp3
 audio/voiceDefault.mp3
