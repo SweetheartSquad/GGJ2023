@@ -391,8 +391,13 @@ The End
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -650 }),
 
+		// food and drink related
 		this.Prop({ texture: 'refreshmentTable', x: 592, y: -801, offset: -60 }),
+		this.Prop({ texture: 'meatFridge', x: -853, y: -32 }),
 
+		// pool upkeep related
+		this.Prop({ texture: 'saltBag', x: -1159, y: -236 }),
+		
 		// wood and fire related
 		this.Prop({ texture: 'furnace', x: -229, y: -282, offset: -150 }),
 		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
