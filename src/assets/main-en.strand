@@ -555,7 +555,7 @@ game over!
 	};
 
 	// timer
-	let time = 3 * 60 * 1000;
+	let time = 2 * 60 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
@@ -615,6 +615,15 @@ game over!
 			this.stats[stat] = this.fairmath(this.stats[stat], -10);
 			if (stat === 'hunger' || stat === 'thirst') {
 				this.stats[stat] = 0;
+			}
+
+			for (let i = 0; i < 5; ++i) {
+				const p = this.randCirc(50);
+				setTimeout(() => {
+					const poof = this.Poof({ texture: 'fire', offset: 200, x: this.gameObject.transform.x + p.x, y: this.gameObject.transform.y + p.y, freq: 1/200 });
+					this.tween(poof.transform, 'y', poof.transform.y - 100, 200);
+					this.tween(poof.display.container, 'alpha', 0, 200);
+				}, i * 30);
 			}
 		} else {
 			// TODO: wrong sfx
