@@ -407,6 +407,26 @@ The End
 
 		this.Prop({ texture: 'woodStation', x: -953, y: -1039 }),
 	]);
+
+
+	// fake some npcs/feed posts
+	let count = 0;
+	setInterval(() => {
+		if (count > 10) return;
+		++count;
+		const npc = this.randItem(['test', 'test2', 'test3']);
+		this.scene.addGuestToPool(npc);
+		setTimeout(() => {
+			setInterval(() => {
+				this.scene.feed.say(
+					'HARDCORE! TO THE MEGA! '.repeat(Math.round(this.randRange(1, 3))),
+					`${npc}Idle`
+				);
+			}, 3143);
+		}, this.randRange(0, 5000));
+	}, 5234);
+
+
 	this.scene.goto({ area: 'main' });
 	this.goto('close');
 >>
