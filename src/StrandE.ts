@@ -384,14 +384,14 @@ export class StrandE extends Strand {
 				bodyCollision: { isSensor: true },
 				x: options.in.x ?? 0,
 				y: options.in.y ?? 0,
-				bodySensor: { plugin: { label: 'grab', type: options.type } },
+				bodySensor: { plugin: { label: 'dump', type: options.type } },
 			}),
 			new NPC({
 				passage: 'stationOut',
 				bodyCollision: { isSensor: true },
 				x: options.out.x ?? 0,
 				y: options.out.y ?? 0,
-				bodySensor: { plugin: { label: 'dump', type: options.type } },
+				bodySensor: { plugin: { label: 'grab', type: options.type } },
 			}),
 		];
 	}

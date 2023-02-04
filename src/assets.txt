@@ -12,17 +12,18 @@ textures/groundGrass.png
 textures/hottub.png
 textures/furnace.png
 textures/furnaceBackBlack.png
-textures/woodStation.png
-textures/refreshmentTable.png
-textures/meatFridge.png
-textures/saltBag.png
-textures/waterBarrel.png
-textures/wineRack.png
-textures/stationWineIdle.png
-textures/stationSaltIdle.png
-textures/stationWaterIdle.png
-textures/stationMeatIdle.png
-textures/stationWoodIdle.png
+
+textures/stationBlandIdle.png
+textures/stationBlandOut.png
+textures/stationColdIdle.png
+textures/stationColdOut.png
+textures/stationDryIdle.png
+textures/stationDryOut.png
+textures/stationHungerIdle.png
+textures/stationHungerOut.png
+textures/stationThirstIdle.png
+textures/stationThirstOut.png
+
 audio/bgm.mp3
 audio/voiceDefault.mp3
 textures/walk_cursor.x7.png
@@ -57,6 +58,3 @@ textures/smoke.png
 textures/fire.x4.png
 
 textures/door.png
-textures/stationTestIn.png
-textures/stationTestOut.png
-textures/stationTestIdle.png
