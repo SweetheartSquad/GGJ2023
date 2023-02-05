@@ -580,6 +580,9 @@ game over (bad)!
 				this.scene.feed.say(post, `${npcType}Idle`);
 			}, postRate[0]));
 		}, this.randRange(0, postRate[0]));
+		if (guests.length === 1) {
+				this.scene.feed.say(this.execute(this.getPassageWithTitle(`first-post`).program)[0].value, `${npcType}Idle`);
+		}
 	}, spawnRate[0]));
 
 	this.letGuestIn = async () => {
@@ -725,6 +728,15 @@ game over (bad)!
 // `8888P88 `88888P' `88888P' `88888P'   dP   `88888P'
 //      .88
 //  d8888P
+
+::first-post
+<<print this.randItem([
+	`party at turnip's!!`,
+	`yoo hot tub time`,
+	`it's time for da tub!!!`,
+	`turniiiip it's party time!`,
+])>>
+
 
 ::guest-hunger
 <<print this.randItem([
