@@ -133,7 +133,7 @@ WHAT'S THIS...
 
 veggies: <<print this.score>>
 
-A PERFECT STEW!!
+A PERFECT SOUP!!
 
 YOU WIN!!
 
@@ -148,11 +148,11 @@ SO CLOSE!!
 <<elseif this.score > 9>>
 ALMOST PERFECT!
 <<elseif this.score > 5>>
-DECENT STEW.
+DECENT SOUP.
 <<elseif this.score > 1>>
 NOT GREAT...
 <<elseif this.score = 1>>
-THE STEW BLEW.
+BARELY A SOUP!!
 <<endif>>
 
 
