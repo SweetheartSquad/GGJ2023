@@ -139,7 +139,7 @@ export class UIDialogue extends GameObject {
 			maxWidth: this.sprBg.width - this.padding.left - this.padding.right,
 		});
 		this.textPrompt = new BitmapText(this.strPrompt, { fontName: 'bmfont' });
-		this.textPrompt.filters = [new OutlineFilter(3, 0)];
+		this.textText.filters = this.textPrompt.filters = [new OutlineFilter(3, 0)];
 		this.textPrompt.alpha = 0;
 		this.textPrompt.x = size.x / 2;
 		this.textPrompt.y = 10;
@@ -340,6 +340,7 @@ export class UIDialogue extends GameObject {
 				fontName: 'bmfont',
 				maxWidth: (this.textText.maxWidth || 0) - 2,
 			});
+			t.filters = this.textText.filters;
 			t.accessible = true;
 			t.accessibleHint = strText;
 			t.interactive = true;
@@ -409,7 +410,6 @@ export class UIDialogue extends GameObject {
 	private open() {
 		if (!this.isOpen) {
 			this.isOpen = true;
-			this.scrim(0.25, 500);
 			this.tweens.forEach((t) => TweenManager.abort(t));
 			this.tweens.length = 0;
 			this.tweens.push(
