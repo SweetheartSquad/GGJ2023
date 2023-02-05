@@ -502,8 +502,8 @@ veggies: <<print this.score>>
 		this.propLid,
 		
 		// wood and fire related
-		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
-		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
+		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282, offset: -1 }),
+		this.Prop({ texture: 'fire', x: -229, y: -282 }),
 
 		this.Emitter({ y: -70, rate: () => this.stats.cold < 70 ? 30 : this.lerp(30, 500, (this.stats.cold-70)/30), texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ y: -70, rate: () => this.stats.cold < 70 ? 40 : this.lerp(40, 600, (this.stats.cold-70)/30), texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
