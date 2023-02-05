@@ -670,6 +670,7 @@ veggies: <<print this.score>>
 				this.sfx('pot lid', { volume: 0.1, rate: 0.875 });
 
 				await this.delay(1000);
+				this.sfx('bubble sizzle');
 				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 1, 1500, 0, this.ease.cubicIn);
 				for (let i = 0; i < 250; ++i) {
 					const p = this.randRange(0, Math.PI*2);
