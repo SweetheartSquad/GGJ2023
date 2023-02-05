@@ -25,7 +25,7 @@ textures/woodPile.png
 textures/stationColdIdle.png
 textures/stationColdOut.png
 textures/stationColdIn.png
-
+textures/steam.png
 textures/stationDryIdle.png
 textures/stationDryOut.png
 textures/stationDryIn.png
