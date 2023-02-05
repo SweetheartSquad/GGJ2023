@@ -545,7 +545,7 @@ THE STEW BLEW.
 		this.Emitter({ y: -70, rate: () => this.stats.cold > 70 ? 5000 : this.lerp(15, 5000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles1', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ y: -70, rate: () => this.stats.cold > 70 ? 6000 : this.lerp(15, 6000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles2', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ y: -70, rate: () => this.stats.cold > 70 ? 7000 : this.lerp(15, 7000, this.ease.circIn(this.stats.cold/70)), texture: 'bubbles3', freq: 1/100, spawn: spawnInPool, }),
-		this.Emitter({ rate: () => this.lerp(20, 500, this.ease.circIn(this.stats.cold/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
+		this.Emitter({ rate: () => this.gameover ? Infinity : this.lerp(20, 500, this.ease.circIn(this.stats.cold/100)), x: -185, y: -710, offset: 1000, texture: 'smoke', time: 3000, spawn: (p) => {
 			const {x,y} = this.randCirc(25);
 			p.transform.y += y*0.5;
 			p.transform.x += x*0.5;
