@@ -98,7 +98,7 @@ for Global Game Jam 2023!
 
 ::New game
 <<do
-	this.music('bgm');
+	this.music('bgm', { fade: 100 });
 	this.show('').then(() => {this.goto('start2')});
 >>
 
@@ -131,12 +131,14 @@ dump
 ::endGood
 // TODO: proper end text
 game over (good)!
+veggies: <<print this.score>>
 
 [[Restart|this.restart()]]
 
 ::endBad
 // TODO: proper end text
 game over (bad)!
+veggies: <<print this.score>>
 
 [[Restart|this.restart()]]
 
@@ -392,8 +394,8 @@ game over (bad)!
 		hunger: 4,
 		thirst: 4,
 		busy: 1,
-		bland: 1,
-		dry: 1,
+		bland: 2,
+		dry: 2,
 	};
 	const intervals = [];
 	intervals.push(setInterval(() => {
@@ -440,14 +442,14 @@ game over (bad)!
 	});
 
 
-	const propMeat = this.Prop({ texture: 'stationHungerIdle', x: 540, y: -1018, offset: 500 });
+	const propMeat = this.Prop({ texture: 'stationHungerIdle', x: 540, y: -1018, offset: 80 });
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
 			propMeat.display.container.visible = this.stats.hunger < 50;
 		},
 	});
-	const propDrink = this.Prop({ texture: 'stationThirstIdle', x: 702, y: -934, offset: 500 });
+	const propDrink = this.Prop({ texture: 'stationThirstIdle', x: 702, y: -934, offset: 40 });
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
@@ -457,12 +459,16 @@ game over (bad)!
 	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
 	this.propLid.display.container.alpha = 0;
 
-	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'sweatDrip', freq: 1/100, spawn: (p) => {
+	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'sweatDrip', time: 1000, spawn: (p) => {
 		p.spr.scale.x = this.scene.player.flipped ? -1 : 1;
-		p.transform.x += this.scene.player.display.container.width/4 * p.spr.scale.x;
-		const pp = this.randCirc(50);
+		p.transform.x += this.scene.player.display.container.width/6 * p.spr.scale.x;
+		let pp = this.randCirc(25);
 		p.transform.x += pp.x;
 		p.transform.y += pp.y;
+		pp = this.randCirc(50);
+		this.tween(p.display.container, 'alpha', 0, 200);
+		this.tween(p.transform, 'x', p.transform.x + Math.abs(pp.x) * Math.sign(p.spr.scale.x), 200);
+		this.tween(p.transform, 'y', p.transform.y - Math.abs(pp.y), 200);
 	}, });
 	this.scene.player.scripts.push({
 		gameObject: sweat,
@@ -479,20 +485,25 @@ game over (bad)!
 		this.Prop({ texture: 'edges', x: 300, y: 200, offset: 10000 }),
 		this.Poly({ verts: [384,-1204, 604,-1175, 749,-1217, 861,-1191, 1017,-1253, 1201,-1377, 1467,-1361, 1663,-1179, 1662,-1090, 1750,-949, 1762,-777, 1718,-680, 1722,-637, 1794,-520, 1786,-450, 1746,-378, 1766,-317, 1786,-241, 1758,-129, 1754,32, 1571,181, 1271,152, 963,183, 543,184, 247,176, 19,184, -261,178, -549,193, -745,141, -1013,109, -1228,-29, -1243,-210, -1243,-521, -1246,-688, -1208,-825, -1240,-970, -1196,-1033, -1232,-1121, -1119,-1223, -978,-1271, -842,-1214, -724,-1133, -415,-1152, -227,-1176, -60,-1207] }),
 
-		this.Prop({ texture: 'bushAndPump', x: 245, y: -93 }),
+		this.Prop({ texture: 'bushAndPump', x: 245, y: -93, offset: -50 }),
+		this.Poly({ verts: [-32,-87, -142,-119, -234,-180, -173,-252, 200,-206, 544,-281, 637,-323, 732,-210, 662,-129, 456,-117, 333,-127, 225,-104, 112,-98, 54,-94, -30,-86] }),
+
 		this.Prop({ texture: 'poolSkimmer', x: -159, y: -173 }),
 		this.Prop({ texture: 'poolCover', x: 797, y: -231, offset: -125 }),
+		this.Poly({ verts: [599,-292, 784,-232, 1013,-375, 777,-409, 598,-291] }),
 
 		doorProp,
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -700 }),
 		waterProp,
 		this.Prop({ texture: 'hottubWall', x: 212, y: -204, offset: -650 }),
+		this.Poly({ verts: [240,-885, -199,-862, -291,-823, -337,-710, -343,-555, -335,-395, -236,-295, -172,-251] }),
+		this.Poly({ verts: [240,-885, 477,-879, 631,-850, 721,-795, 772,-678, 791,-524, 780,-406] }),
 		this.propLid,
 		
 		// wood and fire related
-		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282,offset: -200 }),
-		this.Prop({ texture: 'fire', x: -229, y: -282, offset: -199 }),
+		this.Prop({ texture: 'furnaceBackBlack', x: -229, y: -282, offset: -1 }),
+		this.Prop({ texture: 'fire', x: -229, y: -282 }),
 
 		this.Emitter({ y: -70, rate: () => this.stats.cold < 70 ? 30 : this.lerp(30, 500, (this.stats.cold-70)/30), texture: 'smallBubble1', freq: 1/100, spawn: spawnInPool, }),
 		this.Emitter({ y: -70, rate: () => this.stats.cold < 70 ? 40 : this.lerp(40, 600, (this.stats.cold-70)/30), texture: 'smallBubble2', freq: 1/100, spawn: spawnInPool, }),
@@ -516,11 +527,14 @@ game over (bad)!
 		propDrink,
 
 
-		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { x: -229, y: -282 } }),
-		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 1 }, in: { x: 709, y: -779, offset: -80 } }),
-		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 1 }, in: { x: 520, y: -860, offset: -50 } }),
+		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { x: -229, y: -282, colliderSize: 1.5 }, inPos: { x: -20, y: -50 } }),
+		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 2 }, in: { x: 709, y: -820, offset: -90 }, outPos: { y: -50 }, inPos: { y: -50 } }),
+		this.Poly({ verts: [1308,-41, 1156,-80, 1242,-150, 1392,-70, 1307,-43] }),
+		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 3 }, in: { x: 520, y: -890, offset: -50 }, outPos: { y: -50, x: -20 }, inPos: { y: -50 } }),
+		this.Poly({ verts: [-699,-83, -888,-17, -1040,-133, -916,-163, -702,-82] }),
 		...this.Station({ type: 'Dry', out: { x: 1303, y: -1220 }, in: { x: -125, y: -920 } }),
-		...this.Station({ type: 'Bland', out: { x: -1159, y: -236 }, in: { x: -280, y: -826 } }),
+		this.Poly({ verts: [1239,-1239, 1381,-1240] }),
+		...this.Station({ type: 'Bland', out: { x: -1159, y: -256, colliderSize: 1.5 }, in: { offset: -100, x: -280, y: -826 } }),
 		itemFollower,
 	]);
 
@@ -568,6 +582,9 @@ game over (bad)!
 				this.scene.feed.say(post, `${npcType}Idle`);
 			}, postRate[0]));
 		}, this.randRange(0, postRate[0]));
+		if (guests.length === 1) {
+				this.scene.feed.say(this.execute(this.getPassageWithTitle(`first-post`).program)[0].value, `${npcType}Idle`);
+		}
 	}, spawnRate[0]));
 
 	this.letGuestIn = async () => {
@@ -615,7 +632,8 @@ game over (bad)!
 			}
 			if (time < 0) {
 				// TODO: proper win condition
-				const won = (guests.length - guestsWaiting.length) > 10;
+				this.score = guests.length - guestsWaiting.length;
+				const won = this.score > 25;
 				this.music('');
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
@@ -713,6 +731,15 @@ game over (bad)!
 // `8888P88 `88888P' `88888P' `88888P'   dP   `88888P'
 //      .88
 //  d8888P
+
+::first-post
+<<print this.randItem([
+	`party at turnip's!!`,
+	`yoo hot tub time`,
+	`it's time for da tub!!!`,
+	`turniiiip it's party time!`,
+])>>
+
 
 ::guest-hunger
 <<print this.randItem([
