@@ -655,10 +655,21 @@ veggies: <<print this.score>>
 				intervals.forEach(i => clearInterval(i));
 				intervals.length = 0;
 				this.scene.focusAmt = 1;
+				await this.delay(1000);
 				this.tween(this.propLid.display.container, 'alpha', 1, 500, 0, this.ease.cubicOut);
 				this.tween(this.propLid.transform, 'y', this.propLid.transform.y, 2000, this.propLid.transform.y - 1000, this.ease.bounceOut);
+				await this.delay(750);
+				this.sfx('pot lid');
+				await this.delay(750);
+				this.sfx('pot lid', { volume: 0.8, rate: 0.95 });
+				await this.delay(400);
+				this.sfx('pot lid', { volume: 0.6, rate: 0.925 });
+				await this.delay(100);
+				this.sfx('pot lid', { volume: 0.3, rate: 0.9 });
+				await this.delay(50);
+				this.sfx('pot lid', { volume: 0.1, rate: 0.875 });
 
-				await this.delay(2000);
+				await this.delay(1000);
 				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 1, 1500, 0, this.ease.cubicIn);
 				for (let i = 0; i < 250; ++i) {
 					const p = this.randRange(0, Math.PI*2);
