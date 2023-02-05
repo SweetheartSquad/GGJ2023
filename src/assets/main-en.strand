@@ -627,7 +627,6 @@ veggies: <<print this.score>>
 		guestsWaiting.forEach((i, idx) => {
 			i.roam.target.y = doorProp.transform.y - 100 - idx * guestsGap;
 		});
-		guests.push(guest);
 		guest.waiting = false;
 		this.stats.busy = this.fairmath(this.stats.busy, -20);
 
