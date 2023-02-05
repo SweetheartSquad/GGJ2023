@@ -472,7 +472,7 @@ THE STEW BLEW.
 			propDrink.display.container.visible = this.stats.thirst < 50;
 		},
 	});
-	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
+	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 20000 });
 	this.propLid.display.container.alpha = 0;
 
 	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'sweatDrip', time: 1000, spawn: (p) => {
@@ -696,6 +696,7 @@ THE STEW BLEW.
 				this.tween(this.propLid.transform, 'y', this.propLid.transform.y, 2000, this.propLid.transform.y - 1000, this.ease.bounceOut);
 				await this.delay(750);
 				this.sfx('pot lid');
+				this.tween(this.scene.camera, 'shake', 0, 300, 40, this.ease.circOut);
 				await this.delay(750);
 				this.guests.slice(0, this.guests.length - this.guestsWaiting.length).forEach((i, idx) => {
 					setTimeout(() => {
@@ -704,12 +705,16 @@ THE STEW BLEW.
 					}, idx * 100);
 				});
 				this.sfx('pot lid', { volume: 0.8, rate: 0.95 });
+				this.tween(this.scene.camera, 'shake', 0, 200, 20, this.ease.circOut);
 				await this.delay(400);
 				this.sfx('pot lid', { volume: 0.6, rate: 0.925 });
+				this.tween(this.scene.camera, 'shake', 0, 50, 10, this.ease.circOut);
 				await this.delay(100);
 				this.sfx('pot lid', { volume: 0.3, rate: 0.9 });
+				this.tween(this.scene.camera, 'shake', 0, 25, 4, this.ease.circOut);
 				await this.delay(50);
 				this.sfx('pot lid', { volume: 0.1, rate: 0.875 });
+				this.tween(this.scene.camera, 'shake', 0, 25, 2, this.ease.circOut);
 
 				await this.delay(1000);
 				this.sfx('bubble sizzle');
@@ -717,15 +722,21 @@ THE STEW BLEW.
 				for (let i = 0; i < 250; ++i) {
 					const p = this.randRange(0, Math.PI*2);
 					setTimeout(() => {
-						const poof = this.Poof({ texture: `bubbles${i%3+1}`, offset: 100000, x: this.poolPos.x + Math.cos(p)*500, y: this.poolPos.y + Math.sin(p)*400*0.75 - 50, freq: 1/100 });
+						const poof = this.Poof({ texture: `bubbles${i%3+1}`, offset: 1000, x: this.poolPos.x + Math.cos(p)*500, y: this.poolPos.y + Math.sin(p)*400*0.75 - 50, freq: 1/100 });
 					}, i * 10);
 				}
 				await this.delay(2500);
 				this.scene.feed.display.container.visible = false;
 				this.scene.timer.visible = false;
-				this.show(won ? 'endGood' : 'endBad', { duration: 0 });
+				const end = this.Prop({ texture: won ? 'endGood' : 'endBad', x: 298, y: -123, offset: 9000 });
+				this.add(end);
+				this.scene.drop(end);
 				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 1, this.ease.cubicIn);
-				await this.delay(4000);
+				this.propLid.spr.scale.x = this.propLid.spr.scale.y = 0.8;
+				this.tween(this.propLid.transform, 'y', this.propLid.transform.y - this.size.y, 2500, this.propLid.transform.y - this.size.y/8, this.ease.quartIn);
+				await this.delay(1000);
+				this.tween(this.propLid.display.container, 'alpha', 0, 1000, 1, this.ease.cubicIn);
+				await this.delay(3000);
 				this.sfx(won ? 'loss' : 'win');
 				this.goto(won ? 'endGood' : 'endBad');
 			}
