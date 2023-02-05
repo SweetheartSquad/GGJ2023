@@ -8,7 +8,7 @@ import { Display } from './Scripts/Display';
 import { Transform } from './Scripts/Transform';
 import { Tween, TweenManager } from './Tweens';
 import { UIPost } from './UIPost';
-import { removeFromArray, tex } from './utils';
+import { randRange, removeFromArray, tex } from './utils';
 
 export class UIFeed extends GameObject {
 	padding = {
@@ -80,7 +80,7 @@ export class UIFeed extends GameObject {
 	}
 
 	say(text: string, avatar: string) {
-		sfx('post');
+		sfx('post', { rate: randRange(0.9, 1.1) });
 		const t = new UIPost(
 			text,
 			avatar,

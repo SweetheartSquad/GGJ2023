@@ -91,3 +91,6 @@ audio/loss.mp3
 audio/pick up.mp3
 audio/place bad.mp3
 audio/place good.mp3
+audio/pot lid.mp3
+audio/bubble sizzle.mp3
+audio/walla.mp3
