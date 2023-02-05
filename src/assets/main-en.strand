@@ -731,7 +731,7 @@ BARELY A SOUP!!
 				const end = this.Prop({ texture: won ? 'endGood' : 'endBad', x: 298, y: -123, offset: 9000 });
 				this.add(end);
 				this.scene.drop(end);
-				const steam = this.Emitter({ offset: 9900, scale: 0.3, x: 206, y: -600, rate: 30, texture: 'hottubWater', time: 2000, spawn: (p) => {
+				const steam = this.Emitter({ offset: 9900, x: 206, y: -600, rate: 30, texture: 'steam', time: 2000, spawn: (p) => {
 					const pp = this.randCirc(330);
 					p.transform.x += pp.x;
 					p.transform.y += pp.y * 0.6;
