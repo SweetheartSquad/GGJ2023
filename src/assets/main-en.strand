@@ -652,12 +652,12 @@ veggies: <<print this.score>>
 						const poof = this.Poof({ texture: `bubbles${i%3+1}`, offset: 100000, x: this.poolPos.x + Math.cos(p)*500, y: this.poolPos.y + Math.sin(p)*400*0.75 - 50, freq: 1/100 });
 					}, i * 10);
 				}
-				await this.delay(2000);
+				await this.delay(2500);
 				this.scene.feed.display.container.visible = false;
 				this.scene.timer.visible = false;
 				this.show(won ? 'endGood' : 'endBad', { duration: 0 });
-				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 500, 0, this.ease.cubicOut);
-				await this.delay(3000);
+				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 0, this.ease.cubicIn);
+				await this.delay(4000);
 				this.goto(won ? 'endGood' : 'endBad');
 			}
 		},
