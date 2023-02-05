@@ -565,6 +565,7 @@ veggies: <<print this.score>>
 	const guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
+	let lastPost = Date.now();
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
@@ -595,11 +596,12 @@ veggies: <<print this.score>>
 			if (this.gameover) return;
 			intervals.push(setInterval(() => {
 				if (this.gameover) return;
-				if (Math.random() > postRate[1]) return;
+				if (Date.now() - lastPost < 4000 && Math.random() > postRate[1]) return;
 				let category = npc.waiting ? 'waiting' : this.randItem(postTypes);
 				if (this.stats[category] !== undefined && this.stats[category] < 50) category = `not-${category}`;
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
 				this.scene.feed.say(post, `${npcType}Idle`);
+				lastPost = Date.now();
 			}, postRate[0]));
 		}, this.randRange(0, postRate[0]));
 		if (guests.length === 1) {
