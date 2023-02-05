@@ -566,10 +566,11 @@ veggies: <<print this.score>>
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
 	let lastPost = Date.now();
+	let allowMoreGuests = Date.now() + 5000;
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
-		if (guests.length && Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1]) return;
+		if (guests.length && (Date.now() < allowMoreGuests || Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1])) return;
 		const npcType = this.randItem(guestTypes);
 		guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
