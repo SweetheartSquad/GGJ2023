@@ -731,13 +731,26 @@ BARELY A SOUP!!
 				const end = this.Prop({ texture: won ? 'endGood' : 'endBad', x: 298, y: -123, offset: 9000 });
 				this.add(end);
 				this.scene.drop(end);
+				if (won) {
+					const steam = this.Emitter({ offset: 9900, x: 206, y: -600, rate: 30, texture: 'steam', time: 2000, spawn: (p) => {
+						const pp = this.randCirc(330);
+						p.transform.x += pp.x;
+						p.transform.y += pp.y * 0.6;
+						this.tween(p.display.container, 'alpha', 0, 600, 0.25, (t) => t > 0.25 ? this.ease.cubicIn((t-0.25)/0.9) : this.ease.cubicIn(1 - t/.25));
+						this.tween(p.transform, 'y', p.transform.y - 50, 600, undefined, this.ease.cubicOut);
+						this.tween(p.transform, 'x', p.transform.x - 50, 600, undefined, (t) => Math.sin(Date.now()/1000 + pp.x/100));
+					}, });
+					this.add(steam);
+					this.scene.drop(steam);
+				}
+
 				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 1, this.ease.cubicIn);
 				this.propLid.spr.scale.x = this.propLid.spr.scale.y = 0.8;
 				this.tween(this.propLid.transform, 'y', this.propLid.transform.y - this.size.y, 2500, this.propLid.transform.y - this.size.y/8, this.ease.quartIn);
 				await this.delay(1000);
 				this.tween(this.propLid.display.container, 'alpha', 0, 1000, 1, this.ease.cubicIn);
 				await this.delay(3000);
-				this.sfx(won ? 'loss' : 'win');
+				this.sfx(won ? 'win' : 'loss');
 				this.goto(won ? 'endGood' : 'endBad');
 			}
 		},
