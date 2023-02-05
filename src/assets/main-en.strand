@@ -583,7 +583,7 @@ veggies: <<print this.score>>
 			}, postRate[0]));
 		}, this.randRange(0, postRate[0]));
 		if (guests.length === 1) {
-				this.scene.feed.say(this.execute(this.getPassageWithTitle(`first-post`).program)[0].value, `${npcType}Idle`);
+			this.scene.feed.say(this.execute(this.getPassageWithTitle(`first-post`).program)[0].value, `${npcType}Idle`);
 		}
 	}, spawnRate[0]));
 
