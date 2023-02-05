@@ -77,9 +77,9 @@
 		this.scrim(1, 3000);
 		this.scene.dialogue.sprBg.alpha = 0;
 	});
+	this.show('title');
 >>
 <<endif>>
-Turnip the Heat!
 [[New game]]
 [[About]]
 
