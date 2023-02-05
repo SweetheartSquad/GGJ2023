@@ -528,6 +528,8 @@ veggies: <<print this.score>>
 
 
 		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { x: -229, y: -282, colliderSize: 1.5 }, inPos: { x: -20, y: -50 } }),
+		this.Prop({ texture: 'woodPile', x: -1015, y: -1080, offset: -50 }),
+		this.Poly({ verts: [-1054,-1139, -934,-1141] }),
 		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 2 }, in: { x: 709, y: -820, offset: -90 }, outPos: { y: -50 }, inPos: { y: -50 } }),
 		this.Poly({ verts: [1308,-41, 1156,-80, 1242,-150, 1392,-70, 1307,-43] }),
 		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 3 }, in: { x: 520, y: -890, offset: -50 }, outPos: { y: -50, x: -20 }, inPos: { y: -50 } }),
