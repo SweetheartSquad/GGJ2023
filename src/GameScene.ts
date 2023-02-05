@@ -344,6 +344,10 @@ export class GameScene {
 							`${key.padStart(8, ' ')}: ${value.toFixed(2).padStart(6, '0')}`
 					)
 					.join('\n');
+				// @ts-ignore
+				this.statsDebug.text += `\nguests: ${this.strand.guests?.length}`;
+				// @ts-ignore
+				this.statsDebug.text += `\nwaiting: ${this.strand.guestsWaiting?.length}`;
 			}
 		}
 

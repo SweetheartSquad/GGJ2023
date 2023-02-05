@@ -403,7 +403,7 @@ veggies: <<print this.score>>
 			if (i === 'busy') return;
 			this.stats[i] = this.fairmath(this.stats[i], statRates[i]);
 		});
-		this.stats.busy = this.fairmath(this.stats.busy, guestsWaiting.length || -1);
+		this.stats.busy = this.fairmath(this.stats.busy, this.guestsWaiting.length || -1);
 	}, 1000));
 
 	this.poolPos = {x: 200, y: -580 };
@@ -561,7 +561,7 @@ veggies: <<print this.score>>
 
 	// spawn npcs
 	const guestsGap = 40;
-	const guestsWaiting = [];
+	this.guestsWaiting = [];
 	this.guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
@@ -569,16 +569,16 @@ veggies: <<print this.score>>
 	let allowMoreGuests = Date.now() + 5000;
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
-		if (guestsWaiting.length > guestsMaxWaiting) return;
+		if (this.guestsWaiting.length > guestsMaxWaiting) return;
 		if (this.guests.length && (Date.now() < allowMoreGuests || Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1])) return;
 		const npcType = this.randItem(guestTypes);
 		this.guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
-		guestsWaiting.push(npc);
+		this.guestsWaiting.push(npc);
 
 		const p = pointInPool();
 		npc.roam.target.x = doorProp.transform.x;
-		npc.roam.target.y = doorProp.transform.y - 100 - guestsWaiting.length * guestsGap;
+		npc.roam.target.y = doorProp.transform.y - 100 - this.guestsWaiting.length * guestsGap;
 		npc.setPosition(doorProp.transform.x, Math.min(npc.roam.target.y, doorProp.transform.y) - 200);
 		npc.display.container.alpha = 0;
 		this.tween(npc.display.container, 'alpha', 1, 200);
@@ -622,9 +622,9 @@ veggies: <<print this.score>>
 			doorTimeout = null;
 		}, 500);
 		if (this.gameover) return;
-		if (!guestsWaiting.length) return;
-		const guest = guestsWaiting.shift();
-		guestsWaiting.forEach((i, idx) => {
+		if (!this.guestsWaiting.length) return;
+		const guest = this.guestsWaiting.shift();
+		this.guestsWaiting.forEach((i, idx) => {
 			i.roam.target.y = doorProp.transform.y - 100 - idx * guestsGap;
 		});
 		guest.waiting = false;
@@ -665,7 +665,7 @@ veggies: <<print this.score>>
 				this.scene.timer.scale.x = this.scene.timer.scale.y = this.lerp(2, 1, this.ease.cubicOut(s/30)) + Math.sin(time/100)*0.1*(1-(s/30));
 			}
 			if (time < 0) {
-				this.score = this.guests.length - guestsWaiting.length;
+				this.score = this.guests.length - this.guestsWaiting.length;
 				const won = this.score > 13;
 				this.music('', { fade: 100 });
 				this.sfx('time up');
