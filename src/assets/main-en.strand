@@ -440,14 +440,14 @@ game over (bad)!
 	});
 
 
-	const propMeat = this.Prop({ texture: 'stationHungerIdle', x: 540, y: -1018, offset: 500 });
+	const propMeat = this.Prop({ texture: 'stationHungerIdle', x: 540, y: -1018, offset: 80 });
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
 			propMeat.display.container.visible = this.stats.hunger < 50;
 		},
 	});
-	const propDrink = this.Prop({ texture: 'stationThirstIdle', x: 702, y: -934, offset: 500 });
+	const propDrink = this.Prop({ texture: 'stationThirstIdle', x: 702, y: -934, offset: 40 });
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: () => {
@@ -522,13 +522,13 @@ game over (bad)!
 
 
 		...this.Station({ type: 'Cold', out: { x: -953, y: -1039 }, in: { x: -229, y: -282 } }),
-		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 1 }, in: { x: 709, y: -779, offset: -80 } }),
+		...this.Station({ type: 'Thirst', out: { x: 1282, y: -34, colliderSize: 2 }, in: { x: 709, y: -820, offset: -90 }, outPos: { y: -50 }, inPos: { y: -50 } }),
 		this.Poly({ verts: [1308,-41, 1156,-80, 1242,-150, 1392,-70, 1307,-43] }),
-		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 1 }, in: { x: 520, y: -860, offset: -50 } }),
+		...this.Station({ type: 'Hunger', out: { x: -853, y: -32, colliderSize: 3 }, in: { x: 520, y: -890, offset: -50 }, outPos: { y: -50, x: -20 }, inPos: { y: -50 } }),
 		this.Poly({ verts: [-699,-83, -888,-17, -1040,-133, -916,-163, -702,-82] }),
 		...this.Station({ type: 'Dry', out: { x: 1303, y: -1220 }, in: { x: -125, y: -920 } }),
 		this.Poly({ verts: [1239,-1239, 1381,-1240] }),
-		...this.Station({ type: 'Bland', out: { x: -1159, y: -236 }, in: { x: -280, y: -826 } }),
+		...this.Station({ type: 'Bland', out: { x: -1159, y: -256, colliderSize: 1.5 }, in: { offset: -100, x: -280, y: -826 } }),
 		itemFollower,
 	]);
 
