@@ -80,3 +80,14 @@ textures/door.png
 textures/doorOpen.png
 textures/endBad.x2.png
 textures/endGood.x2.png
+
+audio/post.mp3
+audio/splash.mp3
+audio/time up.mp3
+audio/win.mp3
+audio/door close.mp3
+audio/door open.mp3
+audio/loss.mp3
+audio/pick up.mp3
+audio/place bad.mp3
+audio/place good.mp3

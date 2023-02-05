@@ -1,5 +1,6 @@
 import eases from 'eases';
-import { Container, Sprite } from 'pixi.js';
+import { BitmapText, Container, Sprite } from 'pixi.js';
+import { sfx } from './Audio';
 import { size } from './config';
 import { game } from './Game';
 import { GameObject } from './GameObject';
@@ -57,6 +58,10 @@ export class UIFeed extends GameObject {
 		this.display.container.addChild(this.containerPosts);
 		this.containerPosts.x = this.padding.left;
 		this.containerPosts.y = this.sprBg.height - this.padding.bottom;
+		const t = new BitmapText('InstaYam', { fontName: 'bmfont', fontSize: 16 });
+		this.display.container.addChild(t);
+		t.x += 110;
+		t.y += 20;
 
 		game.app.stage.addChild(this.display.container);
 
@@ -75,6 +80,7 @@ export class UIFeed extends GameObject {
 	}
 
 	say(text: string, avatar: string) {
+		sfx('post');
 		const t = new UIPost(
 			text,
 			avatar,
