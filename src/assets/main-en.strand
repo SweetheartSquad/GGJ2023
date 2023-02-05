@@ -598,7 +598,7 @@ veggies: <<print this.score>>
 				if (this.gameover) return;
 				if (Date.now() - lastPost < 4000 && Math.random() > postRate[1]) return;
 				let category = npc.waiting ? 'waiting' : this.randItem(postTypes);
-				if (this.stats[category] !== undefined && this.stats[category] < 65) category = `not-${category}`;
+				if (this.stats[category] !== undefined && this.stats[category] < 35) category = `not-${category}`;
 				const post = this.execute(this.getPassageWithTitle(`guest-${category}`).program)[0].value;
 				this.scene.feed.say(post, `${npcType}Idle`);
 				lastPost = Date.now();
