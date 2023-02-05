@@ -420,7 +420,7 @@ veggies: <<print this.score>>
 			p.transform.y += y;
 	};
 
-	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150 });
+	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150, offset: -66, });
 
 	function componentToHex(c) {
 		const hex = Math.round(c).toString(16);
@@ -493,6 +493,7 @@ veggies: <<print this.score>>
 		this.Poly({ verts: [599,-292, 784,-232, 1013,-375, 777,-409, 598,-291] }),
 
 		doorProp,
+		this.Poly({ verts: [-47,-1237, 369,-1231] }),
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -700 }),
 		waterProp,
