@@ -971,6 +971,13 @@ THE STEW BLEW.
 <<print this.randItem([
 	`uhh rude`,
 	`wow`,
+	`wtf`,
+	`who turned the lights out!!`,
+	`eek!!`,
+	`HELP`,
+	`${this.randItem(['oh no', 'oh noo', 'oh noooo'])}`,
+	`RIP`,
+	`augh`,
 ])>>
 
 ::guest-waiting
