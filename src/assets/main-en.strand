@@ -457,12 +457,16 @@ game over (bad)!
 	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
 	this.propLid.display.container.alpha = 0;
 
-	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'sweatDrip', freq: 1/100, spawn: (p) => {
+	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'sweatDrip', time: 1000, spawn: (p) => {
 		p.spr.scale.x = this.scene.player.flipped ? -1 : 1;
-		p.transform.x += this.scene.player.display.container.width/4 * p.spr.scale.x;
-		const pp = this.randCirc(50);
+		p.transform.x += this.scene.player.display.container.width/6 * p.spr.scale.x;
+		let pp = this.randCirc(25);
 		p.transform.x += pp.x;
 		p.transform.y += pp.y;
+		pp = this.randCirc(50);
+		this.tween(p.display.container, 'alpha', 0, 200);
+		this.tween(p.transform, 'x', p.transform.x + Math.abs(pp.x) * Math.sign(p.spr.scale.x), 200);
+		this.tween(p.transform, 'y', p.transform.y - Math.abs(pp.y), 200);
 	}, });
 	this.scene.player.scripts.push({
 		gameObject: sweat,
