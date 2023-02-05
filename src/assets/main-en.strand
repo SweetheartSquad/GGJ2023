@@ -77,9 +77,9 @@
 		this.scrim(1, 3000);
 		this.scene.dialogue.sprBg.alpha = 0;
 	});
+	this.show('title');
 >>
 <<endif>>
-Turnip the Heat!
 [[New game]]
 [[About]]
 
@@ -133,7 +133,7 @@ WHAT'S THIS...
 
 veggies: <<print this.score>>
 
-A PERFECT STEW!!
+A PERFECT SOUP!!
 
 YOU WIN!!
 
@@ -148,11 +148,11 @@ SO CLOSE!!
 <<elseif this.score > 9>>
 ALMOST PERFECT!
 <<elseif this.score > 5>>
-DECENT STEW.
+DECENT SOUP.
 <<elseif this.score > 1>>
 NOT GREAT...
 <<elseif this.score = 1>>
-THE STEW BLEW.
+BARELY A SOUP!!
 <<endif>>
 
 
@@ -392,7 +392,7 @@ THE STEW BLEW.
 	});
 
 	// main game variables
-	const timeMax = 10000;
+	const timeMax = 120 * 1000;
 	let time = timeMax;
 	const spawnRate = [500, .01];
 	const postRate = [300, .02];
