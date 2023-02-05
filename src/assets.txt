@@ -17,6 +17,7 @@ textures/furnaceBackBlack.png
 textures/fenceProxy.png
 textures/bushAndPump.png
 textures/poolSkimmer.png
+textures/poolCover.png
 textures/stationBlandIdle.png
 textures/stationBlandOut.png
 textures/stationBlandIn.png

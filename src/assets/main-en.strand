@@ -459,7 +459,8 @@ game over (bad)!
 		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
 		this.Prop({ texture: 'bushAndPump', x: 245, y: -93 }),
 		this.Prop({ texture: 'poolSkimmer', x: -159, y: -173 }),
-		
+		this.Prop({ texture: 'poolCover', x: 797, y: -231, offset: -125 }),
+
 		doorProp,
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -700 }),
