@@ -392,7 +392,7 @@ THE STEW BLEW.
 	});
 
 	// main game variables
-	const timeMax = 120 * 1000;
+	const timeMax = 10000;
 	let time = timeMax;
 	const spawnRate = [500, .01];
 	const postRate = [300, .02];
