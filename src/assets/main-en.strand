@@ -666,7 +666,7 @@ veggies: <<print this.score>>
 			}
 			if (time < 0) {
 				this.score = guests.length - guestsWaiting.length;
-				const won = this.score > 25;
+				const won = this.score > 13;
 				this.music('', { fade: 100 });
 				this.sfx('time up');
 				this.scene.timer.text = 'TIME!';
