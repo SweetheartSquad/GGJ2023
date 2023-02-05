@@ -129,16 +129,32 @@ dump
 
 
 ::endGood
-// TODO: proper end text
-game over (good)!
+WHAT'S THIS...
+
 veggies: <<print this.score>>
+
+A PERFECT STEW!!
+
+YOU WIN!!
 
 [[Restart|this.restart()]]
 
 ::endBad
-// TODO: proper end text
-game over (bad)!
+GAME OVER
+
 veggies: <<print this.score>>
+<<if this.score > 10>>
+SO CLOSE!!
+<<elseif this.score > 9>>
+ALMOST PERFECT!
+<<elseif this.score > 5>>
+DECENT STEW.
+<<elseif this.score > 1>>
+NOT GREAT...
+<<elseif this.score = 1>>
+THE STEW BLEW.
+<<endif>>
+
 
 [[Restart|this.restart()]]
 
