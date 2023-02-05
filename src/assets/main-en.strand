@@ -478,6 +478,22 @@ veggies: <<print this.score>>
 		},
 	});
 
+	const walla = this.Audio({
+		sfx: 'walla',
+		x: this.poolPos.x,
+		y: this.poolPos.y,
+		volume: 1,
+		refDistance: 1,
+		maxDistance: Math.max(this.size.x, this.size.y),
+		rolloffFactor: 1,
+	});
+	this.scene.player.scripts.push({
+		gameObject: walla,
+		update: () => {
+			walla.volume = this.gameover ? 0 : this.ease.cubicIn(this.clamp(0, guests.length / 25, 1));
+		},
+	});
+
 	this.Area('main', [
 		this.Prop({ texture: 'groundGrass', x: 300, y: 200, offset: -100000 }),
 		// walls
@@ -488,6 +504,7 @@ veggies: <<print this.score>>
 		this.Prop({ texture: 'bushAndPump', x: 245, y: -93, offset: -50 }),
 		this.Poly({ verts: [-32,-87, -142,-119, -234,-180, -173,-252, 200,-206, 544,-281, 637,-323, 732,-210, 662,-129, 456,-117, 333,-127, 225,-104, 112,-98, 54,-94, -30,-86] }),
 
+		walla,
 		this.Prop({ texture: 'poolSkimmer', x: -159, y: -173 }),
 		this.Prop({ texture: 'poolCover', x: 797, y: -231, offset: -125 }),
 		this.Poly({ verts: [599,-292, 784,-232, 1013,-375, 777,-409, 598,-291] }),
