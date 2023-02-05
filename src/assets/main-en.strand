@@ -697,6 +697,12 @@ THE STEW BLEW.
 				await this.delay(750);
 				this.sfx('pot lid');
 				await this.delay(750);
+				this.guests.slice(0, this.guests.length - this.guestsWaiting.length).forEach((i, idx) => {
+					setTimeout(() => {
+						const post = this.execute(this.getPassageWithTitle(`guest-cook`).program)[0].value;
+						this.scene.feed.say(post, `${i}Idle`);
+					}, idx * 100);
+				});
 				this.sfx('pot lid', { volume: 0.8, rate: 0.95 });
 				await this.delay(400);
 				this.sfx('pot lid', { volume: 0.6, rate: 0.925 });
