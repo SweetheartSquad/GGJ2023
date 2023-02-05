@@ -750,7 +750,7 @@ BARELY A SOUP!!
 				await this.delay(1000);
 				this.tween(this.propLid.display.container, 'alpha', 0, 1000, 1, this.ease.cubicIn);
 				await this.delay(3000);
-				this.sfx(won ? 'loss' : 'win');
+				this.sfx(won ? 'win' : 'loss');
 				this.goto(won ? 'endGood' : 'endBad');
 			}
 		},
