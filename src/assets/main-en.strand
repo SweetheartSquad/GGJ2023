@@ -420,7 +420,7 @@ veggies: <<print this.score>>
 			p.transform.y += y;
 	};
 
-	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150 });
+	const doorProp = this.Prop({ texture: 'door', x: 221, y: -1150, offset: -66, });
 
 	function componentToHex(c) {
 		const hex = Math.round(c).toString(16);
@@ -493,6 +493,7 @@ veggies: <<print this.score>>
 		this.Poly({ verts: [599,-292, 784,-232, 1013,-375, 777,-409, 598,-291] }),
 
 		doorProp,
+		this.Poly({ verts: [-200,-1237, 669,-1231] }),
 		this.Npc({ x: doorProp.transform.x, y: doorProp.transform.y, passage: 'door', bodyCollision: { isSensor: true }, bodySensor: { plugin: { label: 'open' } } }),
 		this.Prop({ texture: 'hottub', x: 212, y: -204, offset: -700 }),
 		waterProp,
@@ -591,13 +592,13 @@ veggies: <<print this.score>>
 
 	let doorTimeout = null;
 	this.letGuestIn = async () => {
-		this.sfx('door open');
+		this.sfx('door open', { rate: this.randRange(0.9, 1.1) });
 		doorProp.set('doorOpen');
 		clearTimeout(doorTimeout);
 		doorTimeout = setTimeout(() => {
 			if (this.gameover) return;
 			doorProp.set('door');
-			this.sfx('door close');
+			this.sfx('door close', { rate: this.randRange(0.9, 1.1) });
 			doorTimeout = null;
 		}, 500);
 		if (this.gameover) return;
@@ -613,7 +614,7 @@ veggies: <<print this.score>>
 		guest.speed = 2.5;
 		await guest.walkTo(238, -900);
 		this.Poof({ texture: 'bubbles3', scale: 3, x: guest.transform.x, y: guest.transform.y, offset: 1000, freq: 1/50 });
-		this.sfx('splash');
+		this.sfx('splash', { rate: this.randRange(0.9, 1.1) });
 		guest.speed = 1;
 		guest.roam.target = this.poolPos;
 		guest.roam.range[0] = 400;
@@ -683,7 +684,7 @@ veggies: <<print this.score>>
 
 ::stationOut
 <<do
-	this.sfx('pick up');
+	this.sfx('pick up', { rate: this.randRange(0.9, 1.1) });
 	if (this.itemFollower.body) {
 		const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
 		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
@@ -699,7 +700,7 @@ veggies: <<print this.score>>
 ::stationIn
 <<do
 	if (this.itemFollower.body) {
-		this.sfx('place good');
+		this.sfx('place good', { rate: this.randRange(0.9, 1.1) });
 		const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
 		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
 		this.tween(p.spr, 'rotation', 1, 200);
@@ -720,7 +721,7 @@ veggies: <<print this.score>>
 				}, i * 30);
 			}
 		} else {
-			this.sfx('place bad');
+			this.sfx('place bad', { rate: this.randRange(0.9, 1.1) });
 			Object.keys(this.stats).forEach(i => {
 				this.stats[i] = this.fairmath(this.stats[i], 5);
 			});
