@@ -373,6 +373,9 @@ game over (bad)!
 		},
 	});
 
+	// main game variables
+	const timeMax = 120 * 1000;
+	let time = timeMax;
 	const spawnRate = [500, .01];
 	const postRate = [100, .02];
 	const guestsMaxWaiting = 10;
@@ -454,6 +457,21 @@ game over (bad)!
 	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
 	this.propLid.display.container.alpha = 0;
 
+	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: 50, texture: 'smallBubble1', freq: 1/100, spawn: (p) => {
+		p.spr.scale.x = this.scene.player.flipped ? -1 : 1;
+		p.transform.x += this.scene.player.display.container.width/4 * p.spr.scale.x;
+		const pp = this.randCirc(50);
+		p.transform.x += pp.x;
+		p.transform.y += pp.y;
+	}, });
+	this.scene.player.scripts.push({
+		gameObject: sweat,
+		update: () => {
+			sweat.transform.x = this.scene.player.transform.x;
+			sweat.transform.y = this.scene.player.transform.y - this.scene.player.display.container.height * 0.8;
+		},
+	});
+
 	this.Area('main', [
 		this.Prop({ texture: 'groundGrass', x: 300, y: 200, offset: -100000 }),
 		// walls
@@ -489,6 +507,7 @@ game over (bad)!
 			this.tween(p.transform, 'y', p.transform.y + y, 500);
 			this.tween(p.transform, 'x', p.transform.x + x, 500);
 		}, }),
+		sweat,
 
 		propMeat,
 		propDrink,
@@ -577,7 +596,6 @@ game over (bad)!
 	};
 
 	// timer
-	let time = 120 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: async () => {
