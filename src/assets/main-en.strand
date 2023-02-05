@@ -98,7 +98,7 @@ for Global Game Jam 2023!
 
 ::New game
 <<do
-	this.music('bgm');
+	this.music('bgm', { fade: 100 });
 	this.show('').then(() => {this.goto('start2')});
 >>
 
