@@ -1,5 +1,6 @@
 import eases from 'eases';
 import { BitmapText, Container, Sprite } from 'pixi.js';
+import { sfx } from './Audio';
 import { size } from './config';
 import { game } from './Game';
 import { GameObject } from './GameObject';
@@ -79,6 +80,7 @@ export class UIFeed extends GameObject {
 	}
 
 	say(text: string, avatar: string) {
+		sfx('post');
 		const t = new UIPost(
 			text,
 			avatar,

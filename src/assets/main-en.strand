@@ -591,11 +591,13 @@ veggies: <<print this.score>>
 
 	let doorTimeout = null;
 	this.letGuestIn = async () => {
+		this.sfx('door open');
 		doorProp.set('doorOpen');
 		clearTimeout(doorTimeout);
 		doorTimeout = setTimeout(() => {
 			if (this.gameover) return;
 			doorProp.set('door');
+			this.sfx('door close');
 			doorTimeout = null;
 		}, 500);
 		if (this.gameover) return;
@@ -611,6 +613,7 @@ veggies: <<print this.score>>
 		guest.speed = 2.5;
 		await guest.walkTo(238, -900);
 		this.Poof({ texture: 'bubbles3', scale: 3, x: guest.transform.x, y: guest.transform.y, offset: 1000, freq: 1/50 });
+		this.sfx('splash');
 		guest.speed = 1;
 		guest.roam.target = this.poolPos;
 		guest.roam.range[0] = 400;
@@ -644,6 +647,7 @@ veggies: <<print this.score>>
 				this.score = guests.length - guestsWaiting.length;
 				const won = this.score > 25;
 				this.music('', { fade: 100 });
+				this.sfx('time up');
 				this.scene.timer.text = 'TIME!';
 				this.scene.player.canMove = false;
 				this.gameover = true;
@@ -667,6 +671,7 @@ veggies: <<print this.score>>
 				this.show(won ? 'endGood' : 'endBad', { duration: 0 });
 				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 0, this.ease.cubicIn);
 				await this.delay(4000);
+				this.sfx(won ? 'loss' : 'win');
 				this.goto(won ? 'endGood' : 'endBad');
 			}
 		},
@@ -678,6 +683,7 @@ veggies: <<print this.score>>
 
 ::stationOut
 <<do
+	this.sfx('pick up');
 	if (this.itemFollower.body) {
 		const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
 		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
@@ -693,6 +699,7 @@ veggies: <<print this.score>>
 ::stationIn
 <<do
 	if (this.itemFollower.body) {
+		this.sfx('place good');
 		const p = this.Poof({ texture: `${this.itemFollower.body}Idle`, x: this.itemFollower.transform.x, y: this.itemFollower.transform.y, time: 1000 });
 		p.spr.pivot.y = this.itemFollower.spr.pivot.y;
 		this.tween(p.spr, 'rotation', 1, 200);
@@ -713,7 +720,7 @@ veggies: <<print this.score>>
 				}, i * 30);
 			}
 		} else {
-			// TODO: wrong sfx
+			this.sfx('place bad');
 			Object.keys(this.stats).forEach(i => {
 				this.stats[i] = this.fairmath(this.stats[i], 5);
 			});
