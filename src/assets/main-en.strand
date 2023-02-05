@@ -392,8 +392,8 @@ game over (bad)!
 		hunger: 4,
 		thirst: 4,
 		busy: 1,
-		bland: 1,
-		dry: 1,
+		bland: 2,
+		dry: 2,
 	};
 	const intervals = [];
 	intervals.push(setInterval(() => {
