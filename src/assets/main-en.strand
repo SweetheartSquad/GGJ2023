@@ -587,7 +587,15 @@ veggies: <<print this.score>>
 		}
 	}, spawnRate[0]));
 
+	let doorTimeout = null;
 	this.letGuestIn = async () => {
+		doorProp.set('doorOpen');
+		clearTimeout(doorTimeout);
+		doorTimeout = setTimeout(() => {
+			if (this.gameover) return;
+			doorProp.set('door');
+			doorTimeout = null;
+		}, 500);
 		if (this.gameover) return;
 		if (!guestsWaiting.length) return;
 		const guest = guestsWaiting.shift();

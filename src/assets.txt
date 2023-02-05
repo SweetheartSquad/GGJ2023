@@ -77,5 +77,6 @@ textures/fire.x4.png
 textures/edges.png
 textures/pastEdge.png
 textures/door.png
+textures/doorOpen.png
 textures/endBad.x2.png
 textures/endGood.x2.png
