@@ -945,6 +945,12 @@ veggies: <<print this.score>>
 	`${this.randItem(['woo', 'woooo', 'woooooooo'])}`,
 ])>>
 
+::guest-cook
+<<print this.randItem([
+	`uhh rude`,
+	`wow`,
+])>>
+
 ::guest-waiting
 <<print this.randItem([
 	`Let me in.`,
