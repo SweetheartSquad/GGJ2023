@@ -637,15 +637,16 @@ veggies: <<print this.score>>
 		this.sfx('splash', { rate: this.randRange(0.9, 1.1) });
 		guest.speed = 1;
 		guest.roam.target = this.poolPos;
+		guest.spr.mask = guest.mask;
+		guest.mask.visible = guest.skirt.visible = true;
+		await guest.walkTo(238, this.poolPos.y);
 		guest.roam.range[0] = 400;
 		guest.roam.range[1] = 0.7;
 		guest.roam.freq = {
 			value: 4000,
 			range: 3000,
 		};
-		guest.spr.mask = guest.mask;
-		guest.mask.visible = guest.skirt.visible = true;
-		await this.delay(100);
+		await this.delay(500);
 		guest.bodyCollision.body.isSensor = false;
 	};
 
