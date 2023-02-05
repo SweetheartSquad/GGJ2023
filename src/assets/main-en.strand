@@ -699,7 +699,7 @@ veggies: <<print this.score>>
 				this.scene.feed.display.container.visible = false;
 				this.scene.timer.visible = false;
 				this.show(won ? 'endGood' : 'endBad', { duration: 0 });
-				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 0, this.ease.cubicIn);
+				this.tween(this.scene.screenFilter.uniforms, 'whiteout', 0, 2000, 1, this.ease.cubicIn);
 				await this.delay(4000);
 				this.sfx(won ? 'loss' : 'win');
 				this.goto(won ? 'endGood' : 'endBad');
