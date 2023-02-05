@@ -59,6 +59,7 @@ textures/guestDaikonIdle.png
 textures/feedBg.png
 textures/feedMask.png
 textures/postBg.png
+textures/potEmpty.png
 
 font/bmfont.txt
 font/bmfont.x1.png
