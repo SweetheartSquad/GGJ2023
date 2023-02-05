@@ -373,8 +373,11 @@ game over (bad)!
 		},
 	});
 
+	// main game variables
+	const timeMax = 120 * 1000;
+	let time = timeMax;
 	const spawnRate = [500, .01];
-	const postRate = [100, .02];
+	const postRate = [300, .02];
 	const guestsMaxWaiting = 10;
 	this.stats = {
 		cold: 50,
@@ -454,9 +457,28 @@ game over (bad)!
 	this.propLid = this.Prop({ texture: 'hottubLid', x: 212, y: -204, offset: 10000 });
 	this.propLid.display.container.alpha = 0;
 
+	const sweat = this.Emitter({ rate: () => !this.scene.player.running ? 5000 : this.lerp(40, 250, this.ease.circIn(time / timeMax)), offset: this.scene.player.display.container.height, texture: 'smallBubble1', freq: 1/100, spawn: (p) => {
+		p.spr.scale.x = this.scene.player.flipped ? -1 : 1;
+		p.transform.x += this.scene.player.display.container.width/4 * p.spr.scale.x;
+		const pp = this.randCirc(50);
+		p.transform.x += pp.x;
+		p.transform.y += pp.y;
+	}, });
+	this.scene.player.scripts.push({
+		gameObject: sweat,
+		update: () => {
+			sweat.transform.x = this.scene.player.transform.x;
+			sweat.transform.y = this.scene.player.transform.y - this.scene.player.display.container.height * 0.8;
+		},
+	});
+
 	this.Area('main', [
-		this.PropParallax({ texture: 'groundGrass', offset: -1000000, mult: 1 }),
-		this.Poly({ verts: [-1130,-1423, -1130,81, 1510,81, 1510,-1423, 532,-1755, -193,-1750, -1130,-1423] }),
+		this.Prop({ texture: 'groundGrass', x: 300, y: 200, offset: -100000 }),
+		// walls
+		this.PropParallax({ texture: 'pastEdge', offset: -1000000, mult: 1 }),
+		this.Prop({ texture: 'edges', x: 300, y: 200, offset: 10000 }),
+		this.Poly({ verts: [384,-1204, 604,-1175, 749,-1217, 861,-1191, 1017,-1253, 1201,-1377, 1467,-1361, 1663,-1179, 1662,-1090, 1750,-949, 1762,-777, 1718,-680, 1722,-637, 1794,-520, 1786,-450, 1746,-378, 1766,-317, 1786,-241, 1758,-129, 1754,32, 1571,181, 1271,152, 963,183, 543,184, 247,176, 19,184, -261,178, -549,193, -745,141, -1013,109, -1228,-29, -1243,-210, -1243,-521, -1246,-688, -1208,-825, -1240,-970, -1196,-1033, -1232,-1121, -1119,-1223, -978,-1271, -842,-1214, -724,-1133, -415,-1152, -227,-1176, -60,-1207] }),
+
 		this.Prop({ texture: 'bushAndPump', x: 245, y: -93 }),
 		this.Prop({ texture: 'poolSkimmer', x: -159, y: -173 }),
 		this.Prop({ texture: 'poolCover', x: 797, y: -231, offset: -125 }),
@@ -488,6 +510,7 @@ game over (bad)!
 			this.tween(p.transform, 'y', p.transform.y + y, 500);
 			this.tween(p.transform, 'x', p.transform.x + x, 500);
 		}, }),
+		sweat,
 
 		propMeat,
 		propDrink,
@@ -576,7 +599,6 @@ game over (bad)!
 	};
 
 	// timer
-	let time = 120 * 1000;
 	this.scene.player.scripts.push({
 		gameObject: this.scene.player,
 		update: async () => {
