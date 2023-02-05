@@ -490,7 +490,7 @@ veggies: <<print this.score>>
 	this.scene.player.scripts.push({
 		gameObject: walla,
 		update: () => {
-			walla.volume = this.gameover ? 0 : this.ease.cubicIn(this.clamp(0, guests.length / 25, 1));
+			walla.volume = this.gameover ? 0 : this.ease.cubicIn(this.clamp(0, this.guests.length / 12, 1));
 		},
 	});
 
@@ -562,7 +562,7 @@ veggies: <<print this.score>>
 	// spawn npcs
 	const guestsGap = 40;
 	const guestsWaiting = [];
-	const guests = [];
+	this.guests = [];
 	const guestTypes = Array.from(window.resources._cache.keys()).filter(i => i.startsWith('guest') && i.endsWith('Idle')).map(i => i.replace('Idle', ''));
 	const postTypes = Object.keys(this.stats).filter(i => i !== 'busy').concat('random');
 	let lastPost = Date.now();
@@ -570,9 +570,9 @@ veggies: <<print this.score>>
 	intervals.push(setInterval(() => {
 		if (this.gameover) return;
 		if (guestsWaiting.length > guestsMaxWaiting) return;
-		if (guests.length && (Date.now() < allowMoreGuests || Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1])) return;
+		if (this.guests.length && (Date.now() < allowMoreGuests || Math.random() * Object.values(this.stats).reduce((a,i) => a + i, 0)/(100 * Object.keys(this.stats).length) > spawnRate[1])) return;
 		const npcType = this.randItem(guestTypes);
-		guests.push(npcType);
+		this.guests.push(npcType);
 		const npc = this.scene.addGuestToPool(npcType);
 		guestsWaiting.push(npc);
 
@@ -605,7 +605,7 @@ veggies: <<print this.score>>
 				lastPost = Date.now();
 			}, postRate[0]));
 		}, this.randRange(0, postRate[0]));
-		if (guests.length === 1) {
+		if (this.guests.length === 1) {
 			this.scene.feed.say(this.execute(this.getPassageWithTitle(`first-post`).program)[0].value, `${npcType}Idle`);
 		}
 	}, spawnRate[0]));
@@ -665,7 +665,7 @@ veggies: <<print this.score>>
 				this.scene.timer.scale.x = this.scene.timer.scale.y = this.lerp(2, 1, this.ease.cubicOut(s/30)) + Math.sin(time/100)*0.1*(1-(s/30));
 			}
 			if (time < 0) {
-				this.score = guests.length - guestsWaiting.length;
+				this.score = this.guests.length - guestsWaiting.length;
 				const won = this.score > 13;
 				this.music('', { fade: 100 });
 				this.sfx('time up');
